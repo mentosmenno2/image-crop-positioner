@@ -1,0 +1,84 @@
+{
+  "root": true,
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": [
+    "plugin:@wordpress/eslint-plugin/recommended",
+    "eslint:recommended"
+  ],
+  "settings": {
+    "react": {
+      "pragma": "wp"
+    }
+  },
+  "globals": {
+    "module": true,
+    "jQuery": true,
+    "image_crop_positioner": true
+  },
+  "rules": {
+    "space-in-parens": ["warn", "always"],
+    "computed-property-spacing": ["warn", "always"],
+    "no-console": 1,
+    "no-multi-spaces": [
+      1,
+      {
+        "exceptions": {
+          "VariableDeclarator": true
+        }
+      }
+    ],
+    "indent": [
+      "error",
+      "tab",
+      {
+        "VariableDeclarator": 1,
+        "ArrayExpression": "first",
+        "ObjectExpression": "first",
+        "ImportDeclaration": "first"
+      }
+    ],
+    "lines-around-comment" : [
+      "error",
+      {
+        "beforeBlockComment": true,
+        "beforeLineComment": true
+      }
+    ],
+    "comma-spacing" : [
+      "error",
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "comma-dangle": ["error", {
+        "arrays": "only-multiline",
+        "objects": "only-multiline",
+        "imports": "only-multiline",
+        "exports": "never",
+        "functions": "never"
+    }],
+    "no-multiple-empty-lines": ["error", {
+      "max": 1
+    }],
+    "semi": [
+      "warn",
+      "always"
+    ],
+    "space-before-blocks": [
+      "error",
+      "always"
+    ],
+    "padded-blocks": [
+      0
+    ],
+    "no-trailing-spaces": "warn",
+    "prettier/prettier": "off"
+  }
+}

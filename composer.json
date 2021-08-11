@@ -1,0 +1,76 @@
+{
+    "name": "mentosmenno2/image-crop-positioner",
+    "description": "Facial recognition and hotspot selection for cropping images in WordPress.",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "mentosmenno2"
+        }
+    ],
+    "repositories": [
+        {
+            "url": "https://github.com/mentosmenno2/coding-standards.git",
+            "type": "git"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "mentosmenno2/coding-standards": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mentosmenno2\\ImageCropPositioner\\": "app/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "composer dump-autoload"
+        ],
+        "post-update-cmd": [
+            "composer dump-autoload"
+        ],
+        "test":[
+            "echo Running tests",
+            "@test:composer",
+            "@test:phpcs",
+            "@test:psalm",
+            "@test:docs"
+        ],
+        "test:composer": [
+          "composer validate"
+        ],
+        "test:phpcs": [
+            "phpcs"
+        ],
+        "test:psalm": [
+            "./vendor/bin/psalm.phar"
+        ],
+        "integration:setup": [
+            "docker-compose up -d",
+            "echo Waiting for docker to become alive.",
+            "wget -q -O - --tries=10 localhost:8089/wp-admin",
+            "docker-compose run --rm wordpress-cli wp core install --url=localhost:8089 --title=Test --admin_user=admin --admin_password=password --admin_email=test@test.test",
+            "docker-compose run --rm wordpress-cli wp plugin activate image-crop-positioner"
+        ],
+        "test:ci:psalm": [
+            "docker-compose run --rm -w /var/www/html/wp-content/plugins/image-crop-positioner wordpress php vendor/bin/psalm.phar"
+        ],
+        "integration:teardown": [
+            "docker-compose down"
+        ],
+        "test:docs": [
+            "php-doc-check ./app -x vendor"
+        ],
+        "fix":[
+            "phpcbf"
+        ],
+        "make-pot": [
+            "wp i18n make-pot ./ --skip-js --slug=image-crop-positioner"
+        ]
+    },
+    "require-dev": {
+        "psalm/phar": "^4.0",
+        "niels-de-blaauw/php-doc-check": "^0.2.2"
+    }
+}

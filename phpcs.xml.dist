@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ruleset name="ImageCropPositioner">
+	<description>Mentosmenno2 Image Crop Positioner ruleset</description>
+	<config name="testVersion" value="7.1-"/>
+	<file>./app</file>
+	<file>./templates</file>
+	<file>./image-crop-positioner.php</file>
+
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<rule ref="PHPCompatibility"/>
+	<rule ref="Mentosmenno2-Wordpress"/>
+</ruleset>
