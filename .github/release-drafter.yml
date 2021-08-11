@@ -1,0 +1,10 @@
+template: |
+  ### Don't forget to prepare the release:
+
+  - Bump the version number in place-that-face.php
+  - Build CSS and JS with `npm run build`
+  - Generate translations with `composer run make-pot`
+
+  ## What’s Changed
+
+  $CHANGES

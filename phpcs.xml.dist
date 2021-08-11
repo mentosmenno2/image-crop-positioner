@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ruleset name="PlaceThatFace">
+	<description>Mentosmenno2 Place That Face ruleset</description>
+	<config name="testVersion" value="7.1-"/>
+	<file>./app</file>
+	<file>./templates</file>
+	<file>./place-that-face.php</file>
+
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<rule ref="PHPCompatibility"/>
+	<rule ref="Mentosmenno2-Wordpress"/>
+</ruleset>

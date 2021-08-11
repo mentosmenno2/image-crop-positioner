@@ -1,0 +1,101 @@
+name: Build release package
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  php:
+    name: Build release package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          coverage: none
+      - name: Setup WP-CLI
+        run: |
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x wp-cli.phar
+          sudo mv wp-cli.phar /usr/local/bin/wp
+      - name: Generate debugging log
+        run: |
+          echo 'PHP Version:'
+          php --version
+          echo 'PHP Modules:'
+          php -m
+          echo 'Composer:'
+          composer --version
+          echo 'NPM:'
+          npm -v
+          echo 'Node:'
+          node -v
+          echo 'WP-CLI:'
+          wp --info
+      - name: Create plugin directory
+        run: |
+          mkdir -p wp-content/plugins/place-that-face/
+      - name: Checkout plugin repository
+        uses: actions/checkout@v2
+        with:
+          path: wp-content/plugins/place-that-face/
+          fetch-depth: 1
+      - name: Clean install NPM dependencies
+        run: |
+          cd wp-content/plugins/place-that-face/
+          npm ci
+      - name: Build frontend assets
+        run: |
+          cd wp-content/plugins/place-that-face/
+          npm run build
+      - name: Generate translations
+        run: |
+          cd wp-content/plugins/place-that-face/
+          composer run make-pot
+      - name: Install composer dependencies (excluding dev)
+        run: |
+          cd wp-content/plugins/place-that-face/
+          composer install --prefer-dist --no-suggest --no-dev --optimize-autoloader --ignore-platform-reqs
+      - name: Remove source files
+        run: |
+          rm -rf 7.3linux.sh
+          cd wp-content/plugins/place-that-face/
+          rm -rf development
+          rm -rf node_modules
+          rm -rf src
+          rm -rf .editorconfig
+          rm -rf .eslintrc
+          rm -rf .eslintrc.json
+          rm -rf .gitignore
+          rm -rf .stylelintignore
+          rm -rf .stylelintrc.json
+          rm -rf auth.json
+          rm -rf composer.*
+          rm -rf docker-compose.yml
+          rm -rf package-lock.json
+          rm -rf package.json
+          rm -rf phpcs.xml.dist
+          rm -rf psalm-autoloader.php
+          rm -rf psalm.baseline.xml
+          rm -rf psalm.xml.dist
+          rm -rf webpack.*
+      - name: Generate zip file
+        run: |
+          cd wp-content/plugins/place-that-face/
+          zip -r place-that-face.zip .
+          mv place-that-face.zip ../
+      - name: Upload zip to release assets
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./wp-content/plugins/place-that-face.zip
+          asset_name: place-that-face-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
