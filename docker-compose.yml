@@ -14,7 +14,7 @@ services:
       WORDPRESS_DB_NAME: exampledb
     volumes:
       - wordpress:/var/www/html
-      - ./:/var/www/html/wp-content/plugins/place-that-face
+      - ./:/var/www/html/wp-content/plugins/image-crop-positioner
 
   wordpress-cli:
     depends_on:
@@ -27,7 +27,7 @@ services:
     user: xfs
     volumes:
       - wordpress:/var/www/html
-      - ./:/var/www/html/wp-content/plugins/place-that-face
+      - ./:/var/www/html/wp-content/plugins/image-crop-positioner
 
   db:
     image: mysql:5.7

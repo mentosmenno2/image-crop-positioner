@@ -25,7 +25,7 @@ jobs:
           tools: wp
       - uses: actions/checkout@v2
         with:
-          path: wp-content/plugins/place-that-face
+          path: wp-content/plugins/image-crop-positioner
       - name: Debugging
         run: |
           php --version
@@ -34,7 +34,7 @@ jobs:
       - name: Composer build
         run: |
           ls -lsah
-          cd wp-content/plugins/place-that-face
+          cd wp-content/plugins/image-crop-positioner
           composer config http-basic.${{ secrets.SATIS_DOMAIN }} "${{ secrets.SATIS_USERNAME }}" "${{ secrets.SATIS_PASSWORD }}"
           composer install --prefer-dist --no-suggest
         env:
@@ -43,11 +43,11 @@ jobs:
           SATIS_PASSWORD: ${{ secrets.SATIS_PASSWORD }}
       - name: test:composer
         run: |
-          cd wp-content/plugins/place-that-face
+          cd wp-content/plugins/image-crop-positioner
           composer run test:composer
       - name: test:phpcs
         run: |
-          cd wp-content/plugins/place-that-face
+          cd wp-content/plugins/image-crop-positioner
           composer run test:phpcs
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
@@ -56,14 +56,14 @@ jobs:
           wp core download --allow-root --skip-content
           wp config create --allow-root --dbname=wordpress --dbuser=root --dbpass=wordpress --dbhost=127.0.0.1:${{ job.services.mysql.ports['3306'] }}
           wp core install --allow-root  --url=localhost --title=Test --admin_user=admin --admin_password=password --admin_email=test@test.test
-          wp plugin activate place-that-face --allow-root
+          wp plugin activate image-crop-positioner --allow-root
       - name: test:psalm
         run: |
-          cd wp-content/plugins/place-that-face
+          cd wp-content/plugins/image-crop-positioner
           composer run test:psalm
       - name: test:docs
         run: |
-          cd wp-content/plugins/place-that-face
+          cd wp-content/plugins/image-crop-positioner
           composer run test:docs
   npm-project:
     name: NPM project test
@@ -76,16 +76,16 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-          path: wp-content/plugins/place-that-face
+          path: wp-content/plugins/image-crop-positioner
       - name: Clean install dependencies
         run: |
-          cd wp-content/plugins/place-that-face
+          cd wp-content/plugins/image-crop-positioner
           npm ci
       - name: Lint
         run: |
-          cd wp-content/plugins/place-that-face
+          cd wp-content/plugins/image-crop-positioner
           npm run lint
       - name: Build
         run: |
-          cd wp-content/plugins/place-that-face
+          cd wp-content/plugins/image-crop-positioner
           npm run build

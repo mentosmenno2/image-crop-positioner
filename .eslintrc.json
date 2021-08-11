@@ -19,7 +19,7 @@
   "globals": {
     "module": true,
     "jQuery": true,
-    "place_that_face": true
+    "image_crop_positioner": true
   },
   "rules": {
     "space-in-parens": ["warn", "always"],

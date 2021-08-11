@@ -1,6 +1,6 @@
 <?php
 
-namespace MentosmMenno2\PlaceThatFace;
+namespace Mentosmenno2\ImageCropPositioner;
 
 class Assets {
 
@@ -9,12 +9,12 @@ class Assets {
 	}
 
 	public function is_development_mode(): bool {
-		return ! file_exists( PLACE_THAT_FACE_PLUGIN_PATH . 'dist/main.js' );
+		return ! file_exists( IMAGE_CROP_POSITIONER_PLUGIN_PATH . 'dist/main.js' );
 	}
 
 	public function enqueue(): void {
 		if ( $this->is_development_mode() ) {
-			$this->enqueue_development( 'place_that_face_main', array( 'jquery' ), '/src/main.js', true );
+			$this->enqueue_development( 'image_crop_positioner_main', array( 'jquery' ), '/src/main.js', true );
 		} else {
 			$this->enqueue_production();
 		}
@@ -23,17 +23,17 @@ class Assets {
 
 	public function enqueue_development( string $handle, array $deps, string $path, bool $in_footer ): void {
 		$src = $this->get_development_src( $path );
-		wp_enqueue_script( $handle, $src, $deps, PLACE_THAT_FACE_PLUGIN_VERSION, $in_footer );
+		wp_enqueue_script( $handle, $src, $deps, IMAGE_CROP_POSITIONER_PLUGIN_VERSION, $in_footer );
 	}
 
 	public function enqueue_production(): void {
-		wp_enqueue_script( 'place_that_face_main', PLACE_THAT_FACE_PLUGIN_URL . 'dist/main.js', array( 'jquery' ), PLACE_THAT_FACE_PLUGIN_VERSION, true );
-		wp_enqueue_style( 'place_that_face_main', PLACE_THAT_FACE_PLUGIN_URL . 'dist/main.css', array(), PLACE_THAT_FACE_PLUGIN_VERSION, 'all' );
+		wp_enqueue_script( 'image_crop_positioner_main', IMAGE_CROP_POSITIONER_PLUGIN_URL . 'dist/main.js', array( 'jquery' ), IMAGE_CROP_POSITIONER_PLUGIN_VERSION, true );
+		wp_enqueue_style( 'image_crop_positioner_main', IMAGE_CROP_POSITIONER_PLUGIN_URL . 'dist/main.css', array(), IMAGE_CROP_POSITIONER_PLUGIN_VERSION, 'all' );
 	}
 
 	public function localize(): void {
 		$data = $this->get_localize_data();
-		wp_localize_script( 'place_that_face_main', 'place_that_face_options', $data );
+		wp_localize_script( 'image_crop_positioner_main', 'image_crop_positioner_options', $data );
 	}
 
 	public function get_localize_data(): array {
@@ -50,9 +50,9 @@ class Assets {
 	 * Get config settings from development/config.default.json and (optional) development/config.local.json
 	 */
 	public function get_src_config(): array {
-		$local_config_path = PLACE_THAT_FACE_PLUGIN_PATH . 'development/config.local.json';
+		$local_config_path = IMAGE_CROP_POSITIONER_PLUGIN_PATH . 'development/config.local.json';
 		$local_config      = array();
-		$manifest          = json_decode( file_get_contents( PLACE_THAT_FACE_PLUGIN_PATH . 'development/config.default.json' ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$manifest          = json_decode( file_get_contents( IMAGE_CROP_POSITIONER_PLUGIN_PATH . 'development/config.default.json' ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
 		if ( file_exists( $local_config_path ) ) {
 			$local_config = json_decode( file_get_contents( $local_config_path ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
@@ -69,6 +69,6 @@ class Assets {
 		if ( $this->is_development_mode() ) {
 			return $this->get_development_src( '/src' );
 		}
-		return PLACE_THAT_FACE_PLUGIN_URL . 'dist';
+		return IMAGE_CROP_POSITIONER_PLUGIN_URL . 'dist';
 	}
 }

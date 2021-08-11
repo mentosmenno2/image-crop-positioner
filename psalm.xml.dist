@@ -13,7 +13,7 @@
     <projectFiles>
         <directory name="./app" />
 		<directory name="./templates" />
-		<file name="place-that-face.php" />
+		<file name="image-crop-positioner.php" />
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>

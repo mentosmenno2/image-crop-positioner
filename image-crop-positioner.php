@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name:  Place That Face
- * Version:      0.4.1
- * Description:  Facial recognition and hotspot selection for cropping images in WordPress.
- * Author:       mentosmenno2
+ * Plugin Name: Image Crop Positioner
+ * Version:     0.0.1
+ * Description: Facial recognition and hotspot selection for cropping images in WordPress.
+ * Author:      mentosmenno2
  *
- * Text Domain: place-that-face
+ * Text Domain: image-crop-positioner
  * Domain Path: /languages/
  */
 
@@ -14,13 +14,13 @@ add_action(
 	function() {
 		// Set plugin variables
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		$plugin_path = realpath( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR;
+		$plugin_path = plugin_dir_path( __FILE__ );
 		$plugin_data = get_plugin_data( __FILE__ );
 		$plugin_url  = plugin_dir_url( __FILE__ );
-		define( 'PLACE_THAT_FACE_PLUGIN_VERSION', isset( $plugin_data['Version'] ) ? $plugin_data['Version'] : '' );
-		define( 'PLACE_THAT_FACE_PLUGIN_PATH', $plugin_path );
-		define( 'PLACE_THAT_FACE_PLUGIN_URL', $plugin_url );
-		define( 'PLACE_THAT_FACE_PLUGIN_NAMESPACE', 'Mentosmenno2\\PlaceThatFace\\' );
+		define( 'IMAGE_CROP_POSITIONER_PLUGIN_VERSION', isset( $plugin_data['Version'] ) ? $plugin_data['Version'] : '' );
+		define( 'IMAGE_CROP_POSITIONER_PLUGIN_PATH', $plugin_path );
+		define( 'IMAGE_CROP_POSITIONER_PLUGIN_URL', $plugin_url );
+		define( 'IMAGE_CROP_POSITIONER_PLUGIN_NAMESPACE', 'Mentosmenno2\\ImageCropPositioner\\' );
 
 		// Autoload files
 		$autoload_file = $plugin_path . 'vendor/autoload.php';
@@ -31,10 +31,10 @@ add_action(
 			 * Autoload using spl_autoload_register
 			 * @see https://www.php.net/manual/en/language.oop5.autoload.php#120258
 			 */
-			$autoload_dir = PLACE_THAT_FACE_PLUGIN_PATH . 'app' . DIRECTORY_SEPARATOR;
+			$autoload_dir = IMAGE_CROP_POSITIONER_PLUGIN_PATH . 'app' . DIRECTORY_SEPARATOR;
 			spl_autoload_register(
 				function ( string $class ) use ( $autoload_dir ) {
-					$no_plugin_ns_class = str_replace( PLACE_THAT_FACE_PLUGIN_NAMESPACE, '', $class );
+					$no_plugin_ns_class = str_replace( IMAGE_CROP_POSITIONER_PLUGIN_NAMESPACE, '', $class );
 					if ( $no_plugin_ns_class === $class ) {
 						return false; // Class not in plugin namespace, skip autoloading
 					}
@@ -42,7 +42,7 @@ add_action(
 					$file = str_replace( '\\', DIRECTORY_SEPARATOR, $no_plugin_ns_class ) . '.php';
 					$file = $autoload_dir . $file;
 					if ( ! file_exists( $file ) ) {
-						throw new \Exception( 'Class ' . $class . 'not found' );
+						throw new Exception( 'Class ' . $class . 'not found' );
 					}
 
 					// Require the file
@@ -53,9 +53,9 @@ add_action(
 		}
 
 		// Register hooks
-		( new Mentosmenno2\PlaceThatFace\Assets() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Assets() )->register_hooks();
 
 		// Load textdomain
-		load_plugin_textdomain( 'place-that-face', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'image-crop-positioner', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 );

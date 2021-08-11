@@ -1,7 +1,7 @@
 template: |
   ### Don't forget to prepare the release:
 
-  - Bump the version number in place-that-face.php
+  - Bump the version number in image-crop-positioner.php
   - Build CSS and JS with `npm run build`
   - Generate translations with `composer run make-pot`
 

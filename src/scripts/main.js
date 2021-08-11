@@ -3,9 +3,9 @@
 
 	app.instantiate = function( elem ) {
 		const $this   = $( elem );
-		const module  = $this.attr( 'data-place-that-face-module' );
+		const module  = $this.attr( 'data-image-crop-positioner-module' );
 		if ( module === undefined ) {
-			throw 'Place That Face module not defined (use data-place-that-face-module="")';
+			throw 'Image Crop Positioner module not defined (use data-image-crop-positioner-module="")';
 		} else if ( module in app ) {
 			new app[ module ]( elem );
 			$this.attr( 'data-initialized', true );
@@ -14,8 +14,8 @@
 		}
 	};
 
-	$( '[data-place-that-face-module]' ).each( function() {
+	$( '[data-image-crop-positioner-module]' ).each( function() {
 		app.instantiate( this );
 	} );
 
-}( window.place_that_face = window.place_that_face || {}, jQuery ) );
+}( window.image_crop_positioner = window.image_crop_positioner || {}, jQuery ) );

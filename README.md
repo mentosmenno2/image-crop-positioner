@@ -1,17 +1,18 @@
-[![GitHub Actions status](https://github.com/mentosmenno2/place-that-face/workflows/Build%20%26%20test/badge.svg)](https://github.com/mentosmenno2/place-that-face/actions)
+[![GitHub Actions status](https://github.com/mentosmenno2/image-crop-positioner/workflows/Build%20%26%20test/badge.svg)](https://github.com/mentosmenno2/image-crop-positioner/actions)
 
 
-# PlaceThatFace (place-that-face)
-Unofficial plugin to access the PlaceThatFace ticket platform directly from WordPress
+# Image Crop Positioner WordPress plugin
+
+This plugin allows you to better crop your images, based on facial detection or hotspot selection.
 
 ## Installation
 ### Zip download (recommended)
 To download and install this plugin in your WordPress website, follow the steps below.
 
-1. Go to the [releases tab](https://github.com/mentosmenno2/place-that-face/releases) and find the latest release.
-2. Download the zip named `place-that-face-x.x.x.zip` (where x.x.x is the version number).
-3. Rename the downloaded zip to `place-that-face.zip`.
-4. Extract the zip file. Make sure it puts the contents in a directory called `place-that-face`.
+1. Go to the [releases tab](https://github.com/mentosmenno2/image-crop-positioner/releases) and find the latest release.
+2. Download the zip named `image-crop-positioner-x.x.x.zip` (where x.x.x is the version number).
+3. Rename the downloaded zip to `image-crop-positioner.zip`.
+4. Extract the zip file. Make sure it puts the contents in a directory called `image-crop-positioner`.
 5. Put the extracted folder and it's contents inside the `wp-content/plugins` directory of your WordPress installation.
 6. Activate the plugin via the wp-admin panel.
 
@@ -19,18 +20,15 @@ To download and install this plugin in your WordPress website, follow the steps 
 It's also possible to download the plugin via Packagist.
 Keep in mind that if you do, your composer should be setup in a way that packages of the type `wordpress-plugin` are installed in your `wp-content/plugins` directory.
 
-## Configuration
-To configure the plugin, just fill in your client name in the PlaceThatFace plugin settings screen.
-
 ## Development
 ### Setup
 1. Create a new WordPress installation using the latest twenty-* theme.
 2. Navigate to the `wp-content/plugins` directory.
-3. Clone this repo there, so it creates the `place-that-face` directory.
-4. Navigate to the `place-that-face` directory, and from there, run:
+3. Clone this repo there, so it creates the `image-crop-positioner` directory.
+4. Navigate to the `image-crop-positioner` directory, and from there, run:
 
 ```bash
-composer-install
+composer install
 npm ci
 npm run build
 ```
@@ -39,7 +37,7 @@ Run `composer run test` to verify results locally (more info about tests later i
 
 ### Releasing
 1. Merge all PR's in the `main` branch.
-2. Change the version number in `place-that-face.php`.
+2. Change the version number in `image-crop-positioner.php`.
 3. Wait for all GitHub Actions to finish.
 4. Update the created draft release, set a tag and version name, in SEMVER structure like vX.X.X.
 5. Publish the release.
@@ -87,17 +85,17 @@ Webpack automatically processes images used in the SCSS. For the images that you
 import 'images/logo.jpg';
 ```
 
-Get the image URL in the .php files by using the `( new \Mentosmenno2\PlaceThatFace\Assets() )->get_assets_directory_url()` function.
+Get the image URL in the .php files by using the `( new \Mentosmenno2\ImageCropPositioner\Assets() )->get_assets_directory_url()` function.
 For example placing a logo in the header:
 ```html
-<img src="<?php echo ( new \Mentosmenno2\PlaceThatFace\Assets() )->get_assets_directory_url(); ?>/images/logo.jpg" alt="">
+<img src="<?php echo ( new \Mentosmenno2\ImageCropPositioner\Assets() )->get_assets_directory_url(); ?>/images/logo.jpg" alt="">
 ```
 
 ##### Lazyload
 We use default browser lazyloading for images.
 Usage example:
 ```html
-<img src="<?php echo ( new \Mentosmenno2\PlaceThatFace\Assets() )->get_assets_directory_url(); ?>/images/thumbnail.jpg" loading="lazy" alt="">
+<img src="<?php echo ( new \Mentosmenno2\ImageCropPositioner\Assets() )->get_assets_directory_url(); ?>/images/thumbnail.jpg" loading="lazy" alt="">
 ```
 
 #### Linter
@@ -106,7 +104,7 @@ Usage example:
 
 ### Localization
 Default text language for this repo is English.
-Make sure you translate all strings with the text-domain `place-that-face`.
+Make sure you translate all strings with the text-domain `image-crop-positioner`.
 
 Run: `composer run make-pot` for updating the .pot file.
 

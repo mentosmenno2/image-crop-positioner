@@ -1,5 +1,5 @@
 {
-    "name": "mentosmenno2/place-that-face",
+    "name": "mentosmenno2/image-crop-positioner",
     "description": "Facial recognition and hotspot selection for cropping images in WordPress.",
     "type": "wordpress-plugin",
     "license": "GPL-3.0-or-later",
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Mentosmenno2\\PlaceThatFace\\": "app/"
+            "Mentosmenno2\\ImageCropPositioner\\": "app/"
         }
     },
     "scripts": {
@@ -51,10 +51,10 @@
             "echo Waiting for docker to become alive.",
             "wget -q -O - --tries=10 localhost:8089/wp-admin",
             "docker-compose run --rm wordpress-cli wp core install --url=localhost:8089 --title=Test --admin_user=admin --admin_password=password --admin_email=test@test.test",
-            "docker-compose run --rm wordpress-cli wp plugin activate place-that-face"
+            "docker-compose run --rm wordpress-cli wp plugin activate image-crop-positioner"
         ],
         "test:ci:psalm": [
-            "docker-compose run --rm -w /var/www/html/wp-content/plugins/place-that-face wordpress php vendor/bin/psalm.phar"
+            "docker-compose run --rm -w /var/www/html/wp-content/plugins/image-crop-positioner wordpress php vendor/bin/psalm.phar"
         ],
         "integration:teardown": [
             "docker-compose down"
@@ -66,7 +66,7 @@
             "phpcbf"
         ],
         "make-pot": [
-            "wp i18n make-pot ./ --skip-js --slug=place-that-face"
+            "wp i18n make-pot ./ --skip-js --slug=image-crop-positioner"
         ]
     },
     "require-dev": {
