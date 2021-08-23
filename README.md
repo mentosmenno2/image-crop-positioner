@@ -6,7 +6,7 @@ This plugin allows you to better crop your images, based on facial detection or 
 
 ## In Development
 
-> :Warning: **This plugin is still in development.** Some functinality may be missing or not working as intended.
+> :warning: **This plugin is still in development.** Some functinality may be missing or not working as intended.
 
 ## Installation
 ### Zip download (recommended)
