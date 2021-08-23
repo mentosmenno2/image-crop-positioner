@@ -117,12 +117,7 @@ There are multiple code tests in place.
 
 #### GitHub actions
 On every pull-request, a GitHub action is run that verifies the project, based on the
-`composer run test` results. You need to provide the following secret in the
-repository (under settings/secrets):
-
-- SATIS_DOMAIN (without protocol)
-- SATIS_USERNAME
-- SATIS_PASSWORD
+`composer run test` results. 
 
 #### Manually
 
