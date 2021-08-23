@@ -1,9 +1,12 @@
 [![GitHub Actions status](https://github.com/mentosmenno2/image-crop-positioner/workflows/Build%20%26%20test/badge.svg)](https://github.com/mentosmenno2/image-crop-positioner/actions)
 
-
 # Image Crop Positioner WordPress plugin
 
 This plugin allows you to better crop your images, based on facial detection or hotspot selection.
+
+## In Development
+
+> :Warning: **This plugin is still in development.** Some functinality may be missing or not working as intended.
 
 ## Installation
 ### Zip download (recommended)
