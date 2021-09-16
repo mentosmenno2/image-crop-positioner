@@ -20,6 +20,12 @@
 	</projectFiles>
 
 	<issueHandlers>
+		<UndefinedClass>
+			<errorLevel type="suppress">
+				<referencedClass name="WP_CLI" />
+				<referencedClass name="WP_CLI_Command" />
+			</errorLevel>
+		</UndefinedClass>
 		<UndefinedGlobalVariable>
 			<errorLevel type="suppress">
 				<referencedVariable name="$templates" />
