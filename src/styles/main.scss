@@ -1,0 +1,24 @@
+.image-crop-positioner-attachment-edit-fields {
+	.image-previews {
+		border: 1px solid #dfdfdf;
+		border-radius: 5px;
+		padding: 10px;
+
+		&__text {
+			margin-top: 0;
+		}
+
+		&__images {
+
+		}
+
+		&__image {
+			height: 80px;
+			width: auto;
+		}
+	}
+
+	.spinner {
+		float: none;
+	}
+}

@@ -38,7 +38,9 @@ class ImagePreviews {
 		$data  = array();
 		$sizes = get_intermediate_image_sizes();
 		foreach ( $sizes as $size ) {
-			$image  = wp_get_attachment_image( $attachment_id, $size, false, array() );
+			$image  = wp_get_attachment_image( $attachment_id, $size, false, array(
+				'class' => 'image-previews__image',
+			) );
 			$data[] = array(
 				'size' => $size,
 				'html' => $image,

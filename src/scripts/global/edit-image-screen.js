@@ -28,6 +28,10 @@
 			return parseInt( getRootElement().attr( 'data-attachment-id' ) );
 		}
 
+		function getSpinnerHtml() {
+			return '<div class="spinner__wrapper"><div class="spinner is-active"></div></div>';
+		}
+
 		// Event listeners need to be on the document, to prevent
 		function addEventListeners() {
 			getChildElement( '.add-faces' ).on( 'click', function() { addFaces(); } );
@@ -38,7 +42,8 @@
 		}
 
 		function reloadImagePreviews() {
-			getChildElement( '.image-previews__images' ).html( '<div class="spinner is-active"></div>' );
+			getChildElement( '.image-previews__images' ).html( getSpinnerHtml() );
+
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
 				data : {
@@ -57,7 +62,11 @@
 					} );
 				} )
 				.fail( function( jqXHR ) {
-					window.alert( jqXHR.responseJSON.data[ 0 ].message ); // eslint-disable-line no-alert
+					let errorMessage = 'Error';
+					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
+						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
+					}
+					getChildElement( '.image-previews__images' ).html( errorMessage );
 				} );
 		}
 

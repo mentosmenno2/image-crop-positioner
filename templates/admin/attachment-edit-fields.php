@@ -7,7 +7,7 @@
 
 <div class="image-crop-positioner-attachment-edit-fields" data-image-crop-positioner-module="editImage" data-attachment-id="<?php echo esc_attr( (string) $attachment->ID ); ?>">
 	<div class="image-previews" >
-		<p><strong><?php esc_html_e( 'Image previews', 'image-crop-positioner' ); ?></strong></p>
+		<p class="image-previews__text"><strong><?php esc_html_e( 'Image previews', 'image-crop-positioner' ); ?></strong></p>
 		<div class="image-previews__images"></div>
 	</div>
 
