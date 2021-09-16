@@ -8,6 +8,11 @@ This plugin allows you to better crop your images, based on facial detection or 
 
 > :warning: **This plugin is still in development.** Some functinality may be missing or not working as intended.
 
+## Face detection method
+
+The face detection is done in PHP.
+It uses the [mauricesvay/php-facedetection library](https://github.com/mauricesvay/php-facedetection).
+
 ## Installation
 ### Zip download (recommended)
 To download and install this plugin in your WordPress website, follow the steps below.
@@ -120,7 +125,7 @@ There are multiple code tests in place.
 
 #### GitHub actions
 On every pull-request, a GitHub action is run that verifies the project, based on the
-`composer run test` results. 
+`composer run test` results.
 
 #### Manually
 
