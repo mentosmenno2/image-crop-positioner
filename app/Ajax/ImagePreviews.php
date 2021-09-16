@@ -8,13 +8,13 @@ use WP_Error;
 class ImagePreviews {
 
 	public function register_hooks(): void {
-		add_action( 'wp_ajax_image_crop_positioner_image_previews', array( $this, 'get_image_previews' ) );
+		add_action( 'wp_ajax_image_crop_positioner_image_previews', array( $this, 'handle_request' ) );
 	}
 
 	/**
-	 * Add custom fields to attachment edit screen
+	 * Handle the request
 	 */
-	public function get_image_previews(): void {
+	public function handle_request(): void {
 		if ( ! check_ajax_referer( Assets::NONCE_ACTION, false, false ) ) {
 			$error = new WP_Error(
 				403, __( 'Invalid nonce.', 'image-crop-positioner' ), array(
@@ -35,6 +35,13 @@ class ImagePreviews {
 			wp_send_json_error( $error, 403 );
 		}
 
+		$this->get_image_previews( $attachment_id );
+	}
+
+	/**
+	 * Get the image previews and send them to the json response
+	 */
+	protected function get_image_previews( int $attachment_id ): void {
 		$data  = array();
 		$sizes = get_intermediate_image_sizes();
 		foreach ( $sizes as $size ) {
