@@ -38,7 +38,7 @@
             "@test:docs"
         ],
         "test:composer": [
-          "composer validate"
+            "composer validate"
         ],
         "test:phpcs": [
             "phpcs"

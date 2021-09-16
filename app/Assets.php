@@ -4,15 +4,18 @@ namespace Mentosmenno2\ImageCropPositioner;
 
 class Assets {
 
+	public const NONCE_ACTION = 'image-crop-positioner';
+
 	public function register_hooks(): void {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin' ) );
 	}
 
 	public function is_development_mode(): bool {
 		return ! file_exists( IMAGE_CROP_POSITIONER_PLUGIN_PATH . 'dist/main.js' );
 	}
 
-	public function enqueue(): void {
+	public function enqueue_admin(): void {
+		wp_enqueue_media();
 		if ( $this->is_development_mode() ) {
 			$this->enqueue_development( 'image_crop_positioner_main', array( 'jquery' ), '/src/main.js', true );
 		} else {
@@ -37,7 +40,10 @@ class Assets {
 	}
 
 	public function get_localize_data(): array {
-		return array();
+		return array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce'    => wp_create_nonce( self::NONCE_ACTION ),
+		);
 	}
 
 	public function get_development_src( string $path = '' ): string {
