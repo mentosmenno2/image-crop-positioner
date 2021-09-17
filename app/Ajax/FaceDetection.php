@@ -57,7 +57,7 @@ class FaceDetection {
 		}
 
 		try {
-			$extractor = FaceDetector::get_instance()->extract( $file );
+			$extraction = FaceDetector::get_instance()->extract( $file );
 		} catch ( Exception $e ) {
 			$error = new WP_Error(
 				400, $e->getMessage(), array(
@@ -67,8 +67,6 @@ class FaceDetection {
 			wp_send_json_error( $error, 400 );
 			return;
 		}
-
-		$extraction = FaceDetector::get_instance()->extract( $file );
 
 		$data = array(
 			'image_html' => wp_get_attachment_image( $attachment_id, 'full' ),
