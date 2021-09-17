@@ -8,6 +8,11 @@ This plugin allows you to better crop your images, based on facial detection or 
 
 > :warning: **This plugin is still in development.** Some functinality may be missing or not working as intended.
 
+## Face detection method
+
+The face detection is done in PHP.
+It uses a modified version of the [softon/laravel-face-detect library](https://github.com/softon/laravel-face-detect).
+
 ## Installation
 ### Zip download (recommended)
 To download and install this plugin in your WordPress website, follow the steps below.
@@ -22,6 +27,26 @@ To download and install this plugin in your WordPress website, follow the steps 
 ### Composer installation (alternative method)
 It's also possible to download the plugin via Packagist.
 Keep in mind that if you do, your composer should be setup in a way that packages of the type `wordpress-plugin` are installed in your `wp-content/plugins` directory.
+
+## WP CLI commands
+
+There are some WP-CLI commands available.
+
+### Get face
+
+Get face coordinates.
+
+```sh
+wp image-crop-positioner face-detection get-face "\path\to\input_image.jpg"
+```
+
+### Save image
+
+Generate image with the face cropped out.
+
+```sh
+wp image-crop-positioner face-detection save-image "\path\to\input_image.jpg" "\path\to\output_image.jpg"
+```
 
 ## Development
 ### Setup
@@ -120,7 +145,7 @@ There are multiple code tests in place.
 
 #### GitHub actions
 On every pull-request, a GitHub action is run that verifies the project, based on the
-`composer run test` results. 
+`composer run test` results.
 
 #### Manually
 

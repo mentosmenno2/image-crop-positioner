@@ -57,6 +57,11 @@ add_action(
 		( new Mentosmenno2\ImageCropPositioner\Admin() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\ImagePreviews() )->register_hooks();
 
+		// Register CLI commands
+		if ( defined( 'WP_CLI' ) && constant( 'WP_CLI' ) ) {
+			\WP_CLI::add_command( 'image-crop-positioner face-detection', \Mentosmenno2\ImageCropPositioner\CLI\FaceDetection::class );
+		}
+
 		// Load textdomain
 		load_plugin_textdomain( 'image-crop-positioner', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
