@@ -11,7 +11,7 @@ This plugin allows you to better crop your images, based on facial detection or 
 ## Face detection method
 
 The face detection is done in PHP.
-It uses the [mauricesvay/php-facedetection library](https://github.com/mauricesvay/php-facedetection).
+It uses a modified version of the [softon/laravel-face-detect library](https://github.com/softon/laravel-face-detect).
 
 ## Installation
 ### Zip download (recommended)
