@@ -18,6 +18,9 @@ class MyEyesAreUpHere {
 		return max( $faces_success, $hotspots_success );
 	}
 
+	/**
+	 * Migrate faces from My Eyes Are Up Here to Image Crop Positioner
+	 */
 	protected function migrate_faces( int $attachment_id ): int {
 		$old_faces = get_post_meta( $attachment_id, 'faces', true );
 		if ( empty( $old_faces ) || ! is_array( $old_faces ) ) {
@@ -49,6 +52,9 @@ class MyEyesAreUpHere {
 		return self::STATUS_SUCCESS;
 	}
 
+	/**
+	 * Migrate hotspots from My Eyes Are Up Here to Image Crop Positioner
+	 */
 	protected function migrate_hotspots( int $attachment_id ): int {
 		$old_hotspots = get_post_meta( $attachment_id, 'hotspots', true );
 		if ( empty( $old_hotspots ) || ! is_array( $old_hotspots ) ) {
