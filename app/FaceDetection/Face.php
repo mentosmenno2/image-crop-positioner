@@ -1,23 +1,13 @@
 <?php
-/**
- * PHP face detection
- *
- * This code has been reused from the softon/laravel-face-detect library.
- * @author Softon Technologies <powerupneo@gmail.com>
- *
- * The library is a Laravel version of mauricesvay/php-facedetection.
- * @author Maurice Svay <maurice@svay.com>
- * @package mauricesvay/php-facedetection
- * @see https://github.com/mauricesvay/php-facedetection
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- *
- * That face detection library is a direct port of  a JavaScript face detection library by Karthik Tharavaad.
- * @author Karthik Tharavaad <karthik_tharavaad@yahoo.com>
- */
 
 namespace Mentosmenno2\ImageCropPositioner\FaceDetection;
 
-class Face {
+use JsonSerializable;
+
+/**
+ * Represents a square containing a face.
+ */
+class Face implements JsonSerializable {
 
 	/** @var float */
 	protected $x = 0;
@@ -26,7 +16,10 @@ class Face {
 	protected $y = 0;
 
 	/** @var float */
-	protected $w = 0;
+	protected $width = 0;
+
+	/** @var float */
+	protected $height = 0;
 
 	/**
 	 * @param array<string, float> $data
@@ -55,12 +48,33 @@ class Face {
 		return $this;
 	}
 
-	public function get_w(): float {
-		return $this->w;
+	public function get_width(): float {
+		return $this->width;
 	}
 
-	public function set_w( float $w ): Face {
-		$this->w = $w;
+	public function set_width( float $width ): Face {
+		$this->width = $width;
 		return $this;
+	}
+
+	public function get_height(): float {
+		return $this->height;
+	}
+
+	public function set_height( float $height ): Face {
+		$this->height = $height;
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function jsonSerialize() {
+		return array(
+			'x'      => $this->x,
+			'y'      => $this->y,
+			'width'  => $this->width,
+			'height' => $this->height,
+		);
 	}
 }

@@ -33,9 +33,9 @@ class FaceDetection {
 			WP_CLI::warning( 'No face found' );
 		} else {
 			WP_CLI::log( 'Face found' );
-			WP_CLI::log( 'X: ' . $detector->face['x'] );
-			WP_CLI::log( 'Y: ' . $detector->face['y'] );
-			WP_CLI::log( 'Size: ' . $detector->face['w'] . 'x' . $detector->face['w'] );
+			WP_CLI::log( 'X: ' . $detector->face->get_x() );
+			WP_CLI::log( 'Y: ' . $detector->face->get_y() );
+			WP_CLI::log( 'Size: ' . $detector->face->get_width() . 'x' . $detector->face->get_height() );
 		}
 	}
 

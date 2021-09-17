@@ -156,18 +156,19 @@ class FaceDetector {
 
 			$stats      = $this->get_img_stats( $reduced_canvas );
 			$this->face = $this->do_detect_greedy_big_to_small( $stats['ii'], $stats['ii2'], $stats['width'], $stats['height'] );
-			if ( $this->face instanceof Face && $this->face->get_w() > 0 ) {
+			if ( $this->face instanceof Face && $this->face->get_width() > 0 ) {
 				$this->face = $this->face
 					->set_x( $this->face->get_x() * $ratio )
 					->set_y( $this->face->get_y() * $ratio )
-					->set_w( $this->face->get_w() * $ratio );
+					->set_width( $this->face->get_width() * $ratio )
+					->set_height( $this->face->get_height() * $ratio );
 			}
 		} else {
 			/** @psalm-suppress all */
 			$stats      = $this->get_img_stats( $this->canvas );
 			$this->face = $this->do_detect_greedy_big_to_small( $stats['ii'], $stats['ii2'], $stats['width'], $stats['height'] );
 		}
-		if ( $this->face instanceof Face && $this->face->get_w() > 0 ) {
+		if ( $this->face instanceof Face && $this->face->get_width() > 0 ) {
 			$this->face_found = true;
 		}
 		return $this;
@@ -205,8 +206,8 @@ class FaceDetector {
 		$to_crop = array(
 			'x'      => $this->face->get_x() - ( self::PADDING_WIDTH / 2 ),
 			'y'      => $this->face->get_y() - ( self::PADDING_HEIGHT / 2 ),
-			'width'  => $this->face->get_w() + self::PADDING_WIDTH,
-			'height' => $this->face->get_w() + self::PADDING_HEIGHT,
+			'width'  => $this->face->get_width() + self::PADDING_WIDTH,
+			'height' => $this->face->get_height() + self::PADDING_HEIGHT,
 		);
 
 		/** @psalm-suppress PossiblyInvalidArgument */
@@ -322,9 +323,10 @@ class FaceDetector {
 					if ( $passed ) {
 						return new Face(
 							array(
-								'x' => $x,
-								'y' => $y,
-								'w' => $w,
+								'x'      => $x,
+								'y'      => $y,
+								'width'  => $w,
+								'height' => $w,
 							)
 						);
 					}
