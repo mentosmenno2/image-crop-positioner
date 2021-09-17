@@ -31,6 +31,9 @@ class FaceDetector {
 	/** @var array */
 	protected $detection_data = array();
 
+	/** @var self|null*/
+	protected static $instance = null;
+
 	/**
 	 * @var null|resource|GdImage
 	 *
@@ -44,7 +47,10 @@ class FaceDetector {
 	/** @var bool */
 	public $face_found = false;
 
-	public function __construct() {
+	/**
+	 * Create a new face detector class
+	 */
+	protected function __construct() {
 		if ( ! extension_loaded( 'gd' ) ) {
 			throw new Exception( 'PHP GD extension is not loaded' );
 		}
@@ -65,6 +71,22 @@ class FaceDetector {
 		}
 
 		$this->detection_data = $detection_data;
+	}
+
+	public static function get_instance(): self {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	public static function is_available(): bool {
+		try {
+			new self();
+		} catch ( Exception $e ) {
+			return false;
+		}
+		return true;
 	}
 
 	/**

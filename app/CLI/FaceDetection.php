@@ -23,7 +23,7 @@ class FaceDetection {
 	 */
 	public function get_face( array $args, array $assoc_args ): void {
 		try {
-			$detector = ( new FaceDetector() )->extract( $args[0] );
+			$detector = FaceDetector::get_instance()->extract( $args[0] );
 		} catch ( Exception $e ) {
 			WP_CLI::error( $e->getMessage() );
 			exit;
@@ -58,7 +58,7 @@ class FaceDetection {
 	 */
 	public function save_image( array $args, array $assoc_args ): void {
 		try {
-			$saved = ( new FaceDetector() )->extract( $args[0] )->save( $args[1] );
+			$saved = FaceDetector::get_instance()->extract( $args[0] )->save( $args[1] );
 		} catch ( Exception $e ) {
 			WP_CLI::error( $e->getMessage() );
 			exit;
