@@ -28,6 +28,26 @@ To download and install this plugin in your WordPress website, follow the steps 
 It's also possible to download the plugin via Packagist.
 Keep in mind that if you do, your composer should be setup in a way that packages of the type `wordpress-plugin` are installed in your `wp-content/plugins` directory.
 
+## WP CLI commands
+
+There are some WP-CLI commands available.
+
+### Get face
+
+Get face coordinates.
+
+```sh
+wp image-crop-positioner face-detection get-face "\path\to\input_image.jpg"
+```
+
+### Save image
+
+Generate image with the face cropped out.
+
+```sh
+wp image-crop-positioner face-detection save-image "\path\to\input_image.jpg" "\path\to\output_image.jpg"
+```
+
 ## Development
 ### Setup
 1. Create a new WordPress installation using the latest twenty-* theme.
