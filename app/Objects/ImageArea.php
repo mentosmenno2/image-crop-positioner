@@ -1,13 +1,13 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\FaceDetection;
+namespace Mentosmenno2\ImageCropPositioner\Objects;
 
 use JsonSerializable;
 
 /**
- * Represents a square containing a face.
+ * Represents a square of an image
  */
-class Face implements JsonSerializable {
+class ImageArea implements JsonSerializable {
 
 	/** @var float */
 	protected $x = 0;
@@ -34,7 +34,10 @@ class Face implements JsonSerializable {
 		return $this->x;
 	}
 
-	public function set_x( float $x ): Face {
+	/**
+	 * @return static
+	 */
+	public function set_x( float $x ) {
 		$this->x = $x;
 		return $this;
 	}
@@ -43,7 +46,10 @@ class Face implements JsonSerializable {
 		return $this->y;
 	}
 
-	public function set_y( float $y ): Face {
+	/**
+	 * @return static
+	 */
+	public function set_y( float $y ) {
 		$this->y = $y;
 		return $this;
 	}
@@ -52,7 +58,10 @@ class Face implements JsonSerializable {
 		return $this->width;
 	}
 
-	public function set_width( float $width ): Face {
+	/**
+	 * @return static
+	 */
+	public function set_width( float $width ) {
 		$this->width = $width;
 		return $this;
 	}
@@ -61,7 +70,10 @@ class Face implements JsonSerializable {
 		return $this->height;
 	}
 
-	public function set_height( float $height ): Face {
+	/**
+	 * @return static
+	 */
+	public function set_height( float $height ) {
 		$this->height = $height;
 		return $this;
 	}

@@ -4,7 +4,7 @@ namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
 use Exception;
 use Mentosmenno2\ImageCropPositioner\Assets;
-use Mentosmenno2\ImageCropPositioner\FaceDetection\Face;
+use Mentosmenno2\ImageCropPositioner\Objects\Face;
 use Mentosmenno2\ImageCropPositioner\FaceDetection\FaceDetector;
 use WP_Error;
 

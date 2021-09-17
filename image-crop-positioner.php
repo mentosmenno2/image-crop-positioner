@@ -60,6 +60,7 @@ add_action(
 		// Register CLI commands
 		if ( defined( 'WP_CLI' ) && constant( 'WP_CLI' ) ) {
 			\WP_CLI::add_command( 'image-crop-positioner face-detection', \Mentosmenno2\ImageCropPositioner\CLI\FaceDetection::class );
+			\WP_CLI::add_command( 'image-crop-positioner migrate', \Mentosmenno2\ImageCropPositioner\CLI\Migrate::class );
 		}
 
 		// Load textdomain

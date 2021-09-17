@@ -19,6 +19,7 @@ namespace Mentosmenno2\ImageCropPositioner\FaceDetection;
 
 use Exception;
 use GdImage;
+use Mentosmenno2\ImageCropPositioner\Objects\Face;
 
 class FaceDetector {
 
