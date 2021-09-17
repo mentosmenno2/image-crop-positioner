@@ -55,6 +55,7 @@ add_action(
 		// Register hooks
 		( new Mentosmenno2\ImageCropPositioner\Assets() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Ajax\ImagePreviews() )->register_hooks();
 
 		// Load textdomain
 		load_plugin_textdomain( 'image-crop-positioner', false, basename( dirname( __FILE__ ) ) . '/languages/' );
