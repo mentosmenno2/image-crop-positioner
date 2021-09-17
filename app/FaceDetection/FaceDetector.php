@@ -45,6 +45,10 @@ class FaceDetector {
 	public $face_found = false;
 
 	public function __construct() {
+		if ( ! extension_loaded( 'gd' ) ) {
+			throw new Exception( 'PHP GD extension is not loaded' );
+		}
+
 		$detection_file = dirname( __FILE__ ) . '/detection.dat';
 		if ( ! is_file( $detection_file ) ) {
 			throw new Exception( 'Detection data file does not exist' );
