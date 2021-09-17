@@ -9,6 +9,7 @@
  * Domain Path: /languages/
  */
 
+// Initialize the plugin
 add_action(
 	'plugins_loaded',
 	function() {
@@ -18,6 +19,7 @@ add_action(
 		$plugin_data = get_plugin_data( __FILE__ );
 		$plugin_url  = plugin_dir_url( __FILE__ );
 		define( 'IMAGE_CROP_POSITIONER_PLUGIN_VERSION', isset( $plugin_data['Version'] ) ? $plugin_data['Version'] : '' );
+		define( 'IMAGE_CROP_POSITIONER_PLUGIN_FILE', __FILE__ );
 		define( 'IMAGE_CROP_POSITIONER_PLUGIN_PATH', $plugin_path );
 		define( 'IMAGE_CROP_POSITIONER_PLUGIN_URL', $plugin_url );
 		define( 'IMAGE_CROP_POSITIONER_PLUGIN_NAMESPACE', 'Mentosmenno2\\ImageCropPositioner\\' );
@@ -53,6 +55,7 @@ add_action(
 		}
 
 		// Register hooks
+		( new Mentosmenno2\ImageCropPositioner\Conflicts() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Assets() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\ImagePreviews() )->register_hooks();
