@@ -66,15 +66,19 @@ class Face implements JsonSerializable {
 		return $this;
 	}
 
-	/**
-	 * @return array
-	 */
-	public function jsonSerialize() {
+	public function get_data_array(): array {
 		return array(
 			'x'      => $this->x,
 			'y'      => $this->y,
 			'width'  => $this->width,
 			'height' => $this->height,
 		);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function jsonSerialize() {
+		return $this->get_data_array();
 	}
 }
