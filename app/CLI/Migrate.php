@@ -30,7 +30,7 @@ class Migrate {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp image-crop-positioner migrate my-eyes-are-up-here
+	 *     wp image-crop-positioner migrate my-eyes-are-up-here --per-page=100 --page=1
 	 */
 	public function my_eyes_are_up_here( array $args, array $assoc_args ): void {
 		$per_page = (int) ( $assoc_args['per-page'] ?? -1 );

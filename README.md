@@ -32,7 +32,9 @@ Keep in mind that if you do, your composer should be setup in a way that package
 
 There are some WP-CLI commands available.
 
-### Get face
+### Face detection
+
+#### Get face
 
 Get face coordinates.
 
@@ -40,12 +42,22 @@ Get face coordinates.
 wp image-crop-positioner face-detection get-face "\path\to\input_image.jpg"
 ```
 
-### Save image
+#### Save image
 
 Generate image with the face cropped out.
 
 ```sh
 wp image-crop-positioner face-detection save-image "\path\to\input_image.jpg" "\path\to\output_image.jpg"
+```
+
+### Migrate
+
+#### My Eyes Are Up Here
+
+Migrate all attachment faces and hotspots from My Eyes Are Up Here to Image Crop Positioner
+
+```sh
+wp image-crop-positioner migrate my-eyes-are-up-here --per-page=100 --page=1
 ```
 
 ## Development
