@@ -19,7 +19,7 @@ class FaceDetection {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp image-crop-positioner face-detection get-face
+	 *     wp image-crop-positioner face-detection get-face /path/to/input/image.jpg
 	 */
 	public function get_face( array $args, array $assoc_args ): void {
 		try {
@@ -37,6 +37,7 @@ class FaceDetection {
 			WP_CLI::log( 'Y: ' . $detector->face->get_y() );
 			WP_CLI::log( 'Width: ' . $detector->face->get_width() );
 			WP_CLI::log( 'Height: ' . $detector->face->get_height() );
+			WP_CLI::log( 'Precision: ' . $detector->face->get_precision() );
 		}
 	}
 
@@ -55,7 +56,7 @@ class FaceDetection {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp image-crop-positioner face-detection save-image
+	 *     wp image-crop-positioner face-detection save-image /path/to/input/image.jpg /path/to/output/image.jpg
 	 */
 	public function save_image( array $args, array $assoc_args ): void {
 		try {

@@ -312,6 +312,9 @@ class FaceDetector {
 		$s_h          = $height / 20.0;
 		$start_scale  = $s_h < $s_w ? $s_h : $s_w;
 		$scale_update = 1 / 1.2;
+		$loops        = 0;
+		$max_loops    = 0;
+		$face_data    = null;
 		for ( $scale = $start_scale; $scale > 1; $scale *= $scale_update ) {
 			$w        = ( 20 * $scale ) >> 0;
 			$endx     = $width - $w - 1;
@@ -320,21 +323,31 @@ class FaceDetector {
 			$inv_area = 1 / ( $w * $w );
 			for ( $y = 0; $y < $endy; $y += $step ) { //phpcs:ignore
 				for ( $x = 0; $x < $endx; $x += $step ) {
+					$max_loops++;
+					if ( is_array( $face_data ) ) {
+						continue;
+					}
 					$passed = $this->detect_on_sub_image( (int) $x, (int) $y, $scale, $ii, $ii2, (int) $w, $width + 1, $inv_area );
 					if ( $passed ) {
-						return new Face(
-							array(
-								'x'      => $x,
-								'y'      => $y,
-								'width'  => $w,
-								'height' => $w,
-							)
+						$face_data = array(
+							'x'      => $x,
+							'y'      => $y,
+							'width'  => $w,
+							'height' => $w,
 						);
 					}
+					$loops++;
 				} // end x
 			} // end y
 		}  // end scale
-		return null;
+
+		if ( ! is_array( $face_data ) ) {
+			return null;
+		}
+		$face_data['precision'] = ( $max_loops - $loops ) / $max_loops * 100;
+		return new Face(
+			$face_data
+		);
 	}
 
 	/**
