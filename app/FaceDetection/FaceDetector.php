@@ -308,14 +308,20 @@ class FaceDetector {
 	 * @return Face|null
 	 */
 	protected function do_detect_greedy_big_to_small( $ii, $ii2, $width, $height ) {
-		$s_w          = $width / 20.0;
-		$s_h          = $height / 20.0;
-		$start_scale  = $s_h < $s_w ? $s_h : $s_w;
-		$scale_update = 1 / 1.2;
-		$loops        = 0;
-		$max_loops    = 0;
-		$face_data    = null;
+		$s_w                = $width / 20.0;
+		$s_h                = $height / 20.0;
+		$start_scale        = $s_h < $s_w ? $s_h : $s_w;
+		$scale_update       = 1 / 1.2;
+		$loops              = 0;
+		$max_loops          = 0;
+		$face_data          = null;
+		$detection_accuracy = null;
 		for ( $scale = $start_scale; $scale > 1; $scale *= $scale_update ) {
+			$max_loops++;
+			if ( is_array( $face_data ) ) {
+				continue;
+			}
+
 			$w        = ( 20 * $scale ) >> 0;
 			$endx     = $width - $w - 1;
 			$endy     = $height - $w - 1;
@@ -323,12 +329,11 @@ class FaceDetector {
 			$inv_area = 1 / ( $w * $w );
 			for ( $y = 0; $y < $endy; $y += $step ) { //phpcs:ignore
 				for ( $x = 0; $x < $endx; $x += $step ) {
-					$max_loops++;
 					if ( is_array( $face_data ) ) {
 						continue;
 					}
-					$passed = $this->detect_on_sub_image( (int) $x, (int) $y, $scale, $ii, $ii2, (int) $w, $width + 1, $inv_area );
-					if ( $passed ) {
+					$detection_accuracy = $this->detect_on_sub_image( (int) $x, (int) $y, $scale, $ii, $ii2, (int) $w, $width + 1, $inv_area );
+					if ( $detection_accuracy ) {
 						$face_data = array(
 							'x'      => $x,
 							'y'      => $y,
@@ -336,15 +341,19 @@ class FaceDetector {
 							'height' => $w,
 						);
 					}
-					$loops++;
 				} // end x
 			} // end y
+			$loops++;
 		}  // end scale
 
 		if ( ! is_array( $face_data ) ) {
 			return null;
 		}
-		$face_data['precision'] = ( $max_loops - $loops ) / $max_loops * 100;
+
+		$scale_accuracy        = ( $max_loops - ( $loops - 1 ) ) / $max_loops * 100;
+		$accuracys             = array( $detection_accuracy, $scale_accuracy );
+		$avg_accuracy          = array_sum( $accuracys ) / count( $accuracys );
+		$face_data['accuracy'] = $avg_accuracy;
 		return new Face(
 			$face_data
 		);
@@ -359,12 +368,13 @@ class FaceDetector {
 	 * @param int $w
 	 * @param int $iiw
 	 * @param float $inv_area
-	 * @return bool
+	 * @return float
 	 */
 	protected function detect_on_sub_image( $x, $y, $scale, $ii, $ii2, $w, $iiw, $inv_area ) {
-		$mean  = ( $ii[ ( $y + $w ) * $iiw + $x + $w ] + $ii[ $y * $iiw + $x ] - $ii[ ( $y + $w ) * $iiw + $x ] - $ii[ $y * $iiw + $x + $w ] ) * $inv_area;
-		$vnorm = ( $ii2[ ( $y + $w ) * $iiw + $x + $w ] + $ii2[ $y * $iiw + $x ] - $ii2[ ( $y + $w ) * $iiw + $x ] - $ii2[ $y * $iiw + $x + $w ] ) * $inv_area - ( $mean * $mean );
-		$vnorm = $vnorm > 1 ? sqrt( $vnorm ) : 1;
+		$mean             = ( $ii[ ( $y + $w ) * $iiw + $x + $w ] + $ii[ $y * $iiw + $x ] - $ii[ ( $y + $w ) * $iiw + $x ] - $ii[ $y * $iiw + $x + $w ] ) * $inv_area;
+		$vnorm            = ( $ii2[ ( $y + $w ) * $iiw + $x + $w ] + $ii2[ $y * $iiw + $x ] - $ii2[ ( $y + $w ) * $iiw + $x ] - $ii2[ $y * $iiw + $x + $w ] ) * $inv_area - ( $mean * $mean );
+		$vnorm            = $vnorm > 1 ? sqrt( $vnorm ) : 1;
+		$largest_accuracy = 0;
 
 		for ( $i_stage = 0; $i_stage < count( $this->detection_data ); $i_stage++ ) { // phpcs:ignore
 			$stage = $this->detection_data[ $i_stage ];
@@ -419,10 +429,14 @@ class FaceDetector {
 				}
 				$stage_sum += $tree_sum;
 			}
+			$stage_accuracy   = $stage_sum - $stage_thresh;
+			$largest_accuracy = max( $largest_accuracy, $stage_accuracy );
 			if ( $stage_sum < $stage_thresh ) {
-				return false;
+				return 0;
 			}
 		}
-		return true;
+
+		$largest_accuracy = $largest_accuracy * 30;
+		return min( $largest_accuracy, 100 );
 	}
 }

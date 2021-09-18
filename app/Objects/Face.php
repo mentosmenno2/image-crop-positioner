@@ -8,20 +8,26 @@ namespace Mentosmenno2\ImageCropPositioner\Objects;
 class Face extends ImageArea {
 
 	/**
-	 * @var int
-	 * Precision of detection from 0 - 100 (where 0 is worst and 100 is best)
+	 * @var float
+	 * Accuracy of detection from 0 - 100 (where 0 is worst and 100 is best)
 	 */
-	protected $precision = 0;
+	protected $accuracy = 0;
 
-	public function get_precision(): int {
-		return $this->precision;
+	public function get_accuracy(): float {
+		return $this->accuracy;
 	}
 
 	/**
 	 * @return static
 	 */
-	public function set_precision( int $precision ) {
-		$this->precision - $precision;
+	public function set_accuracy( float $accuracy ) {
+		$this->accuracy - $accuracy;
 		return $this;
+	}
+
+	public function get_data_array(): array {
+		$data             = parent::get_data_array();
+		$data['accuracy'] = $this->accuracy;
+		return $data;
 	}
 }

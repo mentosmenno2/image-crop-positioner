@@ -37,7 +37,7 @@ class FaceDetection {
 			WP_CLI::log( 'Y: ' . $detector->face->get_y() );
 			WP_CLI::log( 'Width: ' . $detector->face->get_width() );
 			WP_CLI::log( 'Height: ' . $detector->face->get_height() );
-			WP_CLI::log( 'Precision: ' . $detector->face->get_precision() );
+			WP_CLI::log( 'Accuracy: ' . $detector->face->get_accuracy() );
 		}
 	}
 
