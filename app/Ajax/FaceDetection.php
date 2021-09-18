@@ -10,6 +10,8 @@ use WP_Error;
 
 class FaceDetection {
 
+	protected const ACCURACY_THRESHHOLD = 70;
+
 	public function register_hooks(): void {
 		add_action( 'wp_ajax_image_crop_positioner_face_detection', array( $this, 'handle_request' ) );
 	}
@@ -72,7 +74,7 @@ class FaceDetection {
 			'image_html' => wp_get_attachment_image( $attachment_id, 'full' ),
 			'faces'      => array(),
 		);
-		if ( $extraction->face instanceof Face ) {
+		if ( $extraction->face instanceof Face && $extraction->face->get_accuracy() >= self::ACCURACY_THRESHHOLD ) {
 			$data['faces'][] = $extraction->face->get_data_array();
 		}
 		wp_send_json_success( $data, 200 );
