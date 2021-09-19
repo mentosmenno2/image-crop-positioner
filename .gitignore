@@ -5,6 +5,7 @@
 bundle-analyzer.json
 /cache/
 /vendor/
+/languages/
 
 ## Testing
 /.phpunit.result.cache
