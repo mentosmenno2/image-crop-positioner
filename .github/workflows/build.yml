@@ -81,6 +81,8 @@ jobs:
           git commit -m "Asset build" -a
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
         with:
           directory: wp-content/plugins/image-crop-positioner/
           github_token: ${{ secrets.GITHUB_TOKEN }}
