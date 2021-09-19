@@ -158,7 +158,7 @@ There are multiple code tests in place.
 
 #### GitHub actions
 On every pull-request, a GitHub action is run that verifies the project, based on the
-`composer run test` and `composer run test:codeception` results.
+`composer run test` results.
 
 #### Manually
 
