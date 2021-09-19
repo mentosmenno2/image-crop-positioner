@@ -33,7 +33,7 @@ $data_config = wp_json_encode(
 
 ?>
 
-<div class="image-crop-positioner-attachment-edit-fields" data-image-crop-positioner-module="editImageScreen" data-config="<?php echo esc_attr( $data_config ); ?>">
+<div class="image-crop-positioner-attachment-edit-fields" data-config="<?php echo esc_attr( $data_config ); ?>">
 	<!-- Sizes previews -->
 	<div class="image-previews" >
 		<p class="image-previews__text"><strong><?php esc_html_e( 'Image size previews', 'image-crop-positioner' ); ?></strong></p>
