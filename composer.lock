@@ -283,16 +283,16 @@
         },
         {
             "name": "psalm/phar",
-            "version": "4.9.2",
+            "version": "4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/phar.git",
-                "reference": "5da0c606d1045489f9f587444af85d4c8cf992c3"
+                "reference": "79c5b2210e1a1cabeee671db1160c96869572d08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phar/zipball/5da0c606d1045489f9f587444af85d4c8cf992c3",
-                "reference": "5da0c606d1045489f9f587444af85d4c8cf992c3",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/79c5b2210e1a1cabeee671db1160c96869572d08",
+                "reference": "79c5b2210e1a1cabeee671db1160c96869572d08",
                 "shasum": ""
             },
             "require": {
@@ -312,9 +312,9 @@
             "description": "Composer-based Psalm Phar",
             "support": {
                 "issues": "https://github.com/psalm/phar/issues",
-                "source": "https://github.com/psalm/phar/tree/4.9.2"
+                "source": "https://github.com/psalm/phar/tree/4.10.0"
             },
-            "time": "2021-08-01T13:31:10+00:00"
+            "time": "2021-09-05T00:07:08+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
