@@ -1,9 +1,9 @@
+commitish: 'master-build'
 template: |
   ### Don't forget to prepare the release:
 
   - Bump the version number in image-crop-positioner.php
-  - Build CSS and JS with `npm run build`
-  - Generate translations with `composer run make-pot`
+  - Select the master-build branch as the target to tag.
 
   ## What’s Changed
 

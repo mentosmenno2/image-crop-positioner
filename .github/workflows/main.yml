@@ -3,90 +3,99 @@ name: Build & test
 on:
   push:
     branches:
-      - master
-  pull_request:
+      - 'master'
+  pull_request_target:
     branches:
-      - master
+      - 'master'
 
 jobs:
   php:
     name: PHP test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['7.4']
+        wp: ['5.7']
+        mysql: ['5.7']
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:${{ matrix.mysql }}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
-          MYSQL_ROOT_PASSWORD: wordpress
-          MYSQL_DATABASE: wordpress
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test
         ports:
-          - 3306/tcp
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: ${{ matrix.php }}
           extensions: mbstring, dom, simplexml
           tools: wp
       - uses: actions/checkout@v2
         with:
-          path: wp-content/plugins/image-crop-positioner
+          path: wp-content/plugins/image-crop-positioner/
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Debugging
         run: |
           php --version
           php -m
           composer --version
+          ls -lsah
       - name: Composer build
         run: |
-          ls -lsah
-          cd wp-content/plugins/image-crop-positioner
+          cd wp-content/plugins/image-crop-positioner/
           composer install --prefer-dist --no-suggest
       - name: test:composer
         run: |
-          cd wp-content/plugins/image-crop-positioner
+          cd wp-content/plugins/image-crop-positioner/
           composer run test:composer
       - name: test:phpcs
         run: |
-          cd wp-content/plugins/image-crop-positioner
+          cd wp-content/plugins/image-crop-positioner/
           composer run test:phpcs
-      - name: Start mysql service
-        run: sudo /etc/init.d/mysql start
       - name: Download & configure WP
         run: |
-          wp core download --allow-root --skip-content
-          wp config create --allow-root --dbname=wordpress --dbuser=root --dbpass=wordpress --dbhost=127.0.0.1:${{ job.services.mysql.ports['3306'] }}
-          wp core install --allow-root  --url=localhost --title=Test --admin_user=admin --admin_password=password --admin_email=test@test.test
+          wp core download --allow-root --version=${{ matrix.wp }} --skip-content
+          wp config create --allow-root --dbname=test --dbuser=root --dbpass=root --dbhost=127.0.0.1
+          wp config set WP_DEBUG true --allow-root
+          wp core install --allow-root  --url=localhost --title=Test --admin_user=admin --admin_password=password --admin_email=admin@test.test
           wp plugin activate image-crop-positioner --allow-root
       - name: test:psalm
         run: |
-          cd wp-content/plugins/image-crop-positioner
+          cd wp-content/plugins/image-crop-positioner/
           composer run test:psalm
       - name: test:docs
         run: |
-          cd wp-content/plugins/image-crop-positioner
+          cd wp-content/plugins/image-crop-positioner/
           composer run test:docs
   npm-project:
-    name: NPM project test
+    name: NPM test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['10.x']
     steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
-      - name: checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-          path: wp-content/plugins/image-crop-positioner
+          path: wp-content/plugins/image-crop-positioner/
+          ref: ${{github.event.pull_request.head.sha}}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Clean install dependencies
         run: |
-          cd wp-content/plugins/image-crop-positioner
+          cd wp-content/plugins/image-crop-positioner/
           npm ci
       - name: Lint
         run: |
-          cd wp-content/plugins/image-crop-positioner
+          cd wp-content/plugins/image-crop-positioner/
           npm run lint
       - name: Build
         run: |
-          cd wp-content/plugins/image-crop-positioner
+          cd wp-content/plugins/image-crop-positioner/
           npm run build

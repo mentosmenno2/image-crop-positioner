@@ -76,11 +76,12 @@ npm run build
 Run `composer run test` to verify results locally (more info about tests later in this file).
 
 ### Releasing
-1. Merge all PR's in the `main` branch.
+1. Merge all PR's in the `master` branch.
 2. Change the version number in `image-crop-positioner.php`.
 3. Wait for all GitHub Actions to finish.
-4. Update the created draft release, set a tag and version name, in SEMVER structure like vX.X.X.
-5. Publish the release.
+4. The plugin is built via GitHub actions in the `master-build` branch. Wait for it to finish.
+5. Update the created draft release, set a tag and version name, in SEMVER structure like vX.X.X. Make sure to select `master-build` as the target branch.
+6. Publish the release.
 
 ### Composer
 Composer is used to manage the autoloading and automatic testing. More on the testing subject can be found later in this document.
@@ -161,7 +162,9 @@ On every pull-request, a GitHub action is run that verifies the project, based o
 
 #### Manually
 
-Run `composer run test` to verify results locally.
+Run `composer run test` to verify tests locally.
+
+```
 
 #### Fixing
 
