@@ -1,4 +1,5 @@
-name: Build assets
+name: Build
+
 on:
   push:
     branches:
@@ -6,31 +7,74 @@ on:
 
 jobs:
   all:
-    name: Build assets
+    name: PHP test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['10.x']
+        php: ['7.4']
+        wp: ['5.7']
+        mysql: ['5.7']
+        node: ['10.x']
+    services:
+      mysql:
+        image: mysql:${{ matrix.mysql }}
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
         with:
-          fetch-depth: 1
-      - name: Use Node.js ${{ matrix.node-version }}
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, dom, simplexml
+          tools: wp
+      - name: Setup Node.js ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+      - uses: actions/checkout@v2
+        with:
+          path: wp-content/plugins/image-crop-positioner/
+      - name: Debugging
+        run: |
+          php --version
+          php -m
+          composer --version
+          node -v
+          npm -v
+          ls -lsah
+      - name: Download & configure WP
+        run: |
+          wp core download --allow-root --version=${{ matrix.wp }} --skip-content
+          wp config create --allow-root --dbname=test --dbuser=root --dbpass=root --dbhost=127.0.0.1
+          wp config set WP_DEBUG true --allow-root
+          wp core install --allow-root  --url=localhost --title=Test --admin_user=admin --admin_password=password --admin_email=admin@test.test
+          wp plugin activate image-crop-positioner --allow-root
+      - name: Build translations
+        run: |
+          cd wp-content/plugins/image-crop-positioner/
+          composer run make-pot
       - name: Clean install dependencies
-        run: npm ci
+        run: |
+          cd wp-content/plugins/image-crop-positioner/
+          npm ci
       - name: Build
-        run: npm run build
+        run: |
+          cd wp-content/plugins/image-crop-positioner/
+          npm run build
       - name: Remove build and source files
         run: |
+          cd wp-content/plugins/image-crop-positioner/
           rm -rf node_modules
           rm -rf development
           rm -rf src
       - name: Commit all changes
         run: |
+          cd wp-content/plugins/image-crop-positioner/
           git config --global user.email "github-build-assets-bot@users.noreply.github.com"
           git config --global user.name "[BOT] Build Assets"
           git add -A --force dist/
@@ -38,6 +82,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
+          directory: wp-content/plugins/image-crop-positioner/
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master-build
           force: true
