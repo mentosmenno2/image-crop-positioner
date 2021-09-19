@@ -1,4 +1,4 @@
-name: Build
+name: Build release
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  all:
-    name: PHP test
+  build-release:
+    name: Build release
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -75,8 +75,8 @@ jobs:
       - name: Commit all changes
         run: |
           cd wp-content/plugins/image-crop-positioner/
-          git config --global user.email "github-build-assets-bot@users.noreply.github.com"
-          git config --global user.name "[BOT] Build Assets"
+          git config --global user.email "github-build-release-bot@users.noreply.github.com"
+          git config --global user.name "[BOT] Build Release"
           git add -A --force dist/
           git commit -m "Asset build" -a
       - name: Push changes
