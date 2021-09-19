@@ -69,20 +69,6 @@ jobs:
         run: |
           cd wp-content/plugins/image-crop-positioner/
           composer run test:psalm
-      - name: Start PHP Server
-        run: |
-          nohup php -S 127.0.0.1:8080 > phpd.log 2>&1 &
-      - name: test:codeception:ci
-        run: |
-          cd wp-content/plugins/image-crop-positioner/
-          wp db import tests/_data/dump.sql
-          composer run test:codeception:ci
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        if: ${{ failure() }}
-        with:
-          name: acceptance-tests-errors
-          path: /home/runner/work/image-crop-positioner/image-crop-positioner/wp-content/plugins/image-crop-positioner/_output/
       - name: test:docs
         run: |
           cd wp-content/plugins/image-crop-positioner/

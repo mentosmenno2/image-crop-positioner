@@ -45,19 +45,6 @@
         "test:psalm": [
             "./vendor/bin/psalm.phar"
         ],
-        "test:codeception": [
-            "test ! -f codeception.yml && { echo NO LOCAL CONFIGURATION HAS BEEN SET UP. See README.md; exit 1; } || echo 'Local configuration found!'",
-            "codecept run acceptance",
-            "codecept run functional",
-            "codecept run unit",
-            "codecept run wpunit"
-        ],
-        "test:codeception:ci": [
-            "codecept run acceptance",
-            "codecept run functional",
-            "codecept run unit",
-            "codecept run wpunit"
-        ],
         "test:docs": [
             "php-doc-check ./app -x vendor"
         ],
@@ -71,14 +58,6 @@
     "require-dev": {
         "psalm/phar": "^4.0",
         "niels-de-blaauw/php-doc-check": "^0.2.2",
-        "mentosmenno2/coding-standards": "^1.0",
-        "lucatume/wp-browser": "^3.0",
-        "codeception/module-asserts": "^1.3",
-        "codeception/module-phpbrowser": "^1.0",
-        "codeception/module-webdriver": "^1.4",
-        "codeception/module-db": "^1.1",
-        "codeception/module-filesystem": "^1.0",
-        "codeception/module-cli": "^1.1",
-        "codeception/util-universalframework": "^1.0"
+        "mentosmenno2/coding-standards": "^1.0"
     }
 }
