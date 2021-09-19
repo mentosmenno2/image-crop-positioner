@@ -15,8 +15,7 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "mentosmenno2/coding-standards": "^1.0"
+        "php": "^7.1"
     },
     "autoload": {
         "psr-4": {
@@ -46,18 +45,18 @@
         "test:psalm": [
             "./vendor/bin/psalm.phar"
         ],
-        "integration:setup": [
-            "docker-compose up -d",
-            "echo Waiting for docker to become alive.",
-            "wget -q -O - --tries=10 localhost:8089/wp-admin",
-            "docker-compose run --rm wordpress-cli wp core install --url=localhost:8089 --title=Test --admin_user=admin --admin_password=password --admin_email=test@test.test",
-            "docker-compose run --rm wordpress-cli wp plugin activate image-crop-positioner"
+        "test:codeception": [
+            "test ! -f codeception.yml && { echo NO LOCAL CONFIGURATION HAS BEEN SET UP. See README.md; exit 1; } || echo 'Local configuration found!'",
+            "codecept run acceptance",
+            "codecept run functional",
+            "codecept run unit",
+            "codecept run wpunit"
         ],
-        "test:ci:psalm": [
-            "docker-compose run --rm -w /var/www/html/wp-content/plugins/image-crop-positioner wordpress php vendor/bin/psalm.phar"
-        ],
-        "integration:teardown": [
-            "docker-compose down"
+        "test:codeception:ci": [
+            "codecept run acceptance",
+            "codecept run functional",
+            "codecept run unit",
+            "codecept run wpunit"
         ],
         "test:docs": [
             "php-doc-check ./app -x vendor"
@@ -66,11 +65,20 @@
             "phpcbf"
         ],
         "make-pot": [
-            "wp i18n make-pot ./ --skip-js --slug=image-crop-positioner"
+            "wp i18n make-pot ./ --path=./ --skip-js --slug=image-crop-positioner"
         ]
     },
     "require-dev": {
         "psalm/phar": "^4.0",
-        "niels-de-blaauw/php-doc-check": "^0.2.2"
+        "niels-de-blaauw/php-doc-check": "^0.2.2",
+        "mentosmenno2/coding-standards": "^1.0",
+        "lucatume/wp-browser": "^3.0",
+        "codeception/module-asserts": "^1.3",
+        "codeception/module-phpbrowser": "^1.0",
+        "codeception/module-webdriver": "^1.4",
+        "codeception/module-db": "^1.1",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/module-cli": "^1.1",
+        "codeception/util-universalframework": "^1.0"
     }
 }

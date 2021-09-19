@@ -76,11 +76,12 @@ npm run build
 Run `composer run test` to verify results locally (more info about tests later in this file).
 
 ### Releasing
-1. Merge all PR's in the `main` branch.
+1. Merge all PR's in the `master` branch.
 2. Change the version number in `image-crop-positioner.php`.
 3. Wait for all GitHub Actions to finish.
-4. Update the created draft release, set a tag and version name, in SEMVER structure like vX.X.X.
-5. Publish the release.
+4. The plugin is built via GitHub actions in the `master-build` branch. Wait for it to finish.
+5. Update the created draft release, set a tag and version name, in SEMVER structure like vX.X.X. Make sure to select `master-build` as the target branch.
+6. Publish the release.
 
 ### Composer
 Composer is used to manage the autoloading and automatic testing. More on the testing subject can be found later in this document.
@@ -153,15 +154,31 @@ There are multiple code tests in place.
 - Composer, to check if the composer files are intact
 - PHPCS, to check if you are following the Level Level PHP code standards
 - Psalm tests, that searches for possible mistakes in your code
+- Codeception tests, to check if core functionality isn't broken
 - PHP Doc Check, to check if complicated functions have comments explaining the functionality
 
 #### GitHub actions
 On every pull-request, a GitHub action is run that verifies the project, based on the
-`composer run test` results.
+`composer run test` and `composer run test:codeception` results.
 
 #### Manually
 
-Run `composer run test` to verify results locally.
+Run `composer run test` to verify tests locally.
+The Codeception tests can be run via `compose run test:codeception`. Please note that this needs to be configured first.
+
+##### Configuring Codeception
+This example is specifically written for Local, but most steps should be applicable to other development platforms. This is quite a bit faster, but might not be 100% accurate.
+
+- Copy `codeception.dist.yml` to `codeception.yml`.
+Edit the params property to point to .env.testing.local.
+Create a new (empty) database.
+Import tests/_data/dump.sql into this new empty database.
+Copy .env.testing to .env.testing.local.
+Edit .env.testing.local with your local values.
+Set the database to the test database everywhere.
+Set WP_ROOT_FOLDER to your local WordPress folder.
+Set TEST_SITE_WP_* to your local values.
+
 
 #### Fixing
 
