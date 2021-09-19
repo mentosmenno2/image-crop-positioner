@@ -3,6 +3,7 @@
 namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
 use Mentosmenno2\ImageCropPositioner\Assets;
+use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
 use WP_Error;
 
@@ -57,16 +58,22 @@ class SaveFaces {
 	/**
 	 * Save the faces in the attachment meta, and send the faces in the response
 	 */
-	protected function save_faces( int $attachment_id, array $faces ): void {
-		$saveable_face_data = array_map(
-			function( array $face_data ): array {
-				return ( new Face( $face_data ) )->get_data_array();
+	protected function save_faces( int $attachment_id, array $faces_data ): void {
+		$faces = array_map(
+			function( array $face_data ): Face {
+				return new Face( $face_data );
+			}, $faces_data
+		);
+		( new AttachmentMeta() )->set_faces( $attachment_id, $faces );
+
+		$return_faces_data = array_map(
+			function( Face $face ): array {
+				return $face->get_data_array();
 			}, $faces
 		);
-		update_post_meta( $attachment_id, 'image_crop_positioner_faces', $saveable_face_data );
 
 		$data = array(
-			'faces' => $saveable_face_data,
+			'faces' => $return_faces_data,
 		);
 		wp_send_json_success( $data, 200 );
 		exit;

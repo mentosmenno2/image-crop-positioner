@@ -5,9 +5,9 @@ namespace Mentosmenno2\ImageCropPositioner\Objects;
 use JsonSerializable;
 
 /**
- * Represents a square of an image
+ * Represents a spot on an image
  */
-class ImageArea implements JsonSerializable {
+class Spot implements JsonSerializable {
 
 	/** @var float */
 	protected $x = 0;
