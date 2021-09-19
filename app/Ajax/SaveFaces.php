@@ -2,18 +2,16 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
-use Exception;
 use Mentosmenno2\ImageCropPositioner\Assets;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
-use Mentosmenno2\ImageCropPositioner\FaceDetection\FaceDetector;
 use WP_Error;
 
-class FaceDetection {
+class SaveFaces {
 
 	protected const ACCURACY_THRESHHOLD = 50;
 
 	public function register_hooks(): void {
-		add_action( 'wp_ajax_image_crop_positioner_face_detection', array( $this, 'handle_request' ) );
+		add_action( 'wp_ajax_image_crop_positioner_save_faces', array( $this, 'handle_request' ) );
 	}
 
 	/**
@@ -40,42 +38,33 @@ class FaceDetection {
 			wp_send_json_error( $error, 400 );
 		}
 
-		$this->detect_faces( $attachment_id );
+		$faces = $_POST['faces'] ?? false;
+		if ( ! is_array( $faces ) ) {
+			$error = new WP_Error(
+				400, __( 'Invalid faces.', 'image-crop-positioner' ), array(
+					'status' => 400,
+				)
+			);
+			wp_send_json_error( $error, 400 );
+		}
+
+		$this->save_faces( $attachment_id, $faces );
 	}
 
 	/**
 	 * Detect faces from attachment, save it in the meta, and send them to the json response.
 	 */
-	protected function detect_faces( int $attachment_id ): void {
-		$file = get_attached_file( $attachment_id );
-		if ( ! is_string( $file ) ) {
-			$error = new WP_Error(
-				400, __( 'Attachment has no file path.', 'image-crop-positioner' ), array(
-					'status' => 400,
-				)
-			);
-			wp_send_json_error( $error, 400 );
-			return;
-		}
-
-		try {
-			$extraction = FaceDetector::get_instance()->extract( $file );
-		} catch ( Exception $e ) {
-			$error = new WP_Error(
-				400, $e->getMessage(), array(
-					'status' => 400,
-				)
-			);
-			wp_send_json_error( $error, 400 );
-			return;
-		}
+	protected function save_faces( int $attachment_id, array $faces ): void {
+		$saveable_face_data = array_map(
+			function( array $face_data ): array {
+				return ( new Face( $face_data ) )->get_data_array();
+			}, $faces
+		);
+		update_post_meta( $attachment_id, 'image_crop_positioner_faces', $saveable_face_data );
 
 		$data = array(
-			'faces' => array(),
+			'faces' => $saveable_face_data,
 		);
-		if ( $extraction->face instanceof Face && $extraction->face->get_accuracy() >= self::ACCURACY_THRESHHOLD ) {
-			$data['faces'][] = $extraction->face->get_data_array();
-		}
 		wp_send_json_success( $data, 200 );
 	}
 }

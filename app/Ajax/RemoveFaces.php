@@ -2,18 +2,16 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
-use Exception;
 use Mentosmenno2\ImageCropPositioner\Assets;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
-use Mentosmenno2\ImageCropPositioner\FaceDetection\FaceDetector;
 use WP_Error;
 
-class FaceDetection {
+class RemoveFaces {
 
 	protected const ACCURACY_THRESHHOLD = 50;
 
 	public function register_hooks(): void {
-		add_action( 'wp_ajax_image_crop_positioner_face_detection', array( $this, 'handle_request' ) );
+		add_action( 'wp_ajax_image_crop_positioner_remove_faces', array( $this, 'handle_request' ) );
 	}
 
 	/**
@@ -40,42 +38,19 @@ class FaceDetection {
 			wp_send_json_error( $error, 400 );
 		}
 
-		$this->detect_faces( $attachment_id );
+		$this->remove_faces( $attachment_id );
 	}
 
 	/**
 	 * Detect faces from attachment, save it in the meta, and send them to the json response.
 	 */
-	protected function detect_faces( int $attachment_id ): void {
-		$file = get_attached_file( $attachment_id );
-		if ( ! is_string( $file ) ) {
-			$error = new WP_Error(
-				400, __( 'Attachment has no file path.', 'image-crop-positioner' ), array(
-					'status' => 400,
-				)
-			);
-			wp_send_json_error( $error, 400 );
-			return;
-		}
-
-		try {
-			$extraction = FaceDetector::get_instance()->extract( $file );
-		} catch ( Exception $e ) {
-			$error = new WP_Error(
-				400, $e->getMessage(), array(
-					'status' => 400,
-				)
-			);
-			wp_send_json_error( $error, 400 );
-			return;
-		}
+	protected function remove_faces( int $attachment_id ): void {
+		$faces = array();
+		update_post_meta( $attachment_id, 'image_crop_positioner_faces', $faces );
 
 		$data = array(
-			'faces' => array(),
+			'faces' => $faces,
 		);
-		if ( $extraction->face instanceof Face && $extraction->face->get_accuracy() >= self::ACCURACY_THRESHHOLD ) {
-			$data['faces'][] = $extraction->face->get_data_array();
-		}
 		wp_send_json_success( $data, 200 );
 	}
 }
