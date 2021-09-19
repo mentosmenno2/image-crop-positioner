@@ -287,7 +287,7 @@
 			return '<div class="spinner__wrapper"><div class="spinner is-active"></div></div>';
 		}
 
-		function getAdminNoticeHtml(message, type = 'info', isDismissable = false ) {
+		function getAdminNoticeHtml( message, type = 'info', isDismissable = false ) {
 			const $newNoticeElement = $( `<div class="notice notice-${type} inline" >${message}</div>` );
 			if ( isDismissable ) {
 				$newNoticeElement.addClass( 'is-dismissable' );

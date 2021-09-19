@@ -25,6 +25,7 @@ class RemoveFaces {
 				)
 			);
 			wp_send_json_error( $error, 403 );
+			exit;
 		}
 
 		$attachment_id = (int) filter_input( INPUT_POST, 'attachment_id', FILTER_VALIDATE_INT );
@@ -36,13 +37,14 @@ class RemoveFaces {
 				)
 			);
 			wp_send_json_error( $error, 400 );
+			exit;
 		}
 
 		$this->remove_faces( $attachment_id );
 	}
 
 	/**
-	 * Detect faces from attachment, save it in the meta, and send them to the json response.
+	 * Empty the faces meta from the attachment, and send the faces in the response
 	 */
 	protected function remove_faces( int $attachment_id ): void {
 		$faces = array();
@@ -52,5 +54,6 @@ class RemoveFaces {
 			'faces' => $faces,
 		);
 		wp_send_json_success( $data, 200 );
+		exit;
 	}
 }

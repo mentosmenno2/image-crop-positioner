@@ -22,6 +22,7 @@ class ImagePreviews {
 				)
 			);
 			wp_send_json_error( $error, 403 );
+			exit;
 		}
 
 		$attachment_id = (int) filter_input( INPUT_POST, 'attachment_id', FILTER_VALIDATE_INT );
@@ -33,6 +34,7 @@ class ImagePreviews {
 				)
 			);
 			wp_send_json_error( $error, 403 );
+			exit;
 		}
 
 		$this->get_image_previews( $attachment_id );
@@ -57,5 +59,6 @@ class ImagePreviews {
 		}
 
 		wp_send_json_success( $data, 200 );
+		exit;
 	}
 }

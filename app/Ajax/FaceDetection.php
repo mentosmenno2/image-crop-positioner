@@ -27,6 +27,7 @@ class FaceDetection {
 				)
 			);
 			wp_send_json_error( $error, 403 );
+			exit;
 		}
 
 		$attachment_id = (int) filter_input( INPUT_POST, 'attachment_id', FILTER_VALIDATE_INT );
@@ -38,6 +39,7 @@ class FaceDetection {
 				)
 			);
 			wp_send_json_error( $error, 400 );
+			exit;
 		}
 
 		$this->detect_faces( $attachment_id );
@@ -55,7 +57,7 @@ class FaceDetection {
 				)
 			);
 			wp_send_json_error( $error, 400 );
-			return;
+			exit;
 		}
 
 		try {
@@ -67,7 +69,7 @@ class FaceDetection {
 				)
 			);
 			wp_send_json_error( $error, 400 );
-			return;
+			exit;
 		}
 
 		$data = array(
@@ -77,5 +79,6 @@ class FaceDetection {
 			$data['faces'][] = $extraction->face->get_data_array();
 		}
 		wp_send_json_success( $data, 200 );
+		exit;
 	}
 }

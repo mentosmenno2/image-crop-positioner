@@ -25,6 +25,7 @@ class SaveFaces {
 				)
 			);
 			wp_send_json_error( $error, 403 );
+			exit;
 		}
 
 		$attachment_id = (int) filter_input( INPUT_POST, 'attachment_id', FILTER_VALIDATE_INT );
@@ -36,6 +37,7 @@ class SaveFaces {
 				)
 			);
 			wp_send_json_error( $error, 400 );
+			exit;
 		}
 
 		$faces = $_POST['faces'] ?? false;
@@ -46,13 +48,14 @@ class SaveFaces {
 				)
 			);
 			wp_send_json_error( $error, 400 );
+			exit;
 		}
 
 		$this->save_faces( $attachment_id, $faces );
 	}
 
 	/**
-	 * Detect faces from attachment, save it in the meta, and send them to the json response.
+	 * Save the faces in the attachment meta, and send the faces in the response
 	 */
 	protected function save_faces( int $attachment_id, array $faces ): void {
 		$saveable_face_data = array_map(
@@ -66,5 +69,6 @@ class SaveFaces {
 			'faces' => $saveable_face_data,
 		);
 		wp_send_json_success( $data, 200 );
+		exit;
 	}
 }
