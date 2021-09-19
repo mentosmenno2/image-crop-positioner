@@ -2,8 +2,9 @@ commitish: 'master-build'
 template: |
   ### Don't forget to prepare the release:
 
-  - Bump the version number in image-crop-positioner.php
-  - Select the master-build branch as the target to tag.
+  - Bump the version number in `image-crop-positioner.php`.
+  - Wait for all GitHub actions to finish.
+  - Select the `master-build` branch as the target to tag.
 
   ## What’s Changed
 
