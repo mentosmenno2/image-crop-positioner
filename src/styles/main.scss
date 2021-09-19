@@ -1,4 +1,8 @@
 .image-crop-positioner-attachment-edit-fields {
+	* {
+		box-sizing: border-box;
+	}
+
 	.image-previews {
 		border: 1px solid #dfdfdf;
 		border-radius: 5px;
@@ -18,7 +22,46 @@
 		}
 	}
 
+	.button {
+		.spinner__wrapper {
+			display: inline-block;
+
+			.spinner {
+				margin-top: 0;
+			}
+		}
+	}
+
 	.spinner {
 		float: none;
+	}
+
+	.image-spots-preview {
+		position: relative;
+
+		&__image {
+			width: 100%;
+			height: auto;
+		}
+
+		&__spots {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+
+			.spot {
+				position: absolute;
+				border-width: 2px;
+				border-style: solid;
+				border-radius: 100%;
+
+				&__face {
+					color: red;
+					background-color: rgba($color: red, $alpha: 0.2);
+				}
+			}
+		}
 	}
 }
