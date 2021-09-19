@@ -1,3 +1,4 @@
+commitish: 'master-build'
 template: |
   ### Don't forget to prepare the release:
 
