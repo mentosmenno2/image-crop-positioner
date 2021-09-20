@@ -49,7 +49,7 @@ class FaceDetection {
 	 * Detect faces from attachment, save it in the meta, and send them to the json response.
 	 */
 	protected function detect_faces( int $attachment_id ): void {
-		$file = get_attached_file( $attachment_id );
+		$file = wp_get_original_image_path( $attachment_id );
 		if ( ! is_string( $file ) ) {
 			$error = new WP_Error(
 				400, __( 'Attachment has no file path.', 'image-crop-positioner' ), array(

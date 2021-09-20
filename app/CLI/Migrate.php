@@ -55,12 +55,10 @@ class Migrate {
 		foreach ( $post_ids as $index => $post_id ) {
 			WP_CLI::log( "Migrating attachment ID: $post_id" );
 			$status = $migrator->migrate_attachment( $post_id );
-			if ( $status === MyEyesAreUpHere::STATUS_SUCCESS ) {
+			if ( $status === MyEyesAreUpHere::STATUS_DONE ) {
 				WP_CLI::log( "Migrated attachment ID: $post_id" );
-			} elseif ( $status === MyEyesAreUpHere::STATUS_SKIPPED ) {
-				WP_CLI::log( "Skipped attachment ID: $post_id" );
 			} else {
-				WP_CLI::warning( "Failed to migrate attachment ID: $post_id" );
+				WP_CLI::log( "Skipped attachment ID: $post_id" );
 			}
 
 			$done = (int) $index + 1;

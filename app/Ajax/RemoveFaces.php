@@ -3,7 +3,7 @@
 namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
 use Mentosmenno2\ImageCropPositioner\Assets;
-use Mentosmenno2\ImageCropPositioner\Objects\Face;
+use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use WP_Error;
 
 class RemoveFaces {
@@ -48,7 +48,7 @@ class RemoveFaces {
 	 */
 	protected function remove_faces( int $attachment_id ): void {
 		$faces = array();
-		update_post_meta( $attachment_id, 'image_crop_positioner_faces', $faces );
+		( new AttachmentMeta() )->set_faces( $attachment_id, $faces );
 
 		$data = array(
 			'faces' => $faces,

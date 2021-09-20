@@ -58,6 +58,7 @@ add_action(
 		( new Mentosmenno2\ImageCropPositioner\Conflicts() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Assets() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Crop() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\ImagePreviews() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\FaceDetection() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\SaveFaces() )->register_hooks();

@@ -3,13 +3,16 @@
 /**
  * @var WP_Post
  */
+
+use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
+
 $attachment = $template->get_arg( 'attachment' );
 
 if ( ! wp_attachment_is_image( $attachment ) ) {
 	return;
 }
 
-$faces = get_post_meta( $attachment->ID, 'image_crop_positioner_faces', true ) ?: array();
+$faces = ( new AttachmentMeta() )->get_faces( $attachment->ID );
 
 if ( ! function_exists( 'display_none' ) ) {
 	/**
@@ -73,3 +76,7 @@ $data_config = wp_json_encode(
 
 	<div class="crop-preview"></div>
 </div>
+
+<script>
+	jQuery( document ).trigger( 'imageCropPositionerEditFieldsReady' );
+</script>
