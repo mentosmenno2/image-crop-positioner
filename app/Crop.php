@@ -92,7 +92,7 @@ class Crop {
 		$y_diff = $bounding_box['y_max'] - $bounding_box['y_min'];
 		return array(
 			'x' => (int) ( $bounding_box['x_min'] + ( $x_diff / 2 ) ),
-			'y' => (int) ( $bounding_box['x_min'] + ( $x_diff / 2 ) ),
+			'y' => (int) ( $bounding_box['y_min'] + ( $y_diff / 2 ) ),
 		);
 	}
 
