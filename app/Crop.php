@@ -68,7 +68,7 @@ class Crop {
 
 		// Place the crop in the center of the spots
 		$crop_x = $spots_center['x'] - ( $crop_w / 2 );
-		$crop_y = $spots_center['y'] - ( $crop_w / 2 );
+		$crop_y = $spots_center['y'] - ( $crop_h / 2 );
 
 		// If crop on x gets over border of original image, set x to closest position to border possible
 		if ( $crop_x < 0 ) {
