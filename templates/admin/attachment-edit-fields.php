@@ -12,7 +12,7 @@ if ( ! wp_attachment_is_image( $attachment ) ) {
 	return;
 }
 
-$faces = ( new AttachmentMeta() )->get_faces( $attachment->ID, $faces );
+$faces = ( new AttachmentMeta() )->get_faces( $attachment->ID );
 
 if ( ! function_exists( 'display_none' ) ) {
 	/**
@@ -76,3 +76,7 @@ $data_config = wp_json_encode(
 
 	<div class="crop-preview"></div>
 </div>
+
+<script>
+	jQuery( document ).trigger( 'imageCropPositionerEditFieldsReady' );
+</script>

@@ -15,7 +15,7 @@ class MyEyesAreUpHere {
 		$statuses = $this->get_migrations( $attachment_id );
 
 		// If all statusses skipped, return skipped
-		$all_skipped = count( array_unique( $statuses ) ) === 1 && end( $allvalues ) === self::STATUS_SKIPPED;
+		$all_skipped = count( array_unique( $statuses ) ) === 1 && end( $statuses ) === self::STATUS_SKIPPED;
 		if ( $all_skipped ) {
 			return self::STATUS_SKIPPED;
 		}

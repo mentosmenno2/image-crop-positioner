@@ -45,7 +45,7 @@ class AttachmentMeta {
 	 * @return Hotspot[]
 	 */
 	public function get_hotspots( int $attachment_id ): array {
-		$hotspots_data = (array) get_post_meta( $attachment_id, self::META_KEY_HOTSPOTS, true );
+		$hotspots_data = get_post_meta( $attachment_id, self::META_KEY_HOTSPOTS, true );
 		if ( ! is_array( $hotspots_data ) ) {
 			$hotspots_data = array();
 		}

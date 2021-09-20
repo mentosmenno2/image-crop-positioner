@@ -15,13 +15,12 @@
 		 */
 
 		function initialize() {
-			if ( wp.media ) {
-				wp.media.view.Modal.prototype.on( 'open', function() { prepare(); } );
-			}
+			$( document ).on( 'imageCropPositionerEditFieldsReady', function() { prepare(); } );
 		}
 
 		function prepare() {
-			config = JSON.parse( getRootElement().attr( 'data-config' ) );
+			getRootElement().removeData();
+			config = getRootElement().data( 'config' );
 			loadSpots();
 			addEventListeners();
 			reloadImagePreviews();
@@ -130,7 +129,7 @@
 			} )
 				.done( function( data ) {
 					hideSpots();
-					getSaveFacesButton().attr( 'data-faces', JSON.stringify( data.data.faces ) );
+					getSaveFacesButton().data( 'faces', data.data.faces );
 					showFaces( data.data.faces );
 					if ( data.data.faces.length > 0 ) {
 						getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found face is correct.', 'info' ) );
@@ -168,6 +167,7 @@
 			getSaveFacesButton().prop( 'disabled', true );
 			getDiscardFacesButton().prop( 'disabled', true );
 			getFaceDetectionMessage().empty();
+			getSaveFacesButton().removeData( 'faces' );
 
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
@@ -175,7 +175,7 @@
 					_ajax_nonce: window.image_crop_positioner_options.nonce,
 					action: 'image_crop_positioner_save_faces',
 					attachment_id: config.attachment_id,
-					faces: JSON.parse( getSaveFacesButton().attr( 'data-faces' ) ),
+					faces: getSaveFacesButton().data( 'faces' ),
 				},
 				method : 'POST',
 				dataType: "json",
@@ -250,7 +250,7 @@
 
 		// Global
 		function getRootElement() {
-			return $( '.image-crop-positioner-attachment-edit-fields' );
+			return $( document ).find( '.image-crop-positioner-attachment-edit-fields' );
 		}
 
 		function getChildElement( selector ) {

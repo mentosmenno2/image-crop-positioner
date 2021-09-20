@@ -48,7 +48,7 @@ class RemoveFaces {
 	 */
 	protected function remove_faces( int $attachment_id ): void {
 		$faces = array();
-		( new HelpersAttachmentMeta() )->set_faces( $attachment_id, $faces );
+		( new AttachmentMeta() )->set_faces( $attachment_id, $faces );
 
 		$data = array(
 			'faces' => $faces,
