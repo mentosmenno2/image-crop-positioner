@@ -5,6 +5,7 @@ namespace Mentosmenno2\ImageCropPositioner\Ajax;
 use Mentosmenno2\ImageCropPositioner\Assets;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
+use Mentosmenno2\ImageCropPositioner\Regenerate;
 use WP_Error;
 
 class SaveFaces {
@@ -65,6 +66,17 @@ class SaveFaces {
 			}, $faces_data
 		);
 		( new AttachmentMeta() )->set_faces( $attachment_id, $faces );
+
+		$regenerated = ( new Regenerate() )->run( $attachment_id );
+		if ( ! $regenerated ) {
+			$error = new WP_Error(
+				500, __( 'Could not regenerate images.', 'image-crop-positioner' ), array(
+					'status' => 500,
+				)
+			);
+			wp_send_json_error( $error, 500 );
+			exit;
+		}
 
 		$return_faces_data = array_map(
 			function( Face $face ): array {
