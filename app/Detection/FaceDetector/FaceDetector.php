@@ -15,13 +15,14 @@
  * @author Karthik Tharavaad <karthik_tharavaad@yahoo.com>
  */
 
-namespace Mentosmenno2\ImageCropPositioner\FaceDetection;
+namespace Mentosmenno2\ImageCropPositioner\Detection\FaceDetector;
 
 use Exception;
 use GdImage;
+use Mentosmenno2\ImageCropPositioner\Detection\BaseDetector;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
 
-class FaceDetector {
+class FaceDetector extends BaseDetector {
 
 	/** @var int */
 	protected const PADDING_WIDTH = 10;
@@ -29,27 +30,14 @@ class FaceDetector {
 	/** @var int */
 	protected const PADDING_HEIGHT = 20;
 
+	/** @var int */
+	protected const ACCURACY_THRESHHOLD = 50;
+
 	/** @var array */
 	protected $detection_data = array();
 
-	/** @var self|null*/
-	protected static $instance = null;
-
 	/**
-	 * @var null|resource|GdImage
-	 *
-	 * @psalm-suppress UndefinedDocblockClass
-	 */
-	public $canvas;
-
-	/** @var Face|null */
-	public $face;
-
-	/** @var bool */
-	public $face_found = false;
-
-	/**
-	 * Create a new face detector class
+	 * @inheritDoc
 	 */
 	protected function __construct() {
 		if ( ! extension_loaded( 'gd' ) ) {
@@ -74,63 +62,19 @@ class FaceDetector {
 		$this->detection_data = $detection_data;
 	}
 
-	public static function get_instance(): self {
-		if ( null === self::$instance ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
-	public static function is_available(): bool {
-		try {
-			new self();
-		} catch ( Exception $e ) {
-			return false;
-		}
-		return true;
+	public function get_slug(): string {
+		return 'faces';
 	}
 
 	/**
-	 * @param resource|GdImage|string $file
-	 *
-	 * @return $this
-	 *
-	 * @psalm-suppress UndefinedDocblockClass
+	 * @inheritDoc
 	 */
-	public function extract( $file ) {
-
-		/** @psalm-suppress UndefinedClass */
-		if ( is_resource( $file ) || $file instanceof GdImage ) {
-			$this->canvas = $file;
-		} elseif ( is_file( $file ) ) {
-			/** @var string */
-			$extension     = pathinfo( $file, PATHINFO_EXTENSION );
-			$extension     = $this->map_file_extension( strtolower( $extension ) );
-			$function_name = 'imagecreatefrom' . $extension;
-			if ( ! function_exists( $function_name ) ) {
-				throw new Exception( "File extension of $file is not supported for reading data" );
-			}
-
-			/** @var resource|GdImage|false */
-			$result = $function_name( $file );
-			if ( $result === false ) {
-				throw new Exception( "Cannot load $file" );
-			}
-
-			$this->canvas = $result;
-		} else {
-			throw new Exception( 'Provided file is not a file' );
-		}
-
-		/** @psalm-suppress all */
-		if ( is_null( $this->canvas ) ) {
-			throw new Exception( 'Could not create canvas' );
-		}
-
+	public function detect( $file ): array {
+		$file = $this->file_to_resource( $file );
 		/** @psalm-suppress PossiblyInvalidArgument */
-		$im_width = imagesx( $this->canvas );
+		$im_width = imagesx( $file );
 		/** @psalm-suppress PossiblyInvalidArgument */
-		$im_height = imagesy( $this->canvas );
+		$im_height = imagesy( $file );
 		if ( ! is_int( $im_width ) || ! is_int( $im_height ) ) {
 			throw new Exception( 'Cannot determine dimensions' );
 		}
@@ -153,78 +97,26 @@ class FaceDetector {
 				throw new Exception( 'Could not create new truecolor image' );
 			}
 			/** @psalm-suppress all */
-			imagecopyresampled( $reduced_canvas, $this->canvas, 0, 0, 0, 0, $new_img_width, $new_img_height, $im_width, $im_height );
+			imagecopyresampled( $reduced_canvas, $file, 0, 0, 0, 0, $new_img_width, $new_img_height, $im_width, $im_height );
 
-			$stats      = $this->get_img_stats( $reduced_canvas );
-			$this->face = $this->do_detect_greedy_big_to_small( $stats['ii'], $stats['ii2'], $stats['width'], $stats['height'] );
-			if ( $this->face instanceof Face && $this->face->get_width() > 0 ) {
-				$this->face = $this->face
-					->set_x( $this->face->get_x() * $ratio )
-					->set_y( $this->face->get_y() * $ratio )
-					->set_width( $this->face->get_width() * $ratio )
-					->set_height( $this->face->get_height() * $ratio );
+			$stats = $this->get_img_stats( $reduced_canvas );
+			$face  = $this->do_detect_greedy_big_to_small( $stats['ii'], $stats['ii2'], $stats['width'], $stats['height'] );
+			if ( $face instanceof Face && $face->get_width() > 0 ) {
+				$face = $face
+					->set_x( $face->get_x() * $ratio )
+					->set_y( $face->get_y() * $ratio )
+					->set_width( $face->get_width() * $ratio )
+					->set_height( $face->get_height() * $ratio );
 			}
 		} else {
 			/** @psalm-suppress all */
-			$stats      = $this->get_img_stats( $this->canvas );
-			$this->face = $this->do_detect_greedy_big_to_small( $stats['ii'], $stats['ii2'], $stats['width'], $stats['height'] );
+			$stats = $this->get_img_stats( $file );
+			$face  = $this->do_detect_greedy_big_to_small( $stats['ii'], $stats['ii2'], $stats['width'], $stats['height'] );
 		}
-		if ( $this->face instanceof Face && $this->face->get_width() > 0 ) {
-			$this->face_found = true;
+		if ( ! $face instanceof Face || $face->get_width() <= 0 ) {
+			return array();
 		}
-		return $this;
-	}
-
-	protected function map_file_extension( string $extension ): string {
-		$map = array(
-			'jpg' => 'jpeg',
-		);
-		if ( ! isset( $map[ $extension ] ) ) {
-			return $extension;
-		}
-		return $map[ $extension ];
-	}
-
-	/**
-	 * @param string $file_name
-	 * @param bool $overwrite
-	 * @return bool
-	 */
-	public function save( $file_name, $overwrite = true ) {
-		if ( ! $overwrite && file_exists( $file_name ) ) {
-			throw new Exception( "Save File Already Exists ($file_name)" );
-		}
-
-		if ( ! $this->face instanceof Face ) {
-			throw new Exception( 'Cannot save file because no faces are detected' );
-		}
-
-		/** @psalm-suppress UndefinedClass */
-		if ( ! is_resource( $this->canvas ) && ! $this->canvas instanceof GdImage ) {
-			throw new Exception( 'Cannot save file because no canvas' );
-		}
-
-		$to_crop = array(
-			'x'      => $this->face->get_x() - ( self::PADDING_WIDTH / 2 ),
-			'y'      => $this->face->get_y() - ( self::PADDING_HEIGHT / 2 ),
-			'width'  => $this->face->get_width() + self::PADDING_WIDTH,
-			'height' => $this->face->get_height() + self::PADDING_HEIGHT,
-		);
-
-		/** @psalm-suppress PossiblyInvalidArgument */
-		$cropped_canvas = imagecrop( $this->canvas, $to_crop );
-
-		/** @var string */
-		$extension     = pathinfo( $file_name, PATHINFO_EXTENSION );
-		$extension     = $this->map_file_extension( strtolower( $extension ) );
-		$function_name = 'image' . $extension;
-		if ( ! function_exists( $function_name ) ) {
-			throw new Exception( 'File extension is not supported for saving' );
-		}
-
-		/** @var bool */
-		$result = $function_name( $cropped_canvas, $file_name, 100 );
-		return $result;
+		return array( $face );
 	}
 
 	/**
@@ -350,9 +242,13 @@ class FaceDetector {
 			return null;
 		}
 
-		$scale_accuracy        = ( $max_loops - ( $loops - 1 ) ) / $max_loops * 100;
-		$accuracys             = array( $detection_accuracy, $scale_accuracy );
-		$avg_accuracy          = array_sum( $accuracys ) / count( $accuracys );
+		$scale_accuracy = ( $max_loops - ( $loops - 1 ) ) / $max_loops * 100;
+		$accuracys      = array( $detection_accuracy, $scale_accuracy );
+		$avg_accuracy   = array_sum( $accuracys ) / count( $accuracys );
+		if ( $avg_accuracy < self::ACCURACY_THRESHHOLD ) {
+			return null;
+		}
+
 		$face_data['accuracy'] = $avg_accuracy;
 		return new Face(
 			$face_data
