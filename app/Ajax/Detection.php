@@ -4,16 +4,17 @@ namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
 use Exception;
 use Mentosmenno2\ImageCropPositioner\Assets;
+use Mentosmenno2\ImageCropPositioner\Detection\BaseDetector;
+use Mentosmenno2\ImageCropPositioner\Detection\Detection as DetectionDetection;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
-use Mentosmenno2\ImageCropPositioner\FaceDetection\FaceDetector;
+use Mentosmenno2\ImageCropPositioner\Detection\FaceDetector\FaceDetector;
+use Mentosmenno2\ImageCropPositioner\Objects\Spot;
 use WP_Error;
 
-class FaceDetection {
-
-	protected const ACCURACY_THRESHHOLD = 50;
+class Detection {
 
 	public function register_hooks(): void {
-		add_action( 'wp_ajax_image_crop_positioner_face_detection', array( $this, 'handle_request' ) );
+		add_action( 'wp_ajax_image_crop_positioner_detection', array( $this, 'handle_request' ) );
 	}
 
 	/**
@@ -42,13 +43,25 @@ class FaceDetection {
 			exit;
 		}
 
-		$this->detect_faces( $attachment_id );
+		$detector  = (string) filter_input( INPUT_POST, 'detector' );
+		$detectors = ( new DetectionDetection() )->get_available_detectors();
+		if ( array_key_exists( $detector, $detectors ) ) {
+			$error = new WP_Error(
+				400, __( 'Detector does not exist or is not available.', 'image-crop-positioner' ), array(
+					'status' => 400,
+				)
+			);
+			wp_send_json_error( $error, 400 );
+			exit;
+		}
+
+		$this->detect_spots( $attachment_id, $detectors[ $detector ] );
 	}
 
 	/**
-	 * Detect faces from attachment, save it in the meta, and send them to the json response.
+	 * Detect spots from attachment, save it in the meta, and send them to the json response.
 	 */
-	protected function detect_faces( int $attachment_id ): void {
+	protected function detect_spots( int $attachment_id, BaseDetector $detector ): void {
 		$file = wp_get_original_image_path( $attachment_id );
 		if ( ! is_string( $file ) ) {
 			$error = new WP_Error(
@@ -61,7 +74,7 @@ class FaceDetection {
 		}
 
 		try {
-			$extraction = FaceDetector::get_instance()->extract( $file );
+			$spots = $detector->detect( $file );
 		} catch ( Exception $e ) {
 			$error = new WP_Error(
 				400, $e->getMessage(), array(
@@ -73,11 +86,14 @@ class FaceDetection {
 		}
 
 		$data = array(
-			'faces' => array(),
+			'spots' => array(),
 		);
-		if ( $extraction->face instanceof Face && $extraction->face->get_accuracy() >= self::ACCURACY_THRESHHOLD ) {
-			$data['faces'][] = $extraction->face->get_data_array();
-		}
+
+		$data['spots'] = array_map(
+			function( Spot $spot ): array {
+				return $spot->get_data_array();
+			}, $spots
+		);
 		wp_send_json_success( $data, 200 );
 		exit;
 	}

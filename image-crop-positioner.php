@@ -60,13 +60,13 @@ add_action(
 		( new Mentosmenno2\ImageCropPositioner\Admin() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Crop() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\ImagePreviews() )->register_hooks();
-		( new Mentosmenno2\ImageCropPositioner\Ajax\FaceDetection() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Ajax\Detection() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\SaveFaces() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\RemoveFaces() )->register_hooks();
 
 		// Register CLI commands
 		if ( defined( 'WP_CLI' ) && constant( 'WP_CLI' ) ) {
-			\WP_CLI::add_command( 'image-crop-positioner face-detection', \Mentosmenno2\ImageCropPositioner\CLI\FaceDetection::class );
+			\WP_CLI::add_command( 'image-crop-positioner detection', \Mentosmenno2\ImageCropPositioner\CLI\Detection::class );
 			\WP_CLI::add_command( 'image-crop-positioner migrate', \Mentosmenno2\ImageCropPositioner\CLI\Migrate::class );
 		}
 
