@@ -13,12 +13,17 @@
 		}
 
 		&__images {
-
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			align-items: flex-start;
 		}
 
 		&__image {
 			height: 80px;
 			width: auto;
+			margin: 2px;
 		}
 	}
 
