@@ -28,8 +28,8 @@ class Regenerate {
 			return false;
 		}
 
-		$success = (bool) wp_update_attachment_metadata( $attachment_id, $metadata );
-		return $success;
+		wp_update_attachment_metadata( $attachment_id, $metadata );
+		return true;
 	}
 
 	/**

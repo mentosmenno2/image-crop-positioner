@@ -7,6 +7,7 @@
 	app.editImageScreen = function() {
 
 		let config = {};
+		let tempHotspots = [];
 
 		/**
 		 * ##########
@@ -31,6 +32,10 @@
 			getChildElement( '.button__discard-faces' ).on( 'click', function() { discardFaces(); } );
 			getChildElement( '.button__save-faces' ).on( 'click', function() { saveFaces(); } );
 			getChildElement( '.button__remove-faces' ).on( 'click', function() { removeFaces(); } );
+
+			getChildElement( '.button__edit-hotspots' ).on( 'click', function() { editHotspots(); } );
+			getChildElement( '.button__discard-hotspots' ).on( 'click', function() { discardHotspots(); } );
+			getChildElement( '.button__save-hotspots' ).on( 'click', function() { saveHotspots(); } );
 		}
 
 		/**
@@ -77,6 +82,7 @@
 		function loadSpots() {
 			hideSpots();
 			showFaces( config.faces );
+			showHotspots( config.hotspots );
 		}
 
 		function hideSpots() {
@@ -84,7 +90,7 @@
 		}
 
 		function showSpot( spot, type ) {
-			const $newFaceElement = $( `<div class="spot spot__${type}" ></div>` );
+			const $newFaceElement = $( `<div class="spot spot__${type}" data-x="${spot.x}" data-y="${spot.y}" data-width="${spot.width}" data-height="${spot.height}"></div>` );
 			const leftPercent = spot.x / config.attachment_metadata.width * 100;
 			const topPercent = spot.y / config.attachment_metadata.height * 100;
 			const widthPercent = spot.width / config.attachment_metadata.width * 100;
@@ -96,6 +102,26 @@
 				"height": `${heightPercent}%`
 			} );
 			getChildElement( '.image-spots-preview__spots' ).append( $newFaceElement );
+		}
+
+		/**
+		 * ##########
+		 * All detections
+		 * ##########
+		 */
+
+		function disableAllDetections() {
+			getFaceDetectionMessage().empty();
+			getHotspotSelectionMessage().empty();
+			getDetectFacesButton().prop( 'disabled', true );
+			getRemoveFacesButton().prop( 'disabled', true );
+			getEditHotspotsButton().prop( 'disabled', true );
+		}
+
+		function enableAllDetections() {
+			getDetectFacesButton().prop( 'disabled', false );
+			getRemoveFacesButton().prop( 'disabled', false );
+			getEditHotspotsButton().prop( 'disabled', false );
 		}
 
 		/**
@@ -112,9 +138,8 @@
 		}
 
 		function detectFaces() {
+			disableAllDetections();
 			getDetectFacesButton().append( getSpinnerHtml() );
-			getDetectFacesButton().prop( 'disabled', true );
-			getFaceDetectionMessage().empty();
 
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
@@ -129,7 +154,7 @@
 			} )
 				.done( function( data ) {
 					hideSpots();
-					getSaveFacesButton().attr( 'data-faces', JSON.stringify(data.data.faces) );
+					getSaveFacesButton().attr( 'data-faces', JSON.stringify( data.data.faces ) );
 					showFaces( data.data.faces );
 					if ( data.data.faces.length > 0 ) {
 						getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found face is correct.', 'info' ) );
@@ -145,6 +170,7 @@
 					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
+					enableAllDetections();
 					getFaceDetectionMessage().html( getAdminNoticeHtml( errorMessage, 'error' ) );
 				} )
 				.always( function() {
@@ -159,7 +185,7 @@
 			getDetectFacesButton().show();
 			getDiscardFacesButton().hide();
 			getSaveFacesButton().hide();
-			getFaceDetectionMessage().empty();
+			enableAllDetections();
 		}
 
 		function saveFaces() {
@@ -187,6 +213,7 @@
 					getSaveFacesButton().hide();
 					getDiscardFacesButton().hide();
 					getRemoveFacesButton().show();
+					enableAllDetections();
 					getFaceDetectionMessage().html( getAdminNoticeHtml( 'Faces are saved.', 'success' ) );
 				} )
 				.fail( function( jqXHR ) {
@@ -204,9 +231,8 @@
 		}
 
 		function removeFaces() {
+			disableAllDetections();
 			getRemoveFacesButton().append( getSpinnerHtml() );
-			getRemoveFacesButton().prop( 'disabled', true );
-			getFaceDetectionMessage().empty();
 
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
@@ -225,6 +251,7 @@
 					reloadImagePreviews();
 					getRemoveFacesButton().hide();
 					getDetectFacesButton().show();
+					enableAllDetections();
 					getFaceDetectionMessage().html( getAdminNoticeHtml( 'Faces are removed.', 'success' ) );
 				} )
 				.fail( function( jqXHR ) {
@@ -237,8 +264,133 @@
 				.always( function() {
 					removeSpinnerHtml( getRemoveFacesButton() );
 					getRemoveFacesButton().prop( 'disabled', false );
-					getRemoveFacesButton().prop( 'disabled', false );
 				} );
+		}
+
+		/**
+		 * ##########
+		 * Hotspot selection
+		 * ##########
+		 */
+
+		function showHotspots( hotspotsList ) {
+			getChildElement( '.image-spots-preview__spots' ).find( '.spot__hotspot' ).remove();
+			hotspotsList.forEach( hotspotItem => {
+				showSpot( hotspotItem, 'hotspot' );
+			} );
+		}
+
+		function editHotspots() {
+			tempHotspots = JSON.parse( JSON.stringify( config.hotspots ) );
+			hideSpots();
+			showHotspots( tempHotspots );
+			disableAllDetections();
+			getHotspotSelectionMessage().html( getAdminNoticeHtml( 'Please click on an empty area of the image to add hotspots, or on a hotspot to delete it.', 'info' ) );
+			getEditHotspotsButton().hide();
+			getSaveHotspotsButton().show();
+			getDiscardHotspotsButton().show();
+
+			// Add event listener stuffs
+			addEditHotspotsEventListeners();
+		}
+
+		function discardHotspots() {
+			removeEditHotspotsEventListeners();
+			tempHotspots = [];
+			loadSpots();
+			getEditHotspotsButton().show();
+			getSaveHotspotsButton().hide();
+			getDiscardHotspotsButton().hide();
+			enableAllDetections();
+		}
+
+		function saveHotspots() {
+			getSaveHotspotsButton().append( getSpinnerHtml() );
+			getSaveHotspotsButton().prop( 'disabled', true );
+			getDiscardHotspotsButton().prop( 'disabled', true );
+			getHotspotSelectionMessage().empty();
+			removeEditHotspotsEventListeners();
+
+			$.ajax( {
+				url : window.image_crop_positioner_options.ajax_url,
+				data : {
+					_ajax_nonce: window.image_crop_positioner_options.nonce,
+					action: 'image_crop_positioner_save_hotspots',
+					attachment_id: config.attachment_id,
+					hotspots: tempHotspots,
+				},
+				method : 'POST',
+				dataType: "json",
+				timeout: 30000,
+			} )
+				.done( function( data ) {
+					config.hotspots = data.data.hotspots;
+					loadSpots();
+					reloadImagePreviews();
+					getSaveHotspotsButton().hide();
+					getDiscardHotspotsButton().hide();
+					getEditHotspotsButton().show();
+					enableAllDetections();
+					getHotspotSelectionMessage().html( getAdminNoticeHtml( 'Hotspots are saved.', 'success' ) );
+				} )
+				.fail( function( jqXHR ) {
+					let errorMessage = 'Error';
+					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
+						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
+					}
+					getHotspotSelectionMessage().html( getAdminNoticeHtml( errorMessage, 'error' ) );
+					addEditHotspotsEventListeners();
+				} )
+				.always( function() {
+					removeSpinnerHtml( getSaveHotspotsButton() );
+					getSaveHotspotsButton().prop( 'disabled', false );
+					getDiscardHotspotsButton().prop( 'disabled', false );
+				} );
+		}
+
+		function addEditHotspotsEventListeners() {
+			getChildElement( '.image-spots-preview' ).addClass( 'image-spots-preview--clickable' );
+			getChildElement( '.image-spots-preview' ).on( 'click', onEditHotspotClick );
+		}
+
+		function removeEditHotspotsEventListeners() {
+			getChildElement( '.image-spots-preview' ).removeClass( 'image-spots-preview--clickable' );
+			getChildElement( '.image-spots-preview' ).off( 'click', onEditHotspotClick );
+		}
+
+		function onEditHotspotClick( e ) {
+			const $clickedElement = $( e.target );
+
+			// Run if hotspot was clicked
+			if ( $clickedElement.hasClass( 'spot__hotspot' ) ) {
+				tempHotspots.forEach( ( tempHotspot, tempHotspotIndex ) => {
+					if ( parseFloat( tempHotspot.x ) !== parseFloat( $clickedElement.attr( 'data-x' ) ) ) { return; }
+					if ( parseFloat( tempHotspot.y ) !== parseFloat( $clickedElement.attr( 'data-y' ) ) ) { return; }
+					if ( parseFloat( tempHotspot.width ) !== parseFloat( $clickedElement.attr( 'data-width' ) ) ) { return; }
+					if ( parseFloat( tempHotspot.height ) !== parseFloat( $clickedElement.attr( 'data-height' ) ) ) { return; }
+					tempHotspots.splice( tempHotspotIndex, 1 );
+					$clickedElement.remove();
+				} );
+				return;
+			}
+
+			// Image was clicked
+			const hotspotDisplayWidth = $( this ).width() / 10;
+			const hotspotDisplayX = e.offsetX - ( hotspotDisplayWidth / 2 );
+			const hotspotDisplayY = e.offsetY - ( hotspotDisplayWidth / 2 );
+			const ratio = config.attachment_metadata.width / $( this ).width();
+
+			const hotspotRealWidth = hotspotDisplayWidth * ratio;
+			const hotspotRealX = hotspotDisplayX * ratio;
+			const hotspotRealY = hotspotDisplayY * ratio;
+
+			tempHotspots.push( {
+				x: hotspotRealX,
+				y: hotspotRealY,
+				width: hotspotRealWidth,
+				height: hotspotRealWidth
+			} );
+			showHotspots( tempHotspots );
 		}
 
 		/**
@@ -275,6 +427,23 @@
 
 		function getFaceDetectionMessage() {
 			return getChildElement( '.face-detection__message' );
+		}
+
+		// Hotspot selection
+		function getEditHotspotsButton() {
+			return getChildElement( '.button__edit-hotspots' );
+		}
+
+		function getSaveHotspotsButton() {
+			return getChildElement( '.button__save-hotspots' );
+		}
+
+		function getDiscardHotspotsButton() {
+			return getChildElement( '.button__discard-hotspots' );
+		}
+
+		function getHotspotSelectionMessage() {
+			return getChildElement( '.hotspot-selection__message' );
 		}
 
 		/**

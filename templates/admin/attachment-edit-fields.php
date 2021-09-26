@@ -12,7 +12,9 @@ if ( ! wp_attachment_is_image( $attachment ) ) {
 	return;
 }
 
-$faces = ( new AttachmentMeta() )->get_faces( $attachment->ID );
+$attachmentmeta = new AttachmentMeta();
+$faces          = $attachmentmeta->get_faces( $attachment->ID );
+$hotspots       = $attachmentmeta->get_hotspots( $attachment->ID );
 
 if ( ! function_exists( 'display_none' ) ) {
 	/**
@@ -31,6 +33,7 @@ $data_config = wp_json_encode(
 		'attachment_id'       => $attachment->ID,
 		'attachment_metadata' => wp_get_attachment_metadata( $attachment->ID ) ?: array(),
 		'faces'               => $faces,
+		'hotspots'            => $hotspots,
 	)
 ) ?: '';
 
@@ -70,8 +73,10 @@ $data_config = wp_json_encode(
 	<!-- Hotspot buttons -->
 	<div class="hotspots-selection">
 		<p><strong><?php esc_html_e( 'Hotspot selection', 'image-crop-positioner' ); ?></strong></p>
-		<button type="button" class="button add-hotspots"><?php esc_html_e( 'Add hotspots', 'image-crop-positioner' ); ?></button>
-		<button type="button" class="button remove-hotspots"><?php esc_html_e( 'Remove hotspots', 'image-crop-positioner' ); ?></button>
+		<button type="button" class="button button__edit-hotspots"><?php esc_html_e( 'Edit hotspots', 'image-crop-positioner' ); ?></button>
+		<button type="button" class="button button__save-hotspots" <?php display_none( true ); ?>><?php esc_html_e( 'Save hotspots', 'image-crop-positioner' ); ?></button>
+		<button type="button" class="button button__discard-hotspots" <?php display_none( true ); ?>><?php esc_html_e( 'Discard changes', 'image-crop-positioner' ); ?></button>
+		<span class="hotspot-selection__message" ></span>
 	</div>
 
 	<div class="crop-preview"></div>

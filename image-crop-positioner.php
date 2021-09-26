@@ -63,6 +63,7 @@ add_action(
 		( new Mentosmenno2\ImageCropPositioner\Ajax\FaceDetection() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\SaveFaces() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\RemoveFaces() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Ajax\SaveHotspots() )->register_hooks();
 
 		// Register CLI commands
 		if ( defined( 'WP_CLI' ) && constant( 'WP_CLI' ) ) {

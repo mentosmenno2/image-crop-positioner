@@ -13,12 +13,17 @@
 		}
 
 		&__images {
-
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			align-items: flex-start;
 		}
 
 		&__image {
 			height: 80px;
 			width: auto;
+			margin: 2px;
 		}
 	}
 
@@ -39,6 +44,17 @@
 	.image-spots-preview {
 		position: relative;
 
+		&--clickable {
+			cursor: pointer;
+
+			.spot__hotspot {
+				&:hover,
+				&:active {
+					box-shadow: 0 0 5px 5px red;
+				}
+			}
+		}
+
 		&__image {
 			width: 100%;
 			height: auto;
@@ -56,10 +72,17 @@
 				border-width: 2px;
 				border-style: solid;
 				border-radius: 100%;
+				color: grey;
+				background-color: rgba($color: grey, $alpha: 0.2);
 
 				&__face {
 					color: red;
 					background-color: rgba($color: red, $alpha: 0.2);
+				}
+
+				&__hotspot {
+					color: purple;
+					background-color: rgba($color: purple, $alpha: 0.2);
 				}
 			}
 		}
