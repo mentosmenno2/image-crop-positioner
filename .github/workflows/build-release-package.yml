@@ -1,9 +1,9 @@
 name: Build release package
 
 on:
-  push:
-    branches:
-      - master
+  release:
+    types:
+      - published
 
 jobs:
   build-release-package:
