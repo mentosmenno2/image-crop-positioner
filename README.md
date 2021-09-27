@@ -16,3 +16,13 @@ This plugin allows you to better crop your images, based on face detection or ho
 - [WP-CLI Commands](./docs/wp-cli-commands.md)
 - [Developing](./docs/developing.md)
 - [Automated testing](./docs/automated-testing.md)
+
+## Example images
+
+### Face detection
+
+![Example of face detection](./docs/assets/face-detection.jpg "Example of face detection")
+
+### Hotspot selection
+
+![Example of hotspot selection](./docs/assets/hotspot-selection.jpg "Example of hotspot selection")
