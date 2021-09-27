@@ -44,6 +44,8 @@ class Migrate {
 			'posts_per_page' => $per_page,
 			'paged'          => $page,
 			'fields'         => 'ids',
+			'order'          => 'ASC',
+			'orderby'        => 'ID',
 			'no_found_rows'  => true,
 		);
 
