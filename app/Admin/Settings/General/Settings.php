@@ -11,7 +11,6 @@ class Settings {
 	public const FIELDS = array(
 		ClientName::class,
 		PostTypes::class,
-		SyncEventsInterval::class,
 	);
 
 	public function register_hooks(): void {
