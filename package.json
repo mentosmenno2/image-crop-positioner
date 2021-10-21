@@ -11,6 +11,8 @@
     },
     "dependencies": {
         "@babel/polyfill": "^7.11.5",
+        "devtools-detect": "^4.0.0",
+        "jquery.facedetection": "^2.0.3",
         "js-cookie": "^2.2.1"
     },
     "scripts": {

@@ -1,3 +1,5 @@
+import devTools from "devtools-detect";
+
 ( function( $, app ) {
 
 	/**
@@ -28,14 +30,15 @@
 		}
 
 		function addEventListeners() {
-			getChildElement( '.button__detect-faces' ).on( 'click', function() { detectFaces(); } );
-			getChildElement( '.button__discard-faces' ).on( 'click', function() { discardFaces(); } );
-			getChildElement( '.button__save-faces' ).on( 'click', function() { saveFaces(); } );
-			getChildElement( '.button__remove-faces' ).on( 'click', function() { removeFaces(); } );
+			getDetectFacesPhpButton().on( 'click', function() { detectFacesPhp(); } );
+			getDetectFacesJsButton().on( 'click', function() { detectFacesJs(); } );
+			getDiscardFacesButton().on( 'click', function() { discardFaces(); } );
+			getSaveFacesButton().on( 'click', function() { saveFaces(); } );
+			getRemoveFacesButton().on( 'click', function() { removeFaces(); } );
 
-			getChildElement( '.button__edit-hotspots' ).on( 'click', function() { editHotspots(); } );
-			getChildElement( '.button__discard-hotspots' ).on( 'click', function() { discardHotspots(); } );
-			getChildElement( '.button__save-hotspots' ).on( 'click', function() { saveHotspots(); } );
+			getEditHotspotsButton().on( 'click', function() { editHotspots(); } );
+			getDiscardHotspotsButton().on( 'click', function() { discardHotspots(); } );
+			getSaveHotspotsButton().on( 'click', function() { saveHotspots(); } );
 		}
 
 		/**
@@ -113,13 +116,15 @@
 		function disableAllDetections() {
 			getFaceDetectionMessage().empty();
 			getHotspotSelectionMessage().empty();
-			getDetectFacesButton().prop( 'disabled', true );
+			getDetectFacesPhpButton().prop( 'disabled', true );
+			getDetectFacesJsButton().prop( 'disabled', true );
 			getRemoveFacesButton().prop( 'disabled', true );
 			getEditHotspotsButton().prop( 'disabled', true );
 		}
 
 		function enableAllDetections() {
-			getDetectFacesButton().prop( 'disabled', false );
+			getDetectFacesPhpButton().prop( 'disabled', false );
+			getDetectFacesJsButton().prop( 'disabled', false );
 			getRemoveFacesButton().prop( 'disabled', false );
 			getEditHotspotsButton().prop( 'disabled', false );
 		}
@@ -137,9 +142,9 @@
 			} );
 		}
 
-		function detectFaces() {
+		function detectFacesPhp() {
 			disableAllDetections();
-			getDetectFacesButton().append( getSpinnerHtml() );
+			getDetectFacesPhpButton().append( getSpinnerHtml() );
 
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
@@ -158,7 +163,8 @@
 					showFaces( data.data.faces );
 					if ( data.data.faces.length > 0 ) {
 						getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found face is correct.', 'info' ) );
-						getDetectFacesButton().hide();
+						getDetectFacesPhpButton().hide();
+						getDetectFacesJsButton().hide();
 						getSaveFacesButton().show();
 						getDiscardFacesButton().show();
 					} else {
@@ -174,18 +180,69 @@
 					getFaceDetectionMessage().html( getAdminNoticeHtml( errorMessage, 'error' ) );
 				} )
 				.always( function() {
-					removeSpinnerHtml( getDetectFacesButton() );
-					getDetectFacesButton().prop( 'disabled', false );
+					removeSpinnerHtml( getDetectFacesPhpButton() );
+					getDetectFacesPhpButton().prop( 'disabled', false );
 				} );
+		}
 
+		function detectFacesJs() {
+			if ( devTools.isOpen ) {
+				getFaceDetectionMessage().html( getAdminNoticeHtml( 'Face detection via JavaScript does not work when devtools is open. Please close your devtools and try again.', 'error' ) );
+				return;
+			}
+
+			disableAllDetections();
+			getDetectFacesJsButton().append( getSpinnerHtml() );
+
+			$( '#image-crop-positioner-image-spots-preview-image' ).faceDetection( {
+				complete( foundFaces ) {
+					if ( ! Array.isArray( foundFaces ) ) {
+						return;
+					}
+
+					foundFaces = foundFaces.map( face => {
+						return {
+							x: face.x,
+							y: face.y,
+							width: face.width,
+							height: face.height,
+							accuracy: face.confidence,
+						};
+					} );
+					hideSpots();
+					getSaveFacesButton().attr( 'data-faces', JSON.stringify( foundFaces ) );
+					showFaces( foundFaces );
+					if ( foundFaces.length > 0 ) {
+						getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found face is correct.', 'info' ) );
+						getDetectFacesPhpButton().hide();
+						getDetectFacesJsButton().hide();
+						getSaveFacesButton().show();
+						getDiscardFacesButton().show();
+					} else {
+						getFaceDetectionMessage().html( getAdminNoticeHtml( 'No faces found.', 'warning' ) );
+					}
+
+					removeSpinnerHtml( getDetectFacesJsButton() );
+					getDetectFacesJsButton().prop( 'disabled', false );
+				},
+				error ( code, errorMessage ) {
+					enableAllDetections();
+					getFaceDetectionMessage().html( getAdminNoticeHtml( code + ': ' + errorMessage, 'error' ) );
+
+					removeSpinnerHtml( getDetectFacesJsButton() );
+					getDetectFacesJsButton().prop( 'disabled', false );
+				}
+			} );
 		}
 
 		function discardFaces() {
 			loadSpots();
-			getDetectFacesButton().show();
+			getDetectFacesPhpButton().show();
+			getDetectFacesJsButton().show();
 			getDiscardFacesButton().hide();
 			getSaveFacesButton().hide();
 			enableAllDetections();
+			getFaceDetectionMessage().empty();
 		}
 
 		function saveFaces() {
@@ -250,7 +307,8 @@
 					loadSpots();
 					reloadImagePreviews();
 					getRemoveFacesButton().hide();
-					getDetectFacesButton().show();
+					getDetectFacesPhpButton().show();
+					getDetectFacesJsButton().show();
 					enableAllDetections();
 					getFaceDetectionMessage().html( getAdminNoticeHtml( 'Faces are removed.', 'success' ) );
 				} )
@@ -302,6 +360,7 @@
 			getSaveHotspotsButton().hide();
 			getDiscardHotspotsButton().hide();
 			enableAllDetections();
+			getFaceDetectionMessage().empty();
 		}
 
 		function saveHotspots() {
@@ -409,8 +468,12 @@
 		}
 
 		// Face detection
-		function getDetectFacesButton() {
-			return getChildElement( '.button__detect-faces' );
+		function getDetectFacesPhpButton() {
+			return getChildElement( '.button__detect-faces-php' );
+		}
+
+		function getDetectFacesJsButton() {
+			return getChildElement( '.button__detect-faces-js' );
 		}
 
 		function getSaveFacesButton() {
