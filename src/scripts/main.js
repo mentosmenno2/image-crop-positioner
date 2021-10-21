@@ -1,5 +1,5 @@
 import './global/edit-image-screen.js';
-import 'jquery.faceDetection';
+import 'jquery.facedetection';
 
 ( function( app, $ ) {
 	'use strict';
