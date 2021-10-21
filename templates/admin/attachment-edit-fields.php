@@ -64,7 +64,7 @@ $data_config = wp_json_encode(
 	<div class="face-detection">
 		<p><strong><?php esc_html_e( 'Face detection', 'image-crop-positioner' ); ?></strong></p>
 		<p><?php esc_html_e( "Please note this is very basic face detection and won't find everything. Use hotspots to highlight any that were missed.", 'image-crop-positioner' ); ?></p>
-		<button type="button" class="button button__detect-faces-php" <?php display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect faces via PHP', 'image-crop-positioner' ); ?></button>
+		<button type="button" class="button button__detect-faces-php" <?php display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect face via PHP', 'image-crop-positioner' ); ?></button>
 		<button type="button" class="button button__detect-faces-js" <?php display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect faces via JavaScript', 'image-crop-positioner' ); ?></button>
 		<button type="button" class="button button__save-faces" <?php display_none( true ); ?>><?php esc_html_e( 'Save faces', 'image-crop-positioner' ); ?></button>
 		<button type="button" class="button button__discard-faces" <?php display_none( true ); ?>><?php esc_html_e( 'Discard faces', 'image-crop-positioner' ); ?></button>
