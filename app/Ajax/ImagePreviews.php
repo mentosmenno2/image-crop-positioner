@@ -2,10 +2,7 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
-use Mentosmenno2\ImageCropPositioner\Assets;
-use WP_Error;
-
-class ImagePreviews {
+class ImagePreviews extends BaseAjaxCall {
 
 	public function register_hooks(): void {
 		add_action( 'wp_ajax_image_crop_positioner_image_previews', array( $this, 'handle_request' ) );
@@ -15,27 +12,10 @@ class ImagePreviews {
 	 * Handle the request
 	 */
 	public function handle_request(): void {
-		if ( ! check_ajax_referer( Assets::NONCE_ACTION, false, false ) ) {
-			$error = new WP_Error(
-				403, __( 'Invalid nonce.', 'image-crop-positioner' ), array(
-					'status' => 403,
-				)
-			);
-			wp_send_json_error( $error, 403 );
-			exit;
-		}
-
+		$this->validate_nonce();
 		$attachment_id = (int) filter_input( INPUT_POST, 'attachment_id', FILTER_VALIDATE_INT );
-		$post_type     = get_post_type( $attachment_id );
-		if ( ! $attachment_id || $post_type !== 'attachment' ) {
-			$error = new WP_Error(
-				403, __( 'Invalid attachment ID.', 'image-crop-positioner' ), array(
-					'status' => 403,
-				)
-			);
-			wp_send_json_error( $error, 403 );
-			exit;
-		}
+		$this->validate_is_attachment( $attachment_id );
+		$this->validate_attachment_is_image( $attachment_id );
 
 		$this->get_image_previews( $attachment_id );
 	}
