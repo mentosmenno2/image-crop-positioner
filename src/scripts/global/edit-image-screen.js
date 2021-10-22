@@ -201,6 +201,18 @@ import devTools from "devtools-detect";
 			disableAllDetections();
 			getDetectFacesJsButton().append( getSpinnerHtml() );
 
+			// Put it in a setTimeout so JavaScript will run it a little bit later, making sure the spinner works.
+			setTimeout( () => {
+				detectFacesJsBackgroundTask();
+			}, 0 );
+		}
+
+		function detectFacesJsBackgroundTask() {
+			if ( devTools.isOpen ) {
+				getFaceDetectionMessage().html( getAdminNoticeHtml( 'Face detection via JavaScript does not work when devtools is open. Please close your devtools and try again.', 'error' ) );
+				return;
+			}
+
 			try {
 				getPreviewImage().faceDetection( {
 					complete( foundFaces ) {
@@ -221,7 +233,7 @@ import devTools from "devtools-detect";
 						getSaveFacesButton().attr( 'data-faces', JSON.stringify( foundFaces ) );
 						showFaces( foundFaces );
 						if ( foundFaces.length > 0 ) {
-							getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found face is correct.', 'info' ) );
+							getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found faces are correct.', 'info' ) );
 							getDetectFacesPhpButton().hide();
 							getDetectFacesJsButton().hide();
 							getSaveFacesButton().show();
