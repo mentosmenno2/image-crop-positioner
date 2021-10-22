@@ -175,7 +175,8 @@ import devTools from "devtools-detect";
 						getSaveFacesButton().show();
 						getDiscardFacesButton().show();
 					} else {
-						getFaceDetectionMessage().html( getAdminNoticeHtml( 'No faces found.', 'warning' ) );
+						enableAllDetections();
+						getFaceDetectionMessage().html( getAdminNoticeHtml( 'No face found.', 'warning' ) );
 					}
 				} )
 				.fail( function( jqXHR ) {
