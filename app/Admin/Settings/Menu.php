@@ -12,7 +12,7 @@ class Menu {
 
 	public function add_menu_page(): void {
 		add_options_page(
-			__( 'Image Crop Positioner settings', 'image-crop-positioner' ),
+			__( 'Image Crop Positioner', 'image-crop-positioner' ),
 			__( 'Image Crop Positioner', 'image-crop-positioner' ),
 			'manage_options',
 			self::NAME,

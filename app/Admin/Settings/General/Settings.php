@@ -2,15 +2,13 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\General;
 
-use Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields\ClientName;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields\CropPositioningMethod;
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields\PostTypes;
-use Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields\SyncEventsInterval;
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu;
 
 class Settings {
 	public const FIELDS = array(
-		ClientName::class,
-		PostTypes::class,
+		CropPositioningMethod::class,
 	);
 
 	public function register_hooks(): void {

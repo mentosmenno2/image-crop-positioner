@@ -7,17 +7,12 @@ if ( ! current_user_can( 'manage_options' ) ) {
 	exit;
 }
 
-$is_updated = filter_input( INPUT_GET, 'settings-updated', FILTER_VALIDATE_BOOLEAN );
-if ( $is_updated ) {
-	add_settings_error( Menu::NAME, 'image-crop-positioner-options-updated', __( 'Settings saved', 'image-crop-positioner' ), 'updated' );
-}
-
 settings_errors( Menu::NAME );
 ?>
 
 <div class="wrap">
 	<h1>
-		<?php echo esc_html( get_admin_page_title() ); ?>
+		<?php echo esc_html( get_admin_page_title() ); ?> <?php esc_html_e( 'settings', 'image-crop-positioner' ); ?>
 	</h1>
 	<form action="options.php" method="post">
 		<?php

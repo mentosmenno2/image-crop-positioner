@@ -2,20 +2,20 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields;
 
-class ClientName extends BaseField {
+class CropPositioningMethod extends BaseField {
 
-	protected const NAME = 'client_name';
+	protected const NAME = 'crop_positioning_method';
 
 	public function get_name(): string {
 		return self::PREFIX . self::NAME;
 	}
 
 	public function get_label(): string {
-		return __( 'Client name', 'image-crop-positioner' );
+		return __( 'Crop positioning method', 'image-crop-positioner' );
 	}
 
 	public function get_description(): string {
-		return __( 'The client name is required for the plugin to work.', 'image-crop-positioner' );
+		return __( 'The method used to determine the correct crop position.', 'image-crop-positioner' );
 	}
 
 	public function get_value(): ?string {
@@ -30,10 +30,10 @@ class ClientName extends BaseField {
 	/**
 	 * Get default value
 	 *
-	 * @return null
+	 * @return string
 	 */
 	protected function get_default_value() {
-		return null;
+		return 'center';
 	}
 
 	public function render_field(): void {
@@ -42,7 +42,10 @@ class ClientName extends BaseField {
 
 		<p><label for="<?php echo esc_attr( $this->get_name() ); ?>"><?php echo esc_html( $this->get_description() ); ?></label></p>
 
-		<input type="text" id="<?php echo esc_attr( $this->get_name() ); ?>" name="<?php echo esc_attr( $this->get_name() ); ?>" class="regular-text" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+		<select id="<?php echo esc_attr( $this->get_name() ); ?>" name="<?php echo esc_attr( $this->get_name() ); ?>">
+			<option value="center" <?php selected( $setting, 'center' ); ?> ><?php esc_html_e( 'Center of all spots', 'image-crop-positioner' ); ?></option>
+			<option value="average" <?php selected( $setting, 'average' ); ?> ><?php esc_html_e( 'Average of all spots', 'image-crop-positioner' ); ?></option>
+		</select>
 
 		<?php
 	}
