@@ -39,6 +39,13 @@ import devTools from "devtools-detect";
 			getEditHotspotsButton().on( 'click', function() { editHotspots(); } );
 			getDiscardHotspotsButton().on( 'click', function() { discardHotspots(); } );
 			getSaveHotspotsButton().on( 'click', function() { saveHotspots(); } );
+
+			getPreviewImage().on( 'load', function() { previewImageLoaded(); } );
+		}
+
+		function previewImageLoaded() {
+			getDetectFacesJsButton().attr( 'disabled', false );
+			removeSpinnerHtml( getDetectFacesJsButton() );
 		}
 
 		/**
@@ -194,45 +201,65 @@ import devTools from "devtools-detect";
 			disableAllDetections();
 			getDetectFacesJsButton().append( getSpinnerHtml() );
 
-			$( '#image-crop-positioner-image-spots-preview-image' ).faceDetection( {
-				complete( foundFaces ) {
-					if ( ! Array.isArray( foundFaces ) ) {
-						return;
+			// Put it in a setTimeout so JavaScript will run it a little bit later, making sure the spinner works.
+			setTimeout( () => {
+				detectFacesJsBackgroundTask();
+			}, 0 );
+		}
+
+		function detectFacesJsBackgroundTask() {
+			if ( devTools.isOpen ) {
+				getFaceDetectionMessage().html( getAdminNoticeHtml( 'Face detection via JavaScript does not work when devtools is open. Please close your devtools and try again.', 'error' ) );
+				return;
+			}
+
+			try {
+				getPreviewImage().faceDetection( {
+					complete( foundFaces ) {
+						if ( ! Array.isArray( foundFaces ) ) {
+							return;
+						}
+
+						foundFaces = foundFaces.map( face => {
+							return {
+								x: face.x,
+								y: face.y,
+								width: face.width,
+								height: face.height,
+								accuracy: Math.min( Math.max( face.confidence, 0 ), 10 ) * 10,
+							};
+						} );
+						hideSpots();
+						getSaveFacesButton().attr( 'data-faces', JSON.stringify( foundFaces ) );
+						showFaces( foundFaces );
+						if ( foundFaces.length > 0 ) {
+							getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found faces are correct.', 'info' ) );
+							getDetectFacesPhpButton().hide();
+							getDetectFacesJsButton().hide();
+							getSaveFacesButton().show();
+							getDiscardFacesButton().show();
+						} else {
+							getFaceDetectionMessage().html( getAdminNoticeHtml( 'No faces found.', 'warning' ) );
+						}
+
+						removeSpinnerHtml( getDetectFacesJsButton() );
+						getDetectFacesJsButton().prop( 'disabled', false );
+					},
+					error ( code, errorMessage ) {
+						enableAllDetections();
+						getFaceDetectionMessage().html( getAdminNoticeHtml( code + ': ' + errorMessage, 'error' ) );
+
+						removeSpinnerHtml( getDetectFacesJsButton() );
+						getDetectFacesJsButton().prop( 'disabled', false );
 					}
+				} );
+			} catch ( error ) {
+				enableAllDetections();
+				getFaceDetectionMessage().html( getAdminNoticeHtml( 'JavaScript faces detection failed for this picture.', 'error' ) );
 
-					foundFaces = foundFaces.map( face => {
-						return {
-							x: face.x,
-							y: face.y,
-							width: face.width,
-							height: face.height,
-							accuracy: face.confidence,
-						};
-					} );
-					hideSpots();
-					getSaveFacesButton().attr( 'data-faces', JSON.stringify( foundFaces ) );
-					showFaces( foundFaces );
-					if ( foundFaces.length > 0 ) {
-						getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found face is correct.', 'info' ) );
-						getDetectFacesPhpButton().hide();
-						getDetectFacesJsButton().hide();
-						getSaveFacesButton().show();
-						getDiscardFacesButton().show();
-					} else {
-						getFaceDetectionMessage().html( getAdminNoticeHtml( 'No faces found.', 'warning' ) );
-					}
-
-					removeSpinnerHtml( getDetectFacesJsButton() );
-					getDetectFacesJsButton().prop( 'disabled', false );
-				},
-				error ( code, errorMessage ) {
-					enableAllDetections();
-					getFaceDetectionMessage().html( getAdminNoticeHtml( code + ': ' + errorMessage, 'error' ) );
-
-					removeSpinnerHtml( getDetectFacesJsButton() );
-					getDetectFacesJsButton().prop( 'disabled', false );
-				}
-			} );
+				removeSpinnerHtml( getDetectFacesJsButton() );
+				getDetectFacesJsButton().prop( 'disabled', false );
+			}
 		}
 
 		function discardFaces() {
@@ -465,6 +492,10 @@ import devTools from "devtools-detect";
 
 		function getChildElement( selector ) {
 			return getRootElement().find( selector );
+		}
+
+		function getPreviewImage() {
+			return getChildElement( '#image-crop-positioner-image-spots-preview-image' );
 		}
 
 		// Face detection
