@@ -47,4 +47,16 @@ class Templates {
 		echo strval( $this->get_arg( $arg_name ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
+	/**
+	 * Maybe render style display none attribute
+	 *
+	 * @param mixed $display_none
+	 * @param boolean $compare
+	 * @param boolean $echo
+	 * @return string
+	 */
+	public function display_none( $display_none, bool $compare = true, bool $echo = true ) {
+		return __checked_selected_helper( $display_none, $compare, $echo, 'style="display: none;"' );
+	}
+
 }
