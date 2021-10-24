@@ -23,7 +23,7 @@ import SpinnerHelper from "../helpers/spinner";
 
 		function addEventListeners() {
 			$buttonStart.on( 'click', startMigration );
-			$buttonStop.on( 'click', stopMigration );
+			$buttonStop.on( 'click', queueStopMigration );
 		}
 
 		function startMigration() {
@@ -33,13 +33,22 @@ import SpinnerHelper from "../helpers/spinner";
 			$dataTable.show();
 			$buttonStop.attr( 'disabled', false );
 			isStopQueued = false;
+
+			sendApiRequest();
 		}
 
-		function stopMigration() {
+		function queueStopMigration() {
 			spinnerHelper.appendToElement( $buttonStop );
 			$buttonStop.attr( 'disabled', true );
 			adminNoticeHelper.setToElementHtml( $message, 'Migration stopping, please wait...', 'info' );
 			isStopQueued = true;
+		}
+
+		function sendApiRequest() {
+			if ( isStopQueued ) {
+				return;
+			}
+			console.log( 'run' );
 		}
 
 		initialize();
