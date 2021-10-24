@@ -2,6 +2,8 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Admin\Settings;
 
+use Mentosmenno2\ImageCropPositioner\Templates;
+
 class Menu {
 
 	public const NAME = 'image_crop_positioner_options';
@@ -24,6 +26,36 @@ class Menu {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		require_once IMAGE_CROP_POSITIONER_PLUGIN_PATH . 'templates/admin/settings-page.php';
+
+		( new Templates() )->echo_template( 'admin/settings/settings' );
+	}
+
+	public function get_settings_menu(): array {
+		$menu = array(
+			array(
+				'slug'  => 'settings',
+				'title' => __( 'Settings', 'image-crop-positioner' ),
+			),
+			array(
+				'slug'  => 'migrate',
+				'title' => __( 'Migrate', 'image-crop-positioner' ),
+			),
+		);
+
+		$keys = array_map(
+			function( array $menu_item ): string {
+				return $menu_item['slug'];
+			}, $menu
+		);
+		return array_combine( $keys, $menu );
+	}
+
+	public function get_current_settings_menu_page(): array {
+		$menu = $this->get_settings_menu();
+		$page = filter_input( INPUT_GET, 'image-crop-positioner-settings-menu-page' );
+		if ( ! array_key_exists( $page, $menu ) ) {
+			return $menu['settings'];
+		}
+		return $menu[ $page ];
 	}
 }
