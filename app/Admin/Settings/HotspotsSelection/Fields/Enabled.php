@@ -1,6 +1,6 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\JSFacesDetection\Fields;
+namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\HotspotsSelection\Fields;
 
 class Enabled extends BaseField {
 
@@ -15,7 +15,7 @@ class Enabled extends BaseField {
 	}
 
 	public function get_description(): string {
-		return __( 'Enable JS faces detection.', 'image-crop-positioner' );
+		return __( 'Enable hotspots selection.', 'image-crop-positioner' );
 	}
 
 	public function get_value(): bool {

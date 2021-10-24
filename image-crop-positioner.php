@@ -66,6 +66,8 @@ add_action(
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Settings() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\JSFacesDetection\Section() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\JSFacesDetection\Settings() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\HotspotsSelection\Section() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\HotspotsSelection\Settings() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\ImagePreviews() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\FaceDetection() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\SaveFaces() )->register_hooks();
