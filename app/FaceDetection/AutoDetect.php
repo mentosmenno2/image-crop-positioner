@@ -3,6 +3,8 @@
 namespace Mentosmenno2\ImageCropPositioner\FaceDetection;
 
 use Exception;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\AutoDetectOnUpload as AutoDetectOnUploadSetting;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\Enabled as PHPFaceDetectionEnabledSetting;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
 
@@ -16,6 +18,10 @@ class AutoDetect {
 	 * Auto detect faces in an image
 	 */
 	public function auto_detect_faces( int $attachment_id ): void {
+		if ( ! ( new PHPFaceDetectionEnabledSetting() )->get_value() || ! ( new AutoDetectOnUploadSetting() )->get_value() ) {
+			return;
+		}
+
 		if ( ! wp_attachment_is_image( $attachment_id ) ) {
 			return;
 		}
