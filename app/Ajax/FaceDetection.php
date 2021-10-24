@@ -8,9 +8,6 @@ use Mentosmenno2\ImageCropPositioner\FaceDetection\FaceDetector;
 use WP_Error;
 
 class FaceDetection extends BaseAjaxCall {
-
-	protected const ACCURACY_THRESHHOLD = 50;
-
 	public function register_hooks(): void {
 		add_action( 'wp_ajax_image_crop_positioner_face_detection', array( $this, 'handle_request' ) );
 	}
@@ -57,7 +54,7 @@ class FaceDetection extends BaseAjaxCall {
 		$data = array(
 			'faces' => array(),
 		);
-		if ( $extraction->face instanceof Face && $extraction->face->get_accuracy() >= self::ACCURACY_THRESHHOLD ) {
+		if ( $extraction->face instanceof Face ) {
 			$data['faces'][] = $extraction->face->get_data_array();
 		}
 		wp_send_json_success( $data, 200 );

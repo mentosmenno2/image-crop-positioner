@@ -3,12 +3,12 @@
 namespace Mentosmenno2\ImageCropPositioner\FaceDetection;
 
 use Exception;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\AutoDetectOnUpload as AutoDetectOnUploadSetting;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\Enabled as PHPFaceDetectionEnabledSetting;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
 
 class AutoDetect {
-
-	protected const ACCURACY_THRESHHOLD = 50;
 
 	public function register_hooks(): void {
 		add_filter( 'add_attachment', array( $this, 'auto_detect_faces' ) );
@@ -18,6 +18,10 @@ class AutoDetect {
 	 * Auto detect faces in an image
 	 */
 	public function auto_detect_faces( int $attachment_id ): void {
+		if ( ! ( new PHPFaceDetectionEnabledSetting() )->get_value() || ! ( new AutoDetectOnUploadSetting() )->get_value() ) {
+			return;
+		}
+
 		if ( ! wp_attachment_is_image( $attachment_id ) ) {
 			return;
 		}
@@ -33,7 +37,7 @@ class AutoDetect {
 			return;
 		}
 
-		if ( ! $extraction->face instanceof Face || $extraction->face->get_accuracy() < self::ACCURACY_THRESHHOLD ) {
+		if ( ! $extraction->face instanceof Face ) {
 			return;
 		}
 
