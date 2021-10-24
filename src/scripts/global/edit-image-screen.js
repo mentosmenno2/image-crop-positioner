@@ -229,6 +229,11 @@ import devTools from "devtools-detect";
 								accuracy: Math.min( Math.max( face.confidence, 0 ), 10 ) * 10,
 							};
 						} );
+
+						foundFaces = foundFaces.filter( face => {
+							return face.accuracy >= config.js_faces_detection.min_accuracy;
+						} );
+
 						hideSpots();
 						getSaveFacesButton().attr( 'data-faces', JSON.stringify( foundFaces ) );
 						showFaces( foundFaces );

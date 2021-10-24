@@ -4,6 +4,7 @@
  * @var WP_Post
  */
 
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\JSFacesDetection\Fields\MinAccuracy as JSFacesDetectionMinAccuracy;
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\Enabled as PHPFaceDetectionEnabled;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 
@@ -35,6 +36,9 @@ $data_config = wp_json_encode(
 		'attachment_metadata' => wp_get_attachment_metadata( $attachment->ID ) ?: array(),
 		'faces'               => $faces,
 		'hotspots'            => $hotspots,
+		'js_faces_detection'  => array(
+			'min_accuracy' => ( new JSFacesDetectionMinAccuracy() )->get_value(),
+		),
 	)
 ) ?: '';
 
