@@ -8,8 +8,6 @@ use Mentosmenno2\ImageCropPositioner\Objects\Face;
 
 class AutoDetect {
 
-	protected const ACCURACY_THRESHHOLD = 50;
-
 	public function register_hooks(): void {
 		add_filter( 'add_attachment', array( $this, 'auto_detect_faces' ) );
 	}
@@ -33,7 +31,7 @@ class AutoDetect {
 			return;
 		}
 
-		if ( ! $extraction->face instanceof Face || $extraction->face->get_accuracy() < self::ACCURACY_THRESHHOLD ) {
+		if ( ! $extraction->face instanceof Face ) {
 			return;
 		}
 

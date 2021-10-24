@@ -1,13 +1,17 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\Display;
+namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection;
 
-use Mentosmenno2\ImageCropPositioner\Admin\Settings\Display\Fields\TicketSalesScreenType;
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\AutoDetectOnUpload;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\Enabled;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\MinAccuracy;
 
 class Settings {
 	public const FIELDS = array(
-		TicketSalesScreenType::class,
+		Enabled::class,
+		MinAccuracy::class,
+		AutoDetectOnUpload::class,
 	);
 
 	public function register_hooks(): void {

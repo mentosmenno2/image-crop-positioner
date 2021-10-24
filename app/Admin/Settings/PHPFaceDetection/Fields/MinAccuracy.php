@@ -1,26 +1,32 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Fields;
+namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields;
 
-class CropPositioningMethod extends BaseField {
+use Mentosmenno2\ImageCropPositioner\FaceDetection\FaceDetector;
 
-	protected const NAME = 'crop_positioning_method';
+class MinAccuracy extends BaseField {
+
+	protected const NAME = 'min_accuracy';
 
 	public function get_name(): string {
 		return self::PREFIX . self::NAME;
 	}
 
 	public function get_label(): string {
-		return __( 'Crop positioning method', 'image-crop-positioner' );
+		return __( 'Minimum accuracy', 'image-crop-positioner' );
+	}
+
+	protected function is_disabled(): bool {
+		return ! FaceDetector::get_instance()->is_available();
 	}
 
 	public function get_description(): string {
-		return __( 'The method used to determine the correct crop position.', 'image-crop-positioner' );
+		return __( 'Please select how accurate face detections must be to be used.', 'image-crop-positioner' );
 	}
 
-	public function get_value(): ?string {
+	public function get_value(): int {
 		$default = $this->get_default_value();
-		$value   = (string) get_option( $this->get_name(), $default );
+		$value   = (int) get_option( $this->get_name(), $default );
 		if ( empty( $value ) ) {
 			return $default;
 		}
@@ -29,18 +35,25 @@ class CropPositioningMethod extends BaseField {
 
 	public function get_options(): array {
 		return array(
-			'center'  => __( 'Center of all spots', 'image-crop-positioner' ),
-			'average' => __( 'Average of all spots', 'image-crop-positioner' ),
+			10 => '10%',
+			20 => '20%',
+			30 => '30%',
+			40 => '40%',
+			50 => '50%',
+			60 => '60%',
+			70 => '70%',
+			80 => '80%',
+			90 => '90%',
 		);
 	}
 
 	/**
 	 * Get default value
 	 *
-	 * @return string
+	 * @return int
 	 */
 	protected function get_default_value() {
-		return 'center';
+		return 50;
 	}
 
 	public function render_field(): void {

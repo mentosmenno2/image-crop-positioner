@@ -17,7 +17,7 @@ class Section {
 	}
 
 	public function get_label(): string {
-		return __( 'Crop settings', 'image-crop-positioner' );
+		return __( 'Crop', 'image-crop-positioner' );
 	}
 
 	/**

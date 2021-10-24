@@ -2,7 +2,7 @@
 
 namespace Mentosmenno2\ImageCropPositioner;
 
-use Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields\CropPositioningMethod;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Fields\CropPositioningMethod;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Objects\Spot;
 
@@ -96,8 +96,8 @@ class Crop {
 	 * @return array
 	 */
 	protected function get_spots_average( array $spots ): array {
-		$x_total = 0;
-		$y_total = 0;
+		$x_total     = 0;
+		$y_total     = 0;
 		$spots_count = count( $spots );
 		foreach ( $spots as $spot ) {
 			$x_total += $spot->get_x() + ( $spot->get_width() / 2 );

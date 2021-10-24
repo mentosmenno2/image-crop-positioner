@@ -62,8 +62,8 @@ add_action(
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Section() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Settings() )->register_hooks();
-		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Display\Section() )->register_hooks();
-		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Display\Settings() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Section() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Settings() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\ImagePreviews() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\FaceDetection() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\SaveFaces() )->register_hooks();

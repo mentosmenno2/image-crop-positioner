@@ -19,6 +19,7 @@ namespace Mentosmenno2\ImageCropPositioner\FaceDetection;
 
 use Exception;
 use GdImage;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\MinAccuracy;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
 
 class FaceDetector {
@@ -350,9 +351,13 @@ class FaceDetector {
 			return null;
 		}
 
-		$scale_accuracy        = ( $max_loops - ( $loops - 1 ) ) / $max_loops * 100;
-		$accuracys             = array( $detection_accuracy, $scale_accuracy );
-		$avg_accuracy          = array_sum( $accuracys ) / count( $accuracys );
+		$scale_accuracy = ( $max_loops - ( $loops - 1 ) ) / $max_loops * 100;
+		$accuracys      = array( $detection_accuracy, $scale_accuracy );
+		$avg_accuracy   = array_sum( $accuracys ) / count( $accuracys );
+		if ( $avg_accuracy < ( new MinAccuracy() )->get_value() ) {
+			return null;
+		}
+
 		$face_data['accuracy'] = $avg_accuracy;
 		return new Face(
 			$face_data

@@ -1,12 +1,12 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\Display;
+namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection;
 
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu;
 
 class Section {
 
-	public const NAME = 'image_crop_positioner_options_display';
+	public const NAME = 'image_crop_positioner_options_php_face_detection';
 
 	public function register_hooks(): void {
 		add_action( 'admin_init', array( $this, 'register_section' ) );
@@ -17,14 +17,14 @@ class Section {
 	}
 
 	public function get_label(): string {
-		return __( 'Display settings', 'image-crop-positioner' );
+		return __( 'PHP face detection', 'image-crop-positioner' );
 	}
 
 	/**
 	 * Render a settings section description based on the section ID
 	 */
 	public function render_description( array $args ): void {
-		$text = esc_html__( 'Here you can change how the plugin displays information.', 'image-crop-positioner' );
+		$text = esc_html__( 'Here you can change the PHP face detection settings.', 'image-crop-positioner' );
 		if ( empty( $text ) ) {
 			return;
 		}

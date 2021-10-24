@@ -4,6 +4,7 @@
  * @var WP_Post
  */
 
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\Enabled as PHPFaceDetectionEnabled;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 
 $attachment = $template->get_arg( 'attachment' );
@@ -61,16 +62,18 @@ $data_config = wp_json_encode(
 	</div>
 
 	<!-- Face detection buttons -->
-	<div class="face-detection">
-		<p><strong><?php esc_html_e( 'Face detection', 'image-crop-positioner' ); ?></strong></p>
-		<p><?php esc_html_e( "Please note this is very basic face detection and won't find everything. Use hotspots to highlight any that were missed.", 'image-crop-positioner' ); ?></p>
-		<button type="button" class="button button__detect-faces-php" <?php display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect face via PHP', 'image-crop-positioner' ); ?></button>
-		<button type="button" class="button button__detect-faces-js" disabled="disabled" <?php display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect faces via JavaScript', 'image-crop-positioner' ); ?><div class="spinner__wrapper"><div class="spinner is-active"></div></div></button>
-		<button type="button" class="button button__save-faces" <?php display_none( true ); ?>><?php esc_html_e( 'Save faces', 'image-crop-positioner' ); ?></button>
-		<button type="button" class="button button__discard-faces" <?php display_none( true ); ?>><?php esc_html_e( 'Discard faces', 'image-crop-positioner' ); ?></button>
-		<button type="button" class="button button__remove-faces" <?php display_none( empty( $faces ) ); ?>><?php esc_html_e( 'Remove faces', 'image-crop-positioner' ); ?></button>
-		<span class="face-detection__message" ></span>
-	</div>
+	<?php if ( ( new PHPFaceDetectionEnabled() )->get_value() ) { ?>
+		<div class="face-detection">
+			<p><strong><?php esc_html_e( 'Face detection', 'image-crop-positioner' ); ?></strong></p>
+			<p><?php esc_html_e( "Please note this is very basic face detection and won't find everything. Use hotspots to highlight any that were missed.", 'image-crop-positioner' ); ?></p>
+			<button type="button" class="button button__detect-faces-php" <?php display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect face via PHP', 'image-crop-positioner' ); ?></button>
+			<button type="button" class="button button__detect-faces-js" disabled="disabled" <?php display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect faces via JavaScript', 'image-crop-positioner' ); ?><div class="spinner__wrapper"><div class="spinner is-active"></div></div></button>
+			<button type="button" class="button button__save-faces" <?php display_none( true ); ?>><?php esc_html_e( 'Save faces', 'image-crop-positioner' ); ?></button>
+			<button type="button" class="button button__discard-faces" <?php display_none( true ); ?>><?php esc_html_e( 'Discard faces', 'image-crop-positioner' ); ?></button>
+			<button type="button" class="button button__remove-faces" <?php display_none( empty( $faces ) ); ?>><?php esc_html_e( 'Remove faces', 'image-crop-positioner' ); ?></button>
+			<span class="face-detection__message" ></span>
+		</div>
+	<?php } ?>
 
 	<!-- Hotspot buttons -->
 	<div class="hotspots-selection">
