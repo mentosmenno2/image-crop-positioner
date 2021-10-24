@@ -25,7 +25,7 @@ $migrators = ( new Migrators() )->get_migrators();
 
 			<div class="migrator__message" ></div>
 
-			<table class="wp-list-table widefat fixed striped" <?php ( new Templates() )->display_none( true ); ?>>
+			<table class="migrator__data-table wp-list-table widefat fixed striped" <?php ( new Templates() )->display_none( true ); ?>>
 				<thead>
 					<tr>
 						<th><?php esc_html_e( 'Migrated', 'image-crop-positioner' ); ?></th>

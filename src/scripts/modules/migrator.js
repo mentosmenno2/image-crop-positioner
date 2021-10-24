@@ -12,6 +12,9 @@ import SpinnerHelper from "../helpers/spinner";
 		const $buttonStart = $element.find( '.migrator__button-start' );
 		const $buttonStop = $element.find( '.migrator__button-stop' );
 		const $message = $element.find( '.migrator__message' );
+		const $dataTable = $element.find( '.migrator__data-table' );
+
+		let isStopQueued = false;
 
 		// Initialize an instance
 		function initialize() {
@@ -27,12 +30,16 @@ import SpinnerHelper from "../helpers/spinner";
 			spinnerHelper.appendToElement( $buttonStart );
 			$buttonStart.attr( 'disabled', true );
 			adminNoticeHelper.setToElementHtml( $message, 'Migration in progress, please wait...', 'info' );
+			$dataTable.show();
+			$buttonStop.attr( 'disabled', false );
+			isStopQueued = false;
 		}
 
 		function stopMigration() {
 			spinnerHelper.appendToElement( $buttonStop );
 			$buttonStop.attr( 'disabled', true );
 			adminNoticeHelper.setToElementHtml( $message, 'Migration stopping, please wait...', 'info' );
+			isStopQueued = true;
 		}
 
 		initialize();
