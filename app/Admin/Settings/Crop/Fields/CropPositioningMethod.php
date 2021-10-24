@@ -1,6 +1,6 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields;
+namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Fields;
 
 class CropPositioningMethod extends BaseField {
 

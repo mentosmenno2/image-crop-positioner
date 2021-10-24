@@ -1,12 +1,12 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\General;
+namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop;
 
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu;
 
 class Section {
 
-	public const NAME = 'image_crop_positioner_options_general';
+	public const NAME = 'image_crop_positioner_options_crop';
 
 	public function register_hooks(): void {
 		add_action( 'admin_init', array( $this, 'register_section' ) );
@@ -17,14 +17,14 @@ class Section {
 	}
 
 	public function get_label(): string {
-		return __( 'General settings', 'image-crop-positioner' );
+		return __( 'Crop settings', 'image-crop-positioner' );
 	}
 
 	/**
 	 * Render a settings section description based on the section ID
 	 */
 	public function render_description( array $args ): void {
-		$text = esc_html__( 'Here you can set the general plugin settings.', 'image-crop-positioner' );
+		$text = esc_html__( 'Here you can set the crop settings.', 'image-crop-positioner' );
 		if ( empty( $text ) ) {
 			return;
 		}

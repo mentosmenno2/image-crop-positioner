@@ -1,8 +1,8 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\General;
+namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop;
 
-use Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields\CropPositioningMethod;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Fields\CropPositioningMethod;
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu;
 
 class Settings {

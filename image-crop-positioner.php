@@ -60,8 +60,8 @@ add_action(
 		( new Mentosmenno2\ImageCropPositioner\Admin() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Crop() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu() )->register_hooks();
-		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Section() )->register_hooks();
-		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Settings() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Section() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Settings() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Display\Section() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Display\Settings() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\ImagePreviews() )->register_hooks();
