@@ -3,7 +3,6 @@
 namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\General;
 
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields\CropPositioningMethod;
-use Mentosmenno2\ImageCropPositioner\Admin\Settings\General\Fields\PostTypes;
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu;
 
 class Settings {
