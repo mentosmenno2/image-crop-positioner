@@ -14,10 +14,16 @@ class Migrators {
 			MyEyesAreUpHere::class,
 		);
 
-		return array_map(
+		$classes = array_map(
 			function( string $classname ): BaseMigrator {
 				return new $classname();
 			}, $classnames
 		);
+		$keys    = array_map(
+			function( BaseMigrator $migrator ): string {
+				return $migrator->get_slug();
+			}, $classes
+		);
+		return array_combine( $keys, $classes );
 	}
 }
