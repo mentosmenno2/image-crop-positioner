@@ -60,7 +60,7 @@ class Migrate extends BaseAjaxCall {
 			'log'        => $log,
 			'pagination' => array(
 				'now_processed_posts'   => $wp_query->post_count,
-				'total_processed_posts' => ( self::BATCH_SIZE * $page ),
+				'total_processed_posts' => ( self::BATCH_SIZE * $page ) - self::BATCH_SIZE + $wp_query->post_count,
 				'total_posts'           => $wp_query->found_posts,
 				'current_page'          => $page,
 				'total_pages'           => $wp_query->max_num_pages,
