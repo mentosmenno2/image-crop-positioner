@@ -1,6 +1,6 @@
 {
     "name": "mentosmenno2/image-crop-positioner",
-    "description": "Facial recognition and hotspot selection for cropping images in WordPress.",
+    "description": "Face recognition and hotspot selection for cropping images in WordPress.",
     "type": "wordpress-plugin",
     "license": "GPL-3.0-or-later",
     "authors": [
@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": ">=7.3"
     },
     "autoload": {
         "psr-4": {
