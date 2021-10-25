@@ -1,0 +1,15 @@
+.image-crop-positioner-spinner {
+	float: none;
+}
+
+.button {
+	margin-top: 0;
+
+	.image-crop-positioner-spinner {
+		margin-top: 0;
+
+		&__wrapper {
+			display: inline-block;
+		}
+	}
+}

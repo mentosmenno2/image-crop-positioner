@@ -9,6 +9,7 @@ use Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields\Enab
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\JSFacesDetection\Fields\Enabled as JSFacesDetectionEnabled;
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\HotspotsSelection\Fields\Enabled as HotspotsSelectionEnabled;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
+use Mentosmenno2\ImageCropPositioner\Templates;
 
 $attachment = $template->get_arg( 'attachment' );
 
@@ -19,18 +20,6 @@ if ( ! wp_attachment_is_image( $attachment ) ) {
 $attachmentmeta = new AttachmentMeta();
 $faces          = $attachmentmeta->get_faces( $attachment->ID );
 $hotspots       = $attachmentmeta->get_hotspots( $attachment->ID );
-
-if ( ! function_exists( 'display_none' ) ) {
-	/**
-	 * @param mixed $display_none
-	 * @param mixed $compare
-	 * @param bool $echo
-	 * @return void|string
-	 */
-	function display_none( $display_none, $compare = true, $echo = true ) {
-		__checked_selected_helper( $display_none, $compare, $echo, 'style="display: none;"' );
-	}
-}
 
 $data_config = wp_json_encode(
 	array(
@@ -77,14 +66,17 @@ $data_config = wp_json_encode(
 			<p><strong><?php esc_html_e( 'Face detection', 'image-crop-positioner' ); ?></strong></p>
 			<p><?php esc_html_e( "Please note this is very basic face detection and won't find everything. Use hotspots to highlight any that were missed.", 'image-crop-positioner' ); ?></p>
 			<?php if ( $php_face_detection_enabled ) { ?>
-				<button type="button" class="button button__detect-faces-php" <?php display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect face via PHP', 'image-crop-positioner' ); ?></button>
+				<button type="button" class="button button__detect-faces-php" <?php ( new Templates() )->display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect face via PHP', 'image-crop-positioner' ); ?></button>
 			<?php } ?>
 			<?php if ( $php_face_detection_enabled ) { ?>
-				<button type="button" class="button button__detect-faces-js" disabled="disabled" <?php display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect faces via JavaScript', 'image-crop-positioner' ); ?><div class="spinner__wrapper"><div class="spinner is-active"></div></div></button>
+				<button type="button" class="button button__detect-faces-js" disabled="disabled" <?php ( new Templates() )->display_none( ! empty( $faces ) ); ?>>
+					<?php esc_html_e( 'Detect faces via JavaScript', 'image-crop-positioner' ); ?>
+					<div class="image-crop-positioner-spinner__wrapper"><div class="spinner image-crop-positioner-spinner is-active"></div></div>
+				</button>
 			<?php } ?>
-			<button type="button" class="button button__save-faces" <?php display_none( true ); ?>><?php esc_html_e( 'Save faces', 'image-crop-positioner' ); ?></button>
-			<button type="button" class="button button__discard-faces" <?php display_none( true ); ?>><?php esc_html_e( 'Discard faces', 'image-crop-positioner' ); ?></button>
-			<button type="button" class="button button__remove-faces" <?php display_none( empty( $faces ) ); ?>><?php esc_html_e( 'Remove faces', 'image-crop-positioner' ); ?></button>
+			<button type="button" class="button button__save-faces" <?php ( new Templates() )->display_none( true ); ?>><?php esc_html_e( 'Save faces', 'image-crop-positioner' ); ?></button>
+			<button type="button" class="button button__discard-faces" <?php ( new Templates() )->display_none( true ); ?>><?php esc_html_e( 'Discard faces', 'image-crop-positioner' ); ?></button>
+			<button type="button" class="button button__remove-faces" <?php ( new Templates() )->display_none( empty( $faces ) ); ?>><?php esc_html_e( 'Remove faces', 'image-crop-positioner' ); ?></button>
 			<span class="face-detection__message" ></span>
 		</div>
 	<?php } ?>
@@ -94,8 +86,8 @@ $data_config = wp_json_encode(
 	<div class="hotspots-selection">
 		<p><strong><?php esc_html_e( 'Hotspot selection', 'image-crop-positioner' ); ?></strong></p>
 		<button type="button" class="button button__edit-hotspots"><?php esc_html_e( 'Edit hotspots', 'image-crop-positioner' ); ?></button>
-		<button type="button" class="button button__save-hotspots" <?php display_none( true ); ?>><?php esc_html_e( 'Save hotspots', 'image-crop-positioner' ); ?></button>
-		<button type="button" class="button button__discard-hotspots" <?php display_none( true ); ?>><?php esc_html_e( 'Discard changes', 'image-crop-positioner' ); ?></button>
+		<button type="button" class="button button__save-hotspots" <?php ( new Templates() )->display_none( true ); ?>><?php esc_html_e( 'Save hotspots', 'image-crop-positioner' ); ?></button>
+		<button type="button" class="button button__discard-hotspots" <?php ( new Templates() )->display_none( true ); ?>><?php esc_html_e( 'Discard changes', 'image-crop-positioner' ); ?></button>
 		<span class="hotspot-selection__message" ></span>
 	</div>
 	<?php } ?>

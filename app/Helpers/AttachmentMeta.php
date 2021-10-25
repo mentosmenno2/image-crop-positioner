@@ -7,8 +7,30 @@ use Mentosmenno2\ImageCropPositioner\Objects\Hotspot;
 
 class AttachmentMeta {
 
-	public const META_KEY_FACES    = 'image_crop_positioner_faces';
-	public const META_KEY_HOTSPOTS = 'image_crop_positioner_hotspots';
+	public const META_KEY_UPDATED_TIMESTAMP = 'image_crop_positioner_updated_timestamp';
+	public const META_KEY_FACES             = 'image_crop_positioner_faces';
+	public const META_KEY_HOTSPOTS          = 'image_crop_positioner_hotspots';
+
+	/**
+	 * @param integer $attachment_id
+	 * @return int
+	 */
+	public function get_updated_timestamp( int $attachment_id ): int {
+		$timestamp = get_post_meta( $attachment_id, self::META_KEY_UPDATED_TIMESTAMP, true );
+		if ( ! is_numeric( $timestamp ) ) {
+			$timestamp = 0;
+		}
+
+		return (int) $timestamp;
+	}
+
+	/**
+	 * @param integer $attachment_id
+	 * @param int $timestamp
+	 */
+	public function set_updated_timestamp( int $attachment_id, int $timestamp ): void {
+		update_post_meta( $attachment_id, self::META_KEY_UPDATED_TIMESTAMP, $timestamp );
+	}
 
 	/**
 	 * @param integer $attachment_id

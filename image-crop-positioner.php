@@ -58,6 +58,7 @@ add_action(
 		( new Mentosmenno2\ImageCropPositioner\Conflicts() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Assets() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Cache() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Crop() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Section() )->register_hooks();
@@ -70,6 +71,7 @@ add_action(
 		( new Mentosmenno2\ImageCropPositioner\Admin\Settings\HotspotsSelection\Settings() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\ImagePreviews() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\FaceDetection() )->register_hooks();
+		( new Mentosmenno2\ImageCropPositioner\Ajax\Migrate() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\SaveFaces() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\RemoveFaces() )->register_hooks();
 		( new Mentosmenno2\ImageCropPositioner\Ajax\SaveHotspots() )->register_hooks();

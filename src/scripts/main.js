@@ -1,4 +1,5 @@
 import './global/edit-image-screen.js';
+import './modules/migrator.js';
 import 'jquery.facedetection';
 
 ( function( app, $ ) {
