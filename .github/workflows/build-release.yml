@@ -78,6 +78,7 @@ jobs:
           git config --global user.email "github-build-release-bot@users.noreply.github.com"
           git config --global user.name "[BOT] Build Release"
           git add -A --force dist/
+          git add -A --force languages/
           git commit -m "Asset build" -a
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
