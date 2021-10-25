@@ -21,10 +21,10 @@ This plugin allows you to better crop your images, based on face detection or ho
 
 ## Example images
 
-### Face detection
+### Faces detection
 
-![Example of face detection](./docs/assets/face-detection.jpg "Example of face detection")
+![Example of faces detection](./docs/assets/face-detection.jpg "Example of face detection")
 
-### Hotspot selection
+### Hotspots selection
 
-![Example of hotspot selection](./docs/assets/hotspot-selection.jpg "Example of hotspot selection")
+![Example of hotspots selection](./docs/assets/hotspot-selection.jpg "Example of hotspot selection")
