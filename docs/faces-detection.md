@@ -1,10 +1,10 @@
-# Face detection
+# Faces detection
 
 This plugin has the option to detect faces in images.
 There are two ways to detect faces in your image.
 You can detect faces via PHP or via JavaScript.
 
-![Example of face detection](./assets/face-detection.jpg "Example of face detection")
+![Example of faces detection](./assets/face-detection.jpg "Example of face detection")
 
 ## Face detection via PHP (only supports 1 face)
 
