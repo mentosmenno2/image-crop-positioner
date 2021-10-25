@@ -1,5 +1,7 @@
 # Installation
 
+Please make sure you meet the [requirements](./requirements.md) before installing this plugin.
+
 ## Upload zip via WP-admin (recommended)
 
 1. Go to the [releases tab](https://github.com/mentosmenno2/image-crop-positioner/releases) and find the latest release.
