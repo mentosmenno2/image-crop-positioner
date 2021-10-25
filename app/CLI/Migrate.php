@@ -34,27 +34,17 @@ class Migrate {
 	 */
 	public function my_eyes_are_up_here( array $args, array $assoc_args ): void {
 		$per_page = (int) ( $assoc_args['per-page'] ?? -1 );
-		$page     = (int) ( $assoc_args['per-page'] ?? 1 );
+		$page     = (int) ( $assoc_args['page'] ?? 1 );
 
 		WP_CLI::log( "Retrieving attachments (page: $page, per page: $per_page)" );
 
-		$args = array(
-			'post_type'      => 'attachment',
-			'post_status'    => 'any',
-			'posts_per_page' => $per_page,
-			'paged'          => $page,
-			'fields'         => 'ids',
-			'order'          => 'ASC',
-			'orderby'        => 'ID',
-			'no_found_rows'  => true,
-		);
+		$migrator    = new MyEyesAreUpHere();
+		$wp_query    = $migrator->get_migratable_attachment_ids( $page, $per_page );
+		$posts_count = $wp_query->post_count;
 
 		/** @var int[] */
-		$post_ids    = get_posts( $args );
-		$posts_count = count( $post_ids );
-
-		$migrator = new MyEyesAreUpHere();
-		foreach ( $post_ids as $index => $post_id ) {
+		$posts = $wp_query->posts;
+		foreach ( $posts as $index => $post_id ) {
 			WP_CLI::log( "Migrating attachment ID: $post_id" );
 			$status = $migrator->migrate_attachment( $post_id );
 			if ( $status === MyEyesAreUpHere::STATUS_DONE ) {

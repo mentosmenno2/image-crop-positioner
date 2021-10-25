@@ -10,37 +10,41 @@ $migrators = ( new Migrators() )->get_migrators();
 	<?php
 	foreach ( $migrators as $migrator ) {
 		$data_config = wp_json_encode(
-			array()
+			array(
+				'migrator_slug' => $migrator->get_slug(),
+			)
 		) ?: '';
 		?>
 		<h2><?php echo esc_html( $migrator->get_title() ); ?></h2>
 
-		<div class="migrator" data-image-crop-positioner-module="migrator" data-config="<?php echo esc_attr( $data_config ); ?>">
+		<div class="image-crop-positioner-migrator" data-image-crop-positioner-module="migrator" data-config="<?php echo esc_attr( $data_config ); ?>">
 			<p><?php echo wp_kses_post( $migrator->get_description() ); ?></p>
 
 			<div>
-				<button type="button" class="button migrator__button-start"><?php esc_html_e( 'Start migration', 'image-crop-positioner' ); ?></button>
-				<button type="button" class="button migrator__button-stop" disabled="disabled"><?php esc_html_e( 'Stop migration', 'image-crop-positioner' ); ?></button>
+				<button type="button" class="button image-crop-positioner-migrator__button-start"><?php esc_html_e( 'Start migration', 'image-crop-positioner' ); ?></button>
+				<button type="button" class="button image-crop-positioner-migrator__button-stop" disabled="disabled"><?php esc_html_e( 'Stop migration', 'image-crop-positioner' ); ?></button>
 			</div>
 
-			<div class="migrator__message" ></div>
+			<div class="image-crop-positioner-migrator__message" ></div>
 
-			<table class="migrator__data-table wp-list-table widefat fixed striped" <?php ( new Templates() )->display_none( true ); ?>>
-				<thead>
-					<tr>
-						<th><?php esc_html_e( 'Migrated', 'image-crop-positioner' ); ?></th>
-						<th><?php esc_html_e( 'Skipped', 'image-crop-positioner' ); ?></th>
-						<th><?php esc_html_e( 'Total processed', 'image-crop-positioner' ); ?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>0 / <?php esc_html_e( 'Unknown', 'image-crop-positioner' ); ?></td>
-						<td>0 / <?php esc_html_e( 'Unknown', 'image-crop-positioner' ); ?></td>
-						<td>0 / <?php esc_html_e( 'Unknown', 'image-crop-positioner' ); ?></td>
-					</tr>
-				</tbody>
-			</table>
+			<?php
+			( new Templates() )->echo_template(
+				'partials/progress-bar', array(
+					'min_value'     => 0,
+					'max_value'     => 0,
+					'current_value' => 0,
+					'display_type'  => 'progress',
+					'attributes'    => array(
+						'style' => 'display: none;',
+					),
+				)
+			);
+			?>
+
+			<div class="image-crop-positioner-migrator__log" >
+				<button type="button" class="button image-crop-positioner-migrator__log-button"><?php esc_html_e( 'Show/hide log', 'image-crop-positioner' ); ?></button>
+				<pre class="image-crop-positioner-migrator__log-content" ></pre>
+			</div>
 		</div>
 	<?php } ?>
 </div>

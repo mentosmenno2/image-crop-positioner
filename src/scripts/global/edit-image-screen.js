@@ -253,7 +253,7 @@ import SpinnerHelper from "../helpers/spinner";
 					},
 					error ( code, errorMessage ) {
 						enableAllDetections();
-						adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), code + ': ' + errorMessage, 'error' );
+						adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), `${code}: ${errorMessage}`, 'error' );
 
 						spinnerHelper.removeFromElement( getDetectFacesJsButton() );
 						getDetectFacesJsButton().prop( 'disabled', false );

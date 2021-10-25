@@ -2,6 +2,8 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Migrators;
 
+use WP_Query;
+
 abstract class BaseMigrator {
 
 	public const STATUS_SKIPPED = 0;
@@ -29,4 +31,26 @@ abstract class BaseMigrator {
 	 * @return self::STATUS_*
 	 */
 	abstract public function migrate_attachment( int $attachment_id ): int;
+
+	public function get_migratable_attachment_ids( int $page = 1, int $per_page = -1 ): WP_Query {
+		$image_mimes = array_filter(
+			get_allowed_mime_types(), function( string $mime ): bool {
+				return strpos( $mime, 'image/' ) === 0;
+			}
+		);
+
+		$args = array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'any',
+			'posts_per_page' => $per_page,
+			'paged'          => $page,
+			'fields'         => 'ids',
+			'order'          => 'ASC',
+			'orderby'        => 'ID',
+			'post_mime_type' => $image_mimes,
+		);
+
+		$wp_query = new WP_Query( $args );
+		return $wp_query;
+	}
 }
