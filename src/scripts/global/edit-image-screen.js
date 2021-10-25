@@ -1,4 +1,6 @@
 import devTools from "devtools-detect";
+import AdminNoticeHelper from "../helpers/admin-notice";
+import SpinnerHelper from "../helpers/spinner";
 
 ( function( $, app ) {
 
@@ -7,6 +9,9 @@ import devTools from "devtools-detect";
 	 * Cannot be initialized as a module, because WordPress replaces the instance everytime the window is re-opened.
 	 */
 	app.editImageScreen = function() {
+
+		const spinnerHelper = new SpinnerHelper();
+		const adminNoticeHelper = new AdminNoticeHelper();
 
 		let config = {};
 		let tempHotspots = [];
@@ -45,7 +50,7 @@ import devTools from "devtools-detect";
 
 		function previewImageLoaded() {
 			getDetectFacesJsButton().attr( 'disabled', false );
-			removeSpinnerHtml( getDetectFacesJsButton() );
+			spinnerHelper.removeFromElement( getDetectFacesJsButton() );
 		}
 
 		/**
@@ -55,7 +60,7 @@ import devTools from "devtools-detect";
 		 */
 
 		function reloadImagePreviews() {
-			getChildElement( '.image-previews__images' ).html( getSpinnerHtml() );
+			spinnerHelper.setToElementHtml( getChildElement( '.image-previews__images' ) );
 
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
@@ -79,7 +84,7 @@ import devTools from "devtools-detect";
 					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
-					getChildElement( '.image-previews__images' ).html( getAdminNoticeHtml( errorMessage, 'error' ) );
+					adminNoticeHelper.setToElementHtml( getChildElement( '.image-previews__images' ), errorMessage, 'error' );
 				} );
 		}
 
@@ -121,8 +126,8 @@ import devTools from "devtools-detect";
 		 */
 
 		function disableAllDetections() {
-			getFaceDetectionMessage().empty();
-			getHotspotSelectionMessage().empty();
+			adminNoticeHelper.removeFromElement( getFaceDetectionMessage() );
+			adminNoticeHelper.removeFromElement( getHotspotSelectionMessage() );
 			getDetectFacesPhpButton().prop( 'disabled', true );
 			getDetectFacesJsButton().prop( 'disabled', true );
 			getRemoveFacesButton().prop( 'disabled', true );
@@ -151,7 +156,7 @@ import devTools from "devtools-detect";
 
 		function detectFacesPhp() {
 			disableAllDetections();
-			getDetectFacesPhpButton().append( getSpinnerHtml() );
+			spinnerHelper.appendToElement( getDetectFacesPhpButton() );
 
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
@@ -169,14 +174,14 @@ import devTools from "devtools-detect";
 					getSaveFacesButton().attr( 'data-faces', JSON.stringify( data.data.faces ) );
 					showFaces( data.data.faces );
 					if ( data.data.faces.length > 0 ) {
-						getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found face is correct.', 'info' ) );
+						adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'Please confirm that the found face is correct.', 'info' );
 						getDetectFacesPhpButton().hide();
 						getDetectFacesJsButton().hide();
 						getSaveFacesButton().show();
 						getDiscardFacesButton().show();
 					} else {
 						enableAllDetections();
-						getFaceDetectionMessage().html( getAdminNoticeHtml( 'No face found.', 'warning' ) );
+						adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'No face found.', 'warning' );
 					}
 				} )
 				.fail( function( jqXHR ) {
@@ -185,22 +190,22 @@ import devTools from "devtools-detect";
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
 					enableAllDetections();
-					getFaceDetectionMessage().html( getAdminNoticeHtml( errorMessage, 'error' ) );
+					adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), errorMessage, 'error' );
 				} )
 				.always( function() {
-					removeSpinnerHtml( getDetectFacesPhpButton() );
+					spinnerHelper.removeFromElement( getDetectFacesPhpButton() );
 					getDetectFacesPhpButton().prop( 'disabled', false );
 				} );
 		}
 
 		function detectFacesJs() {
 			if ( devTools.isOpen ) {
-				getFaceDetectionMessage().html( getAdminNoticeHtml( 'Face detection via JavaScript does not work when devtools is open. Please close your devtools and try again.', 'error' ) );
+				adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'Face detection via JavaScript does not work when devtools is open. Please close your devtools and try again.', 'error' );
 				return;
 			}
 
 			disableAllDetections();
-			getDetectFacesJsButton().append( getSpinnerHtml() );
+			spinnerHelper.appendToElement( getDetectFacesJsButton() );
 
 			// Put it in a setTimeout so JavaScript will run it a little bit later, making sure the spinner works.
 			setTimeout( () => {
@@ -209,11 +214,6 @@ import devTools from "devtools-detect";
 		}
 
 		function detectFacesJsBackgroundTask() {
-			if ( devTools.isOpen ) {
-				getFaceDetectionMessage().html( getAdminNoticeHtml( 'Face detection via JavaScript does not work when devtools is open. Please close your devtools and try again.', 'error' ) );
-				return;
-			}
-
 			try {
 				getPreviewImage().faceDetection( {
 					complete( foundFaces ) {
@@ -239,31 +239,30 @@ import devTools from "devtools-detect";
 						getSaveFacesButton().attr( 'data-faces', JSON.stringify( foundFaces ) );
 						showFaces( foundFaces );
 						if ( foundFaces.length > 0 ) {
-							getFaceDetectionMessage().html( getAdminNoticeHtml( 'Please confirm that the found faces are correct.', 'info' ) );
+							adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'Please confirm that the found faces are correct.', 'info' );
 							getDetectFacesPhpButton().hide();
 							getDetectFacesJsButton().hide();
 							getSaveFacesButton().show();
 							getDiscardFacesButton().show();
 						} else {
-							getFaceDetectionMessage().html( getAdminNoticeHtml( 'No faces found.', 'warning' ) );
+							adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'No faces found.', 'warning' );
 						}
 
-						removeSpinnerHtml( getDetectFacesJsButton() );
+						spinnerHelper.removeFromElement( getDetectFacesJsButton() );
 						getDetectFacesJsButton().prop( 'disabled', false );
 					},
 					error ( code, errorMessage ) {
 						enableAllDetections();
-						getFaceDetectionMessage().html( getAdminNoticeHtml( code + ': ' + errorMessage, 'error' ) );
+						adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), `${code}: ${errorMessage}`, 'error' );
 
-						removeSpinnerHtml( getDetectFacesJsButton() );
+						spinnerHelper.removeFromElement( getDetectFacesJsButton() );
 						getDetectFacesJsButton().prop( 'disabled', false );
 					}
 				} );
 			} catch ( error ) {
 				enableAllDetections();
-				getFaceDetectionMessage().html( getAdminNoticeHtml( 'JavaScript faces detection failed for this picture.', 'error' ) );
-
-				removeSpinnerHtml( getDetectFacesJsButton() );
+				adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'JavaScript faces detection failed for this picture.', 'error' );
+				spinnerHelper.removeFromElement( getDetectFacesJsButton() );
 				getDetectFacesJsButton().prop( 'disabled', false );
 			}
 		}
@@ -275,14 +274,14 @@ import devTools from "devtools-detect";
 			getDiscardFacesButton().hide();
 			getSaveFacesButton().hide();
 			enableAllDetections();
-			getFaceDetectionMessage().empty();
+			adminNoticeHelper.removeFromElement( getFaceDetectionMessage() );
 		}
 
 		function saveFaces() {
-			getSaveFacesButton().append( getSpinnerHtml() );
+			spinnerHelper.appendToElement( getSaveFacesButton() );
 			getSaveFacesButton().prop( 'disabled', true );
 			getDiscardFacesButton().prop( 'disabled', true );
-			getFaceDetectionMessage().empty();
+			adminNoticeHelper.removeFromElement( getFaceDetectionMessage() );
 
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
@@ -304,17 +303,17 @@ import devTools from "devtools-detect";
 					getDiscardFacesButton().hide();
 					getRemoveFacesButton().show();
 					enableAllDetections();
-					getFaceDetectionMessage().html( getAdminNoticeHtml( 'Faces are saved.', 'success' ) );
+					adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'Faces are saved.', 'success' );
 				} )
 				.fail( function( jqXHR ) {
 					let errorMessage = 'Error';
 					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
-					getFaceDetectionMessage().html( getAdminNoticeHtml( errorMessage, 'error' ) );
+					adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), errorMessage, 'error' );
 				} )
 				.always( function() {
-					removeSpinnerHtml( getSaveFacesButton() );
+					spinnerHelper.removeFromElement( getSaveFacesButton() );
 					getSaveFacesButton().prop( 'disabled', false );
 					getDiscardFacesButton().prop( 'disabled', false );
 				} );
@@ -322,7 +321,7 @@ import devTools from "devtools-detect";
 
 		function removeFaces() {
 			disableAllDetections();
-			getRemoveFacesButton().append( getSpinnerHtml() );
+			spinnerHelper.appendToElement( getRemoveFacesButton() );
 
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
@@ -343,17 +342,17 @@ import devTools from "devtools-detect";
 					getDetectFacesPhpButton().show();
 					getDetectFacesJsButton().show();
 					enableAllDetections();
-					getFaceDetectionMessage().html( getAdminNoticeHtml( 'Faces are removed.', 'success' ) );
+					adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'Faces are removed.', 'success' );
 				} )
 				.fail( function( jqXHR ) {
 					let errorMessage = 'Error';
 					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
-					getFaceDetectionMessage().html( getAdminNoticeHtml( errorMessage, 'error' ) );
+					adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), errorMessage, 'error' );
 				} )
 				.always( function() {
-					removeSpinnerHtml( getRemoveFacesButton() );
+					spinnerHelper.removeFromElement( getRemoveFacesButton() );
 					getRemoveFacesButton().prop( 'disabled', false );
 				} );
 		}
@@ -376,7 +375,7 @@ import devTools from "devtools-detect";
 			hideSpots();
 			showHotspots( tempHotspots );
 			disableAllDetections();
-			getHotspotSelectionMessage().html( getAdminNoticeHtml( 'Please click on an empty area of the image to add hotspots, or on a hotspot to delete it.', 'info' ) );
+			adminNoticeHelper.setToElementHtml( getHotspotSelectionMessage(), 'Please click on an empty area of the image to add hotspots, or on a hotspot to delete it.', 'info' );
 			getEditHotspotsButton().hide();
 			getSaveHotspotsButton().show();
 			getDiscardHotspotsButton().show();
@@ -393,14 +392,14 @@ import devTools from "devtools-detect";
 			getSaveHotspotsButton().hide();
 			getDiscardHotspotsButton().hide();
 			enableAllDetections();
-			getFaceDetectionMessage().empty();
+			adminNoticeHelper.removeFromElement( getFaceDetectionMessage() );
 		}
 
 		function saveHotspots() {
-			getSaveHotspotsButton().append( getSpinnerHtml() );
+			spinnerHelper.appendToElement( getSaveHotspotsButton() );
 			getSaveHotspotsButton().prop( 'disabled', true );
 			getDiscardHotspotsButton().prop( 'disabled', true );
-			getHotspotSelectionMessage().empty();
+			adminNoticeHelper.removeFromElement( getHotspotSelectionMessage() );
 			removeEditHotspotsEventListeners();
 
 			$.ajax( {
@@ -423,18 +422,18 @@ import devTools from "devtools-detect";
 					getDiscardHotspotsButton().hide();
 					getEditHotspotsButton().show();
 					enableAllDetections();
-					getHotspotSelectionMessage().html( getAdminNoticeHtml( 'Hotspots are saved.', 'success' ) );
+					adminNoticeHelper.setToElementHtml( getHotspotSelectionMessage(), 'Hotspots are saved.', 'success' );
 				} )
 				.fail( function( jqXHR ) {
 					let errorMessage = 'Error';
 					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
-					getHotspotSelectionMessage().html( getAdminNoticeHtml( errorMessage, 'error' ) );
+					adminNoticeHelper.setToElementHtml( getHotspotSelectionMessage(), errorMessage, 'error' );
 					addEditHotspotsEventListeners();
 				} )
 				.always( function() {
-					removeSpinnerHtml( getSaveHotspotsButton() );
+					spinnerHelper.removeFromElement( getSaveHotspotsButton() );
 					getSaveHotspotsButton().prop( 'disabled', false );
 					getDiscardHotspotsButton().prop( 'disabled', false );
 				} );
@@ -544,27 +543,6 @@ import devTools from "devtools-detect";
 
 		function getHotspotSelectionMessage() {
 			return getChildElement( '.hotspot-selection__message' );
-		}
-
-		/**
-		 * ##########
-		 * HTML generators
-		 * ##########
-		 */
-		function getSpinnerHtml() {
-			return '<div class="spinner__wrapper"><div class="spinner is-active"></div></div>';
-		}
-
-		function getAdminNoticeHtml( message, type = 'info', isDismissable = false ) {
-			const $newNoticeElement = $( `<div class="notice notice-${type} inline" >${message}</div>` );
-			if ( isDismissable ) {
-				$newNoticeElement.addClass( 'is-dismissable' );
-			}
-			return $newNoticeElement;
-		}
-
-		function removeSpinnerHtml( $element ) {
-			return $element.find( '.spinner__wrapper' ).remove();
 		}
 
 		initialize();

@@ -6,10 +6,20 @@ use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
 use Mentosmenno2\ImageCropPositioner\Objects\Hotspot;
 
-class MyEyesAreUpHere {
+class MyEyesAreUpHere extends BaseMigrator {
 
-	public const STATUS_SKIPPED = 0;
-	public const STATUS_DONE    = 1;
+	public function get_slug(): string {
+		return 'my_eyes_are_up_here';
+	}
+
+	public function get_title(): string {
+		return __( 'My Eyes Are Up Here', 'image-crop-positioner' );
+	}
+
+	public function get_description(): string {
+		$url = 'https://wordpress.org/plugins/my-eyes-are-up-here/';
+		return sprintf( __( 'Migrate faces and hotspots from the <a href="%s" target="_blank">My Eyes Are Up Here</a> plugin.', 'image-crop-positioner' ), $url );
+	}
 
 	public function migrate_attachment( int $attachment_id ): int {
 		$statuses = $this->get_migrations( $attachment_id );
