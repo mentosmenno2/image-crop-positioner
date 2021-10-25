@@ -2,6 +2,7 @@
 
 namespace Mentosmenno2\ImageCropPositioner\CLI;
 
+use Mentosmenno2\ImageCropPositioner\Migrators\Migrators;
 use Mentosmenno2\ImageCropPositioner\Migrators\MyEyesAreUpHere;
 use WP_CLI;
 
@@ -10,11 +11,12 @@ class Migrate {
 	protected const PROGRESS_DISPLAY_BATCH_SIZE = 20;
 
 	/**
-	 * Migrate attachments from my-eyes-are-up-here to image-crop-positioner
-	 *
-	 * @subcommand my-eyes-are-up-here
+	 * Migrate attachments from a migrator to image-crop-positioner
 	 *
 	 * ## OPTIONS
+	 *
+	 * <migrator_slug>
+	 * : Slug of a migrator
 	 *
 	 * [--per-page=<int>]
 	 * : How many attachments are in a page. Use -1 for all attachments.
@@ -30,9 +32,15 @@ class Migrate {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp image-crop-positioner migrate my-eyes-are-up-here --per-page=100 --page=1
+	 *     wp image-crop-positioner migrate attachments my_eyes_are_up_here --per-page=100 --page=1
 	 */
-	public function my_eyes_are_up_here( array $args, array $assoc_args ): void {
+	public function attachments( array $args, array $assoc_args ): void {
+		$migrator_slug = $args[0];
+		$migrators     = ( new Migrators() )->get_migrators();
+		if ( ! array_key_exists( $migrator_slug, $migrators ) ) {
+			WP_CLI::error( sprintf( 'Migrator does not exist. Please select one of: %s', implode( ', ', array_keys( $migrators ) ) ) );
+		}
+
 		$per_page = (int) ( $assoc_args['per-page'] ?? -1 );
 		$page     = (int) ( $assoc_args['page'] ?? 1 );
 
