@@ -22,9 +22,9 @@ wp image-crop-positioner face-detection save-image "\path\to\input_image.jpg" "\
 
 ## Migrate
 
-### My Eyes Are Up Here
+### Attachments
 
-Migrate all attachment faces and hotspots from My Eyes Are Up Here to Image Crop Positioner
+Migrate all attachments from another plugin.
 
 ```sh
 wp image-crop-positioner migrate attachments my_eyes_are_up_here --per-page=100 --page=1
