@@ -54,7 +54,7 @@ class Cache {
 		$url = add_query_arg( 'image-crop-positioner-ts', $updated_date, $url );
 		return $url;
 	}
-	
+
 	public function change_attachment_srcset( array $sources, array $size_array, string $image_src, array $image_meta, int $attachment_id ): array {
 		$updated_date = ( new AttachmentMeta() )->get_updated_timestamp( $attachment_id );
 		if ( ! $updated_date ) {
