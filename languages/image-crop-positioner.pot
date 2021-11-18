@@ -1,0 +1,251 @@
+# Copyright (C) 2021 mentosmenno2
+# This file is distributed under the same license as the Image Crop Positioner plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Image Crop Positioner 0.1.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/image-crop-positioner\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-11-18T14:08:40+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Domain: image-crop-positioner\n"
+
+#. Plugin Name of the plugin
+#: app/Admin/Settings/Menu.php:17
+#: app/Admin/Settings/Menu.php:18
+#: app/Conflicts.php:56
+msgid "Image Crop Positioner"
+msgstr ""
+
+#. Description of the plugin
+msgid "Face recognition and hotspot selection for cropping images in WordPress."
+msgstr ""
+
+#. Author of the plugin
+msgid "mentosmenno2"
+msgstr ""
+
+#: app/Admin.php:28
+msgid "Image crop position"
+msgstr ""
+
+#: app/Admin/Settings/Crop/Fields/CropPositioningMethod.php:14
+msgid "Crop positioning method"
+msgstr ""
+
+#: app/Admin/Settings/Crop/Fields/CropPositioningMethod.php:18
+msgid "The method used to determine the correct crop position."
+msgstr ""
+
+#: app/Admin/Settings/Crop/Fields/CropPositioningMethod.php:32
+msgid "Center of all spots"
+msgstr ""
+
+#: app/Admin/Settings/Crop/Fields/CropPositioningMethod.php:33
+msgid "Average of all spots"
+msgstr ""
+
+#: app/Admin/Settings/Crop/Section.php:20
+msgid "Crop"
+msgstr ""
+
+#: app/Admin/Settings/Crop/Section.php:27
+msgid "Here you can set the crop settings."
+msgstr ""
+
+#: app/Admin/Settings/HotspotsSelection/Fields/Enabled.php:14
+#: app/Admin/Settings/JSFacesDetection/Fields/Enabled.php:14
+#: app/Admin/Settings/PHPFaceDetection/Fields/Enabled.php:16
+msgid "Enabled"
+msgstr ""
+
+#: app/Admin/Settings/HotspotsSelection/Fields/Enabled.php:18
+msgid "Enable hotspots selection."
+msgstr ""
+
+#: app/Admin/Settings/HotspotsSelection/Section.php:20
+msgid "Hotspots selection"
+msgstr ""
+
+#: app/Admin/Settings/HotspotsSelection/Section.php:27
+msgid "Here you can change the hotspots selection settings."
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Fields/Enabled.php:18
+msgid "Enable JS faces detection."
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Fields/MinAccuracy.php:16
+#: app/Admin/Settings/PHPFaceDetection/Fields/MinAccuracy.php:16
+msgid "Minimum accuracy"
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Fields/MinAccuracy.php:24
+msgid "Please select how accurate faces detections must be to be used."
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Section.php:20
+msgid "JavaScript faces detection"
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Section.php:27
+msgid "Here you can change the JS faces detection settings."
+msgstr ""
+
+#: app/Admin/Settings/Menu.php:37
+msgid "Settings"
+msgstr ""
+
+#: app/Admin/Settings/Menu.php:41
+msgid "Migrate"
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/AutoDetectOnUpload.php:16
+msgid "Auto detect and crop"
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/AutoDetectOnUpload.php:24
+msgid "After uploading an image, automatically attempt to detect a face and crop the image."
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/Enabled.php:25
+msgid "Cannot enable PHP face detection because your system does not need the requirements."
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/Enabled.php:27
+msgid "Enable PHP face detection."
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/MinAccuracy.php:24
+msgid "Please select how accurate face detections must be to be used."
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Section.php:20
+msgid "PHP face detection"
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Section.php:27
+msgid "Here you can change the PHP face detection settings."
+msgstr ""
+
+#: app/Ajax/BaseAjaxCall.php:15
+msgid "Invalid nonce."
+msgstr ""
+
+#: app/Ajax/BaseAjaxCall.php:28
+msgid "Invalid attachment ID."
+msgstr ""
+
+#: app/Ajax/BaseAjaxCall.php:40
+msgid "Attachment is not an image."
+msgstr ""
+
+#: app/Ajax/FaceDetection.php:34
+msgid "Attachment has no file path."
+msgstr ""
+
+#: app/Ajax/Migrate.php:33
+msgid "Invalid validator slug"
+msgstr ""
+
+#: app/Ajax/Migrate.php:52
+msgid "Migrated"
+msgstr ""
+
+#: app/Ajax/Migrate.php:52
+msgid "Skipped"
+msgstr ""
+
+#: app/Ajax/RemoveFaces.php:37
+#: app/Ajax/SaveFaces.php:53
+#: app/Ajax/SaveHotspots.php:53
+msgid "Could not regenerate images."
+msgstr ""
+
+#: app/Ajax/SaveFaces.php:28
+msgid "Invalid faces."
+msgstr ""
+
+#: app/Ajax/SaveHotspots.php:28
+msgid "Invalid hotspots."
+msgstr ""
+
+#: app/Conflicts.php:57
+msgid "The plugin has been automatically disabled because the following conflicting plugins are active:"
+msgstr ""
+
+#: app/Migrators/MyEyesAreUpHere.php:16
+msgid "My Eyes Are Up Here"
+msgstr ""
+
+#: app/Migrators/MyEyesAreUpHere.php:21
+msgid "Migrate faces and hotspots from the <a href=\"%s\" target=\"_blank\">My Eyes Are Up Here</a> plugin."
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:41
+msgid "Image size previews"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:46
+msgid "The important spots on the image"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:66
+msgid "Face detection"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:67
+msgid "Please note this is very basic face detection and won't find everything. Use hotspots to highlight any that were missed."
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:69
+msgid "Detect face via PHP"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:73
+msgid "Detect faces via JavaScript"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:77
+msgid "Save faces"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:78
+msgid "Discard faces"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:79
+msgid "Remove faces"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:87
+msgid "Hotspot selection"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:88
+msgid "Edit hotspots"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:89
+msgid "Save hotspots"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:90
+msgid "Discard changes"
+msgstr ""
+
+#: templates/admin/settings/pages/migrate.php:24
+msgid "Start migration"
+msgstr ""
+
+#: templates/admin/settings/pages/migrate.php:25
+msgid "Stop migration"
+msgstr ""
+
+#: templates/admin/settings/pages/migrate.php:45
+msgid "Show/hide log"
+msgstr ""
