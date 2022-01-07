@@ -245,6 +245,7 @@ import SpinnerHelper from "../helpers/spinner";
 							getSaveFacesButton().show();
 							getDiscardFacesButton().show();
 						} else {
+							enableAllDetections();
 							adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'No faces found.', 'warning' );
 						}
 
