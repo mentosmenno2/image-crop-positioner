@@ -24,10 +24,9 @@ $image_src      = wp_get_attachment_image_src( $attachment->ID, 'full' )[0] ?? '
 
 // If image is hosted on external url (like an image bucket), convert it to a data image.
 if ( strpos( $image_src, home_url() ) !== 0 ) {
-	$image_data = file_get_contents( $image_src ) ?: '';
-	if ( ! empty( $image_data ) ) {
-		$image_type = pathinfo( $image_src, PATHINFO_EXTENSION );
-		$image_src  = 'data:image/' . $image_type . ';base64,' . base64_encode( $image_data );
+	$image_data = wp_remote_get( $image_src ) ?: '';
+	if ( ! $image_data instanceof WP_Error && ! empty( $image_data['body'] ) && ! empty( $image_data['content-type'] ) ) {
+		$image_src = 'data:' . $image_data['content-type'] . ';base64,' . base64_encode( $image_data['body'] ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 	}
 }
 
@@ -60,14 +59,6 @@ $data_config = wp_json_encode(
 			id="image-crop-positioner-image-spots-preview-image"
 			src="<?php echo esc_attr( $image_src ); ?>"
 		>
-		<?php
-		// echo wp_get_attachment_image(
-		// 	$attachment->ID, 'full', false, array(
-		// 		'class' => 'image-spots-preview__image',
-		// 		'id'    => 'image-crop-positioner-image-spots-preview-image',
-		// 	)
-		// );
-		?>
 		<div class="image-spots-preview__spots"></div>
 	</div>
 
