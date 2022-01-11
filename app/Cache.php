@@ -27,12 +27,13 @@ class Cache {
 
 	/**
 	 * @param array|false $image
-	 * @param integer $attachment_id
+	 * @param int|string $attachment_id
 	 * @param string $size
 	 * @return array|false
 	 */
-	public function change_attachment_src( $image, int $attachment_id ) {
-		if ( ! is_array( $image ) || ! isset( $image[0] ) ) {
+	public function change_attachment_src( $image, $attachment_id ) {
+		$attachment_id = (int) $attachment_id;
+		if ( ! is_array( $image ) || ! isset( $image[0] ) || ! $attachment_id ) {
 			return $image;
 		}
 
