@@ -1,13 +1,13 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop;
+namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\Cache;
 
-use Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Fields\PositioningMethod;
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\Cache\Fields\BreakEnabled;
 
 class Settings {
 	public const FIELDS = array(
-		PositioningMethod::class,
+		BreakEnabled::class,
 	);
 
 	public function register_hooks(): void {

@@ -2,6 +2,7 @@
 
 namespace Mentosmenno2\ImageCropPositioner;
 
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\Cache\Fields\BreakEnabled;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 
 class Cache {
@@ -33,6 +34,10 @@ class Cache {
 	 * @return array|false
 	 */
 	public function change_attachment_image_src( $image, $attachment_id ) {
+		if ( ! ( new BreakEnabled() )->get_value() ) {
+			return $image;
+		}
+
 		$attachment_id = (int) $attachment_id;
 		if ( ! is_array( $image ) || ! isset( $image[0] ) || ! $attachment_id ) {
 			return $image;
@@ -46,6 +51,10 @@ class Cache {
 	 * Change the sourceset of the attachment
 	 */
 	public function change_attachment_image_srcset( array $sources, array $size_array, string $image_src, array $image_meta, int $attachment_id ): array {
+		if ( ! ( new BreakEnabled() )->get_value() ) {
+			return $sources;
+		}
+
 		foreach ( $sources as &$source ) {
 			$source['url'] = $this->change_attachment_image_url( $source['url'], $attachment_id );
 		}
