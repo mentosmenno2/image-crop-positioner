@@ -2,7 +2,7 @@
 
 namespace Mentosmenno2\ImageCropPositioner;
 
-use Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Fields\CropPositioningMethod;
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\Crop\Fields\PositioningMethod;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Objects\Spot;
 
@@ -64,7 +64,7 @@ class Crop {
 		}
 
 		// Get the spots focus coordinates
-		if ( ( new CropPositioningMethod() )->get_value() === 'average' ) {
+		if ( ( new PositioningMethod() )->get_value() === 'average' ) {
 			$spots_focus_coords = $this->get_spots_average( $spots );
 		} else {
 			$spots_focus_coords = $this->get_spots_center( $spots );

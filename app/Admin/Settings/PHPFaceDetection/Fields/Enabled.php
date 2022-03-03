@@ -2,11 +2,12 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection\Fields;
 
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\BaseToggleField;
 use Mentosmenno2\ImageCropPositioner\FaceDetection\FaceDetector;
 
-class Enabled extends BaseField {
+class Enabled extends BaseToggleField {
 
-	protected const NAME = 'enabled';
+	protected const NAME = 'php_face_detection_enabled';
 
 	public function get_name(): string {
 		return self::PREFIX . self::NAME;
@@ -16,7 +17,11 @@ class Enabled extends BaseField {
 		return __( 'Enabled', 'image-crop-positioner' );
 	}
 
-	protected function is_disabled(): bool {
+	public function get_checkbox_label(): string {
+		return __( 'Enable PHP face detection.', 'image-crop-positioner' );
+	}
+
+	public function is_disabled(): bool {
 		return ! FaceDetector::get_instance()->is_available();
 	}
 
@@ -24,7 +29,7 @@ class Enabled extends BaseField {
 		if ( $this->is_disabled() ) {
 			return __( 'Cannot enable PHP face detection because your system does not need the requirements.', 'image-crop-positioner' );
 		}
-		return __( 'Enable PHP face detection.', 'image-crop-positioner' );
+		return '';
 	}
 
 	public function get_value(): bool {
@@ -32,9 +37,7 @@ class Enabled extends BaseField {
 			return false;
 		}
 
-		$default = $this->get_default_value();
-		$value   = (bool) get_option( $this->get_name(), $default );
-		return $value;
+		return parent::get_value();
 	}
 
 	public function get_default_value(): bool {
@@ -42,12 +45,17 @@ class Enabled extends BaseField {
 	}
 
 	public function render_field(): void {
-		$disabled = $this->is_disabled();
-		$value    = $this->get_value();
+		$disabled    = $this->is_disabled();
+		$value       = $this->get_value();
+		$description = $this->get_description();
 		?>
 
 		<input type="checkbox" id="<?php echo esc_attr( $this->get_name() ); ?>" name="<?php echo esc_attr( $this->get_name() ); ?>" value="1" <?php checked( $value ); ?> <?php disabled( $disabled ); ?>/>
-		<label for="<?php echo esc_attr( $this->get_name() ); ?>"><?php echo esc_html( $this->get_description() ); ?></label>
+		<label for="<?php echo esc_attr( $this->get_name() ); ?>"><?php echo esc_html( $this->get_checkbox_label() ); ?></label>
+
+		<?php if ( $description ) { ?>
+			<p><?php echo esc_html( $description ); ?></p>
+		<?php } ?>
 
 		<?php
 	}
