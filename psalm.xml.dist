@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-	totallyTyped="true"
+	reportMixedIssues="true"
 	autoloader="psalm-autoloader.php"
 	errorLevel="2"
 	hideExternalErrors="true"
