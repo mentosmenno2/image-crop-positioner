@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Image Crop Positioner
- * Version:     0.2.0
+ * Version:     0.2.1
  * Description: Face recognition and hotspot selection for cropping images in WordPress.
  * Author:      mentosmenno2
  *
