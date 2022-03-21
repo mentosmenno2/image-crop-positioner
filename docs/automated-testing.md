@@ -12,7 +12,7 @@ To run the tests, you can use the command to test everything, or run tests separ
 # All tests at once
 composer run test
 
-# # Every test separately
+# Every test separately
 composer run test:composer
 composer run test:phpcs
 composer run test:psalm
@@ -51,7 +51,7 @@ And it's also possible to automatically fix some issues, but it won't fix everyt
 # Fix all at once
 npm run fix
 
-# Every test separately
+# Fix separately
 npm run scripts:fix
 npm run styles:fix
 ```
