@@ -5,7 +5,7 @@ This page has some instructions to get you started.
 
 ## Requirements
 
-- PHP >= 7.1
+- PHP >= 7.3
 - NodeJS 12.x.x
 - MySQL 5.7.x
 
