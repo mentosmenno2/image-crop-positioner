@@ -33,13 +33,17 @@ class Crop {
 	 * @param mixed $payload Whether to preempt output of the resize dimensions.
 	 * @param int $orig_w Original width in pixels.
 	 * @param int $orig_h Original height in pixels.
-	 * @param int $dest_w New width in pixels.
-	 * @param int $dest_h New height in pixels.
+	 * @param int|null $dest_w New width in pixels.
+	 * @param int|null $dest_h New height in pixels.
 	 * @param bool|array $crop Whether to crop image to specified width and height or resize. An array can specify positioning of the crop area. Default false.
 	 *
 	 * @return mixed
 	 */
-	public function crop( $payload, int $orig_w, int $orig_h, int $dest_w, int $dest_h, $crop ) {
+	public function crop( $payload, int $orig_w, int $orig_h, $dest_w, $dest_h, $crop ) {
+		if ( ! $crop ) {
+			return $payload;
+		}
+
 		$attachment_meta_helper = new AttachmentMeta();
 
 		/** @var Spot[] */
@@ -48,9 +52,16 @@ class Crop {
 			$attachment_meta_helper->get_hotspots( $this->attachment_id )
 		);
 
-		// Exit if not cropping or no spots
-		if ( ! $crop || empty( $spots ) ) {
+		// Exit if no spots are set
+		if ( empty( $spots ) ) {
 			return $payload;
+		}
+
+		// If one of destination sizes is empty, calculate it.
+		if ( ! $dest_w ) {
+			$dest_w = (int) $dest_h * ( $orig_w / $orig_h );
+		} elseif ( ! $dest_h ) {
+			$dest_h = $dest_w * ( $orig_h / $orig_w );
 		}
 
 		// Calculate the size of the crop from the original image
