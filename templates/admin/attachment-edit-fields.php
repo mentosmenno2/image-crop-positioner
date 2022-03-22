@@ -74,7 +74,7 @@ $data_config = wp_json_encode(
 			<?php if ( $php_face_detection_enabled ) { ?>
 				<button type="button" class="button button__detect-faces-php" <?php ( new Templates() )->display_none( ! empty( $faces ) ); ?>><?php esc_html_e( 'Detect face via PHP', 'image-crop-positioner' ); ?></button>
 			<?php } ?>
-			<?php if ( $php_face_detection_enabled ) { ?>
+			<?php if ( $js_faces_detection_enabled ) { ?>
 				<button type="button" class="button button__detect-faces-js" disabled="disabled" <?php ( new Templates() )->display_none( ! empty( $faces ) ); ?>>
 					<?php esc_html_e( 'Detect faces via JavaScript', 'image-crop-positioner' ); ?>
 					<div class="image-crop-positioner-spinner__wrapper"><div class="spinner image-crop-positioner-spinner is-active"></div></div>
