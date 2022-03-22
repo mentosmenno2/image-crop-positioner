@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99d9a157c4d7a0ed7a89a44825b3a6af",
+    "content-hash": "b562253bac531e0d911f17f3952a94f7",
     "packages": [],
     "packages-dev": [
         {
@@ -90,20 +90,19 @@
                 "url": "https://github.com/mentosmenno2/coding-standards.git",
                 "reference": "2e236c0fe14a36217959b19cc790a1efb5324624"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mentosmenno2/coding-standards/zipball/2e236c0fe14a36217959b19cc790a1efb5324624",
+                "reference": "2e236c0fe14a36217959b19cc790a1efb5324624",
+                "shasum": ""
+            },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
                 "phpcompatibility/php-compatibility": "^9.3",
                 "wp-coding-standards/wpcs": "^2.3"
             },
             "type": "phpcodesniffer-standard",
-            "scripts": {
-                "install-codestandards": [
-                    "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
-                ],
-                "test": [
-                    "composer validate"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "proprietary"
             ],
@@ -114,6 +113,10 @@
                 }
             ],
             "description": "Menno van den Ende Coding Standards",
+            "support": {
+                "issues": "https://github.com/mentosmenno2/coding-standards/issues",
+                "source": "https://github.com/mentosmenno2/coding-standards/tree/v1.0.5"
+            },
             "time": "2021-02-27T21:47:27+00:00"
         },
         {
@@ -542,5 +545,5 @@
         "php": ">=7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.2.0"
 }
