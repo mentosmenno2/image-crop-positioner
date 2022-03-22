@@ -8,12 +8,6 @@
             "name": "mentosmenno2"
         }
     ],
-    "repositories": [
-        {
-            "url": "https://github.com/mentosmenno2/coding-standards.git",
-            "type": "git"
-        }
-    ],
     "require": {
         "php": ">=7.3"
     },
