@@ -7,9 +7,10 @@ use Mentosmenno2\ImageCropPositioner\Objects\Hotspot;
 
 class AttachmentMeta {
 
-	public const META_KEY_UPDATED_TIMESTAMP = 'image_crop_positioner_updated_timestamp';
-	public const META_KEY_FACES             = 'image_crop_positioner_faces';
-	public const META_KEY_HOTSPOTS          = 'image_crop_positioner_hotspots';
+	public const META_KEY_UPDATED_TIMESTAMP  = 'image_crop_positioner_updated_timestamp';
+	public const META_KEY_FACES              = 'image_crop_positioner_faces';
+	public const META_KEY_HOTSPOTS           = 'image_crop_positioner_hotspots';
+	public const META_KEY_FACES_AUTODETECTED = 'image_crop_positioner_faces_autodetected';
 
 	/**
 	 * @param integer $attachment_id
@@ -60,6 +61,19 @@ class AttachmentMeta {
 			}, $faces
 		);
 		update_post_meta( $attachment_id, self::META_KEY_FACES, $faces_data );
+	}
+
+	public function get_faces_autodetected( int $attachment_id ): bool {
+		$autodetected = get_post_meta( $attachment_id, self::META_KEY_FACES_AUTODETECTED, true );
+		if ( ! is_scalar( $autodetected ) ) {
+			$autodetected = 0;
+		}
+
+		return (bool) $autodetected;
+	}
+
+	public function set_faces_autodetected( int $attachment_id, bool $autodetected ): void {
+		update_post_meta( $attachment_id, self::META_KEY_FACES_AUTODETECTED, $autodetected );
 	}
 
 	/**
