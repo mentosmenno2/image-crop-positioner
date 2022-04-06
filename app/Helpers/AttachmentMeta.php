@@ -66,7 +66,7 @@ class AttachmentMeta {
 	public function get_faces_autodetected( int $attachment_id ): bool {
 		$autodetected = get_post_meta( $attachment_id, self::META_KEY_FACES_AUTODETECTED, true );
 		if ( ! is_scalar( $autodetected ) ) {
-			$autodetected = 0;
+			$autodetected = false;
 		}
 
 		return (bool) $autodetected;

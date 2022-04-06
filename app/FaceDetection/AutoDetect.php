@@ -42,7 +42,7 @@ class AutoDetect {
 		}
 
 		// If already autodetected, skip.
-		if ( ( new AttachmentMeta() )->get_faces_autodetected( $attachment_id, true ) ) {
+		if ( ( new AttachmentMeta() )->get_faces_autodetected( $attachment_id ) ) {
 			return;
 		}
 
