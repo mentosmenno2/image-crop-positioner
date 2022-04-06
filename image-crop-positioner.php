@@ -8,7 +8,7 @@
  * Author URI:        https://github.com/mentosmenno2
  * Text Domain:       image-crop-positioner
  * Domain Path:       /languages
- * Requires at least: 5.2
+ * Requires at least: 5.3
  * Requires PHP:      7.3
  * Update URI:        https://github.com/mentosmenno2/image-crop-positioner
  */
