@@ -23,7 +23,7 @@ This plugin allows you to better crop your images, based on face detection or ho
 That's amazing to hear 😄! I attempt to keep it up to date as best as I can. However, it's a spare-time project that I mostly work on in the evening hours.
 Would you like to support me, feel free to give a small donation so I can buy some snacks to eat when I'm beeing a keyboard warrior.
 
-[<img src="https://user-images.githubusercontent.com/12169252/162330890-c89b9856-ee0b-4683-9e01-18cdfff295c8.png" alt="Donate with PayPal or Creditcard" title="Donate woth PayPal or Creditcard" width="150"/>](https://www.paypal.com/donate/?hosted_button_id=9NSDQCQYNZUB6)
+[<img src="https://user-images.githubusercontent.com/12169252/162330890-c89b9856-ee0b-4683-9e01-18cdfff295c8.png" alt="Donate with PayPal or Creditcard" title="Donate woth PayPal or Creditcard" width="200"/>](https://www.paypal.com/donate/?hosted_button_id=9NSDQCQYNZUB6)
 
 ## Example images
 
