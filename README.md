@@ -20,12 +20,10 @@ This plugin allows you to better crop your images, based on face detection or ho
 - [Automated testing](./docs/automated-testing.md)
 
 ## Do you like this plugin?
-That's amazing to hear! I attempt to keep it up to date as best as I can. However, it's a spare-time project that I mostly work on in the evening hours.
-Would you like to support me, feel free to give a small donation so I can drink some coffee ☕ and stay awake 😄.
+That's amazing to hear 😄! I attempt to keep it up to date as best as I can. However, it's a spare-time project that I mostly work on in the evening hours.
+Would you like to support me, feel free to give a small donation so I can buy some snacks to eat when I'm beeing a keyboard warrior.
 
-[<img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" border="0" alt="PayPal Logo" />](https://www.paypal.com/donate/?hosted_button_id=9NSDQCQYNZUB6)
-
-[Donate a cup of coffee ☕ (via PayPal or Credit/Debit Card)](https://www.paypal.com/donate/?hosted_button_id=9NSDQCQYNZUB6)
+[<img src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0" alt="Donate via PayPal" />](https://www.paypal.com/donate/?hosted_button_id=9NSDQCQYNZUB6)
 
 ## Example images
 
