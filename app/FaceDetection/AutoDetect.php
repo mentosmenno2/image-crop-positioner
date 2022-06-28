@@ -58,39 +58,36 @@ class AutoDetect {
 			return;
 		}
 
-		// If PHP face detection is not enabled, skip and set to autodetected to prevent retrying later.
+		// Always mark as autodetected to never try again in the future.
+		$attachment_meta->set_faces_autodetected( $attachment_id, true );
+
+		// If PHP face detection is not enabled, skip.
 		if ( ! ( new PHPFaceDetectionEnabledSetting() )->get_value() ) {
-			$attachment_meta->set_faces_autodetected( $attachment_id, true );
 			return;
 		}
 
-		// If autodetect faces setting is not enabled, skip and set to autodetected to prevent retrying later.
+		// If autodetect faces setting is not enabled, skip.
 		if ( ! ( new AutoDetectOnUploadSetting() )->get_value() ) {
-			$attachment_meta->set_faces_autodetected( $attachment_id, true );
 			return;
 		}
 
-		// If already has faces, skip and set to autodetected to prevent retrying later.
+		// If already has faces, skip.
 		if ( $attachment_meta->get_faces( $attachment_id ) ) {
-			$attachment_meta->set_faces_autodetected( $attachment_id, true );
 			return;
 		}
 
 		$file = get_attached_file( $attachment_id );
 		if ( ! is_string( $file ) ) {
-			$attachment_meta->set_faces_autodetected( $attachment_id, true );
 			return;
 		}
 
 		try {
 			$extraction = FaceDetector::get_instance()->extract( $file );
 		} catch ( Exception $e ) {
-			$attachment_meta->set_faces_autodetected( $attachment_id, true );
 			return;
 		}
 
 		if ( ! $extraction->face instanceof Face ) {
-			$attachment_meta->set_faces_autodetected( $attachment_id, true );
 			return;
 		}
 
@@ -101,6 +98,5 @@ class AutoDetect {
 			}, $faces_data
 		);
 		$attachment_meta->set_faces( $attachment_id, $faces );
-		$attachment_meta->set_faces_autodetected( $attachment_id, true );
 	}
 }
