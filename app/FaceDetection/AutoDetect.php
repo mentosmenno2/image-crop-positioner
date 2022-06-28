@@ -11,6 +11,7 @@ use Mentosmenno2\ImageCropPositioner\Objects\Face;
 class AutoDetect {
 
 	public function register_hooks(): void {
+		add_action( 'add_attachment', array( $this, 'set_added_with_plugin_enabled' ) );
 		add_action( 'add_attachment', array( $this, 'auto_detect_faces' ) );
 		add_filter( 'updated_postmeta', array( $this, 'auto_detect_faces_after_saving_imagemeta' ), 10, 3 );
 	}
@@ -27,22 +28,23 @@ class AutoDetect {
 		return $meta_id;
 	}
 
+	public function set_added_with_plugin_enabled( int $attachment_id ): void {
+		( new AttachmentMeta() )->set_plugin_enabled_on_upload( $attachment_id, true );
+	}
+
 	/**
 	 * Auto detect faces in an image
 	 */
 	public function auto_detect_faces( int $attachment_id ): void {
-		// If PHP face detection is not enabled, skip.
-		if ( ! ( new PHPFaceDetectionEnabledSetting() )->get_value() ) {
-			return;
-		}
-
-		// If autodetect faces setting is not enabled, skip.
-		if ( ! ( new AutoDetectOnUploadSetting() )->get_value() ) {
-			return;
-		}
+		$attachment_meta = new AttachmentMeta();
 
 		// If already autodetected, skip.
-		if ( ( new AttachmentMeta() )->get_faces_autodetected( $attachment_id ) ) {
+		if ( $attachment_meta->get_faces_autodetected( $attachment_id ) ) {
+			return;
+		}
+
+		// If this plugin was not enabled when this attachment was uploaded, skip.
+		if ( ! $attachment_meta->get_plugin_enabled_on_upload( $attachment_id ) ) {
 			return;
 		}
 
@@ -53,6 +55,24 @@ class AutoDetect {
 
 		// If no metadata is present, we cannot autodetect faces, because large images havn't been downscaled yet. Skip.
 		if ( ! wp_get_attachment_metadata( $attachment_id ) ) {
+			return;
+		}
+
+		// Always mark as autodetected to never try again in the future.
+		$attachment_meta->set_faces_autodetected( $attachment_id, true );
+
+		// If PHP face detection is not enabled, skip.
+		if ( ! ( new PHPFaceDetectionEnabledSetting() )->get_value() ) {
+			return;
+		}
+
+		// If autodetect faces setting is not enabled, skip.
+		if ( ! ( new AutoDetectOnUploadSetting() )->get_value() ) {
+			return;
+		}
+
+		// If already has faces, skip.
+		if ( $attachment_meta->get_faces( $attachment_id ) ) {
 			return;
 		}
 
@@ -77,7 +97,6 @@ class AutoDetect {
 				return new Face( $face_data );
 			}, $faces_data
 		);
-		( new AttachmentMeta() )->set_faces( $attachment_id, $faces );
-		( new AttachmentMeta() )->set_faces_autodetected( $attachment_id, true );
+		$attachment_meta->set_faces( $attachment_id, $faces );
 	}
 }
