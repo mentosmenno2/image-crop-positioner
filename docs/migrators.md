@@ -6,6 +6,9 @@ Migrators can be run by going to the plugin settings, or by running the [Migrate
 
 ## Available migrators
 
+### Regenerate all images
+Regenerate all image sizes for all images in the WordPress media library.
+
 ### My Eyes Are Up Here
 
 The My Eyes Are Up Here migrator migrates all faces and hotspots from the [My Eyes Are Up Here plugin](https://wordpress.org/plugins/my-eyes-are-up-here/).
