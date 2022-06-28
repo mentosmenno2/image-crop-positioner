@@ -24,6 +24,8 @@ abstract class BaseMigrator {
 	 */
 	abstract public function get_description(): string;
 
+	abstract public function get_default_batch_size() : int;
+
 	/**
 	 * Migrate an attachment
 	 *

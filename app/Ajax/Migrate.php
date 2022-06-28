@@ -8,8 +8,6 @@ use WP_Error;
 
 class Migrate extends BaseAjaxCall {
 
-	protected const BATCH_SIZE = 50;
-
 	public function register_hooks(): void {
 		add_action( 'wp_ajax_image_crop_positioner_migrate', array( $this, 'handle_request' ) );
 	}
@@ -22,7 +20,8 @@ class Migrate extends BaseAjaxCall {
 
 		$migrator = $this->get_and_validate_migrator();
 		$page     = (int) filter_input( INPUT_POST, 'page', FILTER_VALIDATE_INT ) ?: 1;
-		$this->migrate( $migrator, $page );
+		$per_page = (int) filter_input( INPUT_POST, 'per_page', FILTER_VALIDATE_INT ) ?: 10;
+		$this->migrate( $migrator, $page, $per_page );
 	}
 
 	protected function get_and_validate_migrator(): BaseMigrator {
@@ -41,8 +40,8 @@ class Migrate extends BaseAjaxCall {
 		return $migrators[ $migrator_slug ];
 	}
 
-	protected function migrate( BaseMigrator $migrator, int $page ): void {
-		$wp_query = $migrator->get_migratable_attachment_ids( $page, self::BATCH_SIZE );
+	protected function migrate( BaseMigrator $migrator, int $page, int $per_page ): void {
+		$wp_query = $migrator->get_migratable_attachment_ids( $page, $per_page );
 		$log      = array();
 
 		/** @var int[] */
@@ -60,7 +59,7 @@ class Migrate extends BaseAjaxCall {
 			'log'        => $log,
 			'pagination' => array(
 				'now_processed_posts'   => $wp_query->post_count,
-				'total_processed_posts' => ( self::BATCH_SIZE * $page ) - self::BATCH_SIZE + $wp_query->post_count,
+				'total_processed_posts' => ( $per_page * $page ) - $per_page + $wp_query->post_count,
 				'total_posts'           => $wp_query->found_posts,
 				'current_page'          => $page,
 				'total_pages'           => $wp_query->max_num_pages,

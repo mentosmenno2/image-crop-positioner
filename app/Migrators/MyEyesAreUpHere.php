@@ -21,6 +21,10 @@ class MyEyesAreUpHere extends BaseMigrator {
 		return sprintf( __( 'Migrate faces and hotspots from the <a href="%s" target="_blank">My Eyes Are Up Here</a> plugin.', 'image-crop-positioner' ), $url );
 	}
 
+	public function get_default_batch_size(): int {
+		return 50;
+	}
+
 	public function migrate_attachment( int $attachment_id ): int {
 		$statuses = $this->get_migrations( $attachment_id );
 
