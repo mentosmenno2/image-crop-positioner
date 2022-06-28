@@ -60,6 +60,12 @@ class AutoDetect {
 			return;
 		}
 
+		// If already has faces, skip and set to autodetected to prevent retrying later.
+		if ( $attachment_meta->get_faces( $attachment_id ) ) {
+			$attachment_meta->set_faces_autodetected( $attachment_id, true );
+			return;
+		}
+
 		$file = get_attached_file( $attachment_id );
 		if ( ! is_string( $file ) ) {
 			$attachment_meta->set_faces_autodetected( $attachment_id, true );
