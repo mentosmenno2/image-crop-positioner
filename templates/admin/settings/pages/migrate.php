@@ -40,7 +40,7 @@ $migrators = ( new Migrators() )->get_migrators();
 							<label for="image-crop-positioner-migrator-<?php echo esc_attr( $migrator->get_slug() ); ?>__input-batch-size">
 								<?php esc_html_e( 'Images per batch', 'image-crop-positioner' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Higher batch sizes speed up the migration, but increase the chance of server timeouts. If you experience server timeouts, please lower the batch size.', 'image-crop-positioner' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Higher batch sizes speed up the migration, but increase the chance of server timeouts. If you experience server timeouts, please lower the batch size or use WP-CLI.', 'image-crop-positioner' ); ?></p>
 						</td>
 					</tr>
 				</tbody>
@@ -72,6 +72,8 @@ $migrators = ( new Migrators() )->get_migrators();
 				<pre class="image-crop-positioner-migrator__log-content" ></pre>
 			</div>
 		</div>
+
+		<hr>
 	<?php } ?>
 </div>
 
