@@ -31,18 +31,10 @@ class AutoDetect {
 	 * Auto detect faces in an image
 	 */
 	public function auto_detect_faces( int $attachment_id ): void {
-		// If PHP face detection is not enabled, skip.
-		if ( ! ( new PHPFaceDetectionEnabledSetting() )->get_value() ) {
-			return;
-		}
-
-		// If autodetect faces setting is not enabled, skip.
-		if ( ! ( new AutoDetectOnUploadSetting() )->get_value() ) {
-			return;
-		}
+		$attachment_meta = new AttachmentMeta();
 
 		// If already autodetected, skip.
-		if ( ( new AttachmentMeta() )->get_faces_autodetected( $attachment_id ) ) {
+		if ( $attachment_meta->get_faces_autodetected( $attachment_id ) ) {
 			return;
 		}
 
@@ -56,18 +48,33 @@ class AutoDetect {
 			return;
 		}
 
+		// If PHP face detection is not enabled, skip and set to autodetected to prevent retrying later.
+		if ( ! ( new PHPFaceDetectionEnabledSetting() )->get_value() ) {
+			$attachment_meta->set_faces_autodetected( $attachment_id, true );
+			return;
+		}
+
+		// If autodetect faces setting is not enabled, skip and set to autodetected to prevent retrying later.
+		if ( ! ( new AutoDetectOnUploadSetting() )->get_value() ) {
+			$attachment_meta->set_faces_autodetected( $attachment_id, true );
+			return;
+		}
+
 		$file = get_attached_file( $attachment_id );
 		if ( ! is_string( $file ) ) {
+			$attachment_meta->set_faces_autodetected( $attachment_id, true );
 			return;
 		}
 
 		try {
 			$extraction = FaceDetector::get_instance()->extract( $file );
 		} catch ( Exception $e ) {
+			$attachment_meta->set_faces_autodetected( $attachment_id, true );
 			return;
 		}
 
 		if ( ! $extraction->face instanceof Face ) {
+			$attachment_meta->set_faces_autodetected( $attachment_id, true );
 			return;
 		}
 
@@ -77,7 +84,7 @@ class AutoDetect {
 				return new Face( $face_data );
 			}, $faces_data
 		);
-		( new AttachmentMeta() )->set_faces( $attachment_id, $faces );
-		( new AttachmentMeta() )->set_faces_autodetected( $attachment_id, true );
+		$attachment_meta->set_faces( $attachment_id, $faces );
+		$attachment_meta->set_faces_autodetected( $attachment_id, true );
 	}
 }
