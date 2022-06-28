@@ -11,6 +11,7 @@ import SpinnerHelper from "../helpers/spinner";
 		const progressbarHelper = new ProgressBarHelper();
 
 		const $element = $( element );
+		const $inputBatchSize = $element.find( '.image-crop-positioner-migrator__input-batch-size' );
 		const $buttonStart = $element.find( '.image-crop-positioner-migrator__button-start' );
 		const $buttonStop = $element.find( '.image-crop-positioner-migrator__button-stop' );
 		const $message = $element.find( '.image-crop-positioner-migrator__message' );
@@ -37,6 +38,7 @@ import SpinnerHelper from "../helpers/spinner";
 		function startMigration() {
 			spinnerHelper.appendToElement( $buttonStart );
 			$buttonStart.attr( 'disabled', true );
+			$inputBatchSize.attr( 'disabled', true );
 			adminNoticeHelper.setToElementHtml( $message, 'Migration in progress, please wait...', 'info' );
 			$progressBar.show();
 			updateProgressbar( 0, 0 );
@@ -63,6 +65,7 @@ import SpinnerHelper from "../helpers/spinner";
 					_ajax_nonce: window.image_crop_positioner_options.nonce,
 					action: 'image_crop_positioner_migrate',
 					page: currentProcessingPage,
+					per_page: parseInt( $inputBatchSize.val() ),
 					migrator: config.migrator_slug,
 				},
 				method : 'POST',
@@ -103,6 +106,7 @@ import SpinnerHelper from "../helpers/spinner";
 			spinnerHelper.removeFromElement( $buttonStart );
 			spinnerHelper.removeFromElement( $buttonStop );
 			$buttonStart.attr( 'disabled', false );
+			$inputBatchSize.attr( 'disabled', false );
 			$buttonStop.attr( 'disabled', true );
 			adminNoticeHelper.setToElementHtml( $message, 'Migration completed', 'success' );
 			$logContent.append( 'Migration completed' );
@@ -112,6 +116,7 @@ import SpinnerHelper from "../helpers/spinner";
 			spinnerHelper.removeFromElement( $buttonStart );
 			spinnerHelper.removeFromElement( $buttonStop );
 			$buttonStart.attr( 'disabled', false );
+			$inputBatchSize.attr( 'disabled', false );
 			$buttonStop.attr( 'disabled', true );
 			if ( ! dontSetMessage ) {
 				adminNoticeHelper.setToElementHtml( $message, 'Migration stopped', 'error' );
