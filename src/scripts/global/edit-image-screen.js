@@ -81,7 +81,7 @@ import SpinnerHelper from "../helpers/spinner";
 				} )
 				.fail( function( jqXHR ) {
 					let errorMessage = 'Error';
-					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
+					if ( typeof jqXHR.responseJSON !== 'undefined' && typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
 					adminNoticeHelper.setToElementHtml( getChildElement( '.image-previews__images' ), errorMessage, 'error' );
@@ -186,7 +186,7 @@ import SpinnerHelper from "../helpers/spinner";
 				} )
 				.fail( function( jqXHR ) {
 					let errorMessage = 'Error';
-					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
+					if ( typeof jqXHR.responseJSON !== 'undefined' && typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
 					enableAllDetections();
@@ -308,7 +308,7 @@ import SpinnerHelper from "../helpers/spinner";
 				} )
 				.fail( function( jqXHR ) {
 					let errorMessage = 'Error';
-					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
+					if ( typeof jqXHR.responseJSON !== 'undefined' && typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
 					adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), errorMessage, 'error' );
@@ -347,7 +347,7 @@ import SpinnerHelper from "../helpers/spinner";
 				} )
 				.fail( function( jqXHR ) {
 					let errorMessage = 'Error';
-					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
+					if ( typeof jqXHR.responseJSON !== 'undefined' && typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
 					adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), errorMessage, 'error' );
@@ -427,7 +427,7 @@ import SpinnerHelper from "../helpers/spinner";
 				} )
 				.fail( function( jqXHR ) {
 					let errorMessage = 'Error';
-					if ( typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
+					if ( typeof jqXHR.responseJSON !== 'undefined' && typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
 					adminNoticeHelper.setToElementHtml( getHotspotSelectionMessage(), errorMessage, 'error' );
