@@ -7,10 +7,11 @@ use Mentosmenno2\ImageCropPositioner\Objects\Hotspot;
 
 class AttachmentMeta {
 
-	public const META_KEY_UPDATED_TIMESTAMP  = 'image_crop_positioner_updated_timestamp';
-	public const META_KEY_FACES              = 'image_crop_positioner_faces';
-	public const META_KEY_HOTSPOTS           = 'image_crop_positioner_hotspots';
-	public const META_KEY_FACES_AUTODETECTED = 'image_crop_positioner_faces_autodetected';
+	public const META_KEY_UPDATED_TIMESTAMP        = 'image_crop_positioner_updated_timestamp';
+	public const META_KEY_FACES                    = 'image_crop_positioner_faces';
+	public const META_KEY_HOTSPOTS                 = 'image_crop_positioner_hotspots';
+	public const META_KEY_FACES_AUTODETECTED       = 'image_crop_positioner_faces_autodetected';
+	public const META_KEY_PLUGIN_ENABLED_ON_UPLOAD = 'image_crop_positioner_plugin_enabled_on_upload';
 
 	/**
 	 * @param integer $attachment_id
@@ -104,5 +105,18 @@ class AttachmentMeta {
 			}, $hotspots
 		);
 		update_post_meta( $attachment_id, self::META_KEY_HOTSPOTS, $hotspots_data );
+	}
+
+	public function get_plugin_enabled_on_upload( int $attachment_id ): bool {
+		$plugin_enabled = get_post_meta( $attachment_id, self::META_KEY_PLUGIN_ENABLED_ON_UPLOAD, true );
+		if ( ! is_scalar( $plugin_enabled ) ) {
+			$plugin_enabled = false;
+		}
+
+		return (bool) $plugin_enabled;
+	}
+
+	public function set_plugin_enabled_on_upload( int $attachment_id, bool $plugin_enabled ): void {
+		update_post_meta( $attachment_id, self::META_KEY_PLUGIN_ENABLED_ON_UPLOAD, $plugin_enabled );
 	}
 }

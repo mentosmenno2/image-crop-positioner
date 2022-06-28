@@ -11,6 +11,7 @@ use Mentosmenno2\ImageCropPositioner\Objects\Face;
 class AutoDetect {
 
 	public function register_hooks(): void {
+		add_action( 'add_attachment', array( $this, 'set_added_with_plugin_enabled' ) );
 		add_action( 'add_attachment', array( $this, 'auto_detect_faces' ) );
 		add_filter( 'updated_postmeta', array( $this, 'auto_detect_faces_after_saving_imagemeta' ), 10, 3 );
 	}
@@ -27,6 +28,10 @@ class AutoDetect {
 		return $meta_id;
 	}
 
+	public function set_added_with_plugin_enabled( int $attachment_id ): void {
+		( new AttachmentMeta() )->set_plugin_enabled_on_upload( $attachment_id, true );
+	}
+
 	/**
 	 * Auto detect faces in an image
 	 */
@@ -35,6 +40,11 @@ class AutoDetect {
 
 		// If already autodetected, skip.
 		if ( $attachment_meta->get_faces_autodetected( $attachment_id ) ) {
+			return;
+		}
+
+		// If this plugin was not enabled when this attachment was uploaded, skip.
+		if ( ! $attachment_meta->get_plugin_enabled_on_upload( $attachment_id ) ) {
 			return;
 		}
 
