@@ -58,7 +58,6 @@ import SpinnerHelper from "../helpers/spinner";
 		}
 
 		function previewImageLoaded() {
-			getPreviewImage().show();
 			getDetectFacesJsButton().attr( 'disabled', false );
 			spinnerHelper.removeFromElement( getChildElement( '.image-spots-preview' ) );
 			spinnerHelper.removeFromElement( getDetectFacesJsButton() );

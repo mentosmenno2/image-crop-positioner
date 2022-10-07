@@ -60,9 +60,8 @@ $data_config = wp_json_encode(
 		<img
 			class="image-spots-preview__image"
 			id="image-crop-positioner-image-spots-preview-image"
-			src=""
+			src="data:"
 			loading="lazy"
-			style="display: none;"
 			width="<?php echo esc_attr( (string) ( $attachment_metadata['width'] ?? '' ) ); ?>"
 			height="<?php echo esc_attr( (string) ( $attachment_metadata['height'] ?? '' ) ); ?>"
 		>
