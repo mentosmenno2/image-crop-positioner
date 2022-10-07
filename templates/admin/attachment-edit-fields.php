@@ -17,10 +17,11 @@ if ( ! wp_attachment_is_image( $attachment ) ) {
 	return;
 }
 
-$attachmentmeta = new AttachmentMeta();
-$faces          = $attachmentmeta->get_faces( $attachment->ID );
-$hotspots       = $attachmentmeta->get_hotspots( $attachment->ID );
-$image_src      = wp_get_attachment_image_src( $attachment->ID, 'full' )[0] ?? '';
+$attachmentmeta      = new AttachmentMeta();
+$faces               = $attachmentmeta->get_faces( $attachment->ID );
+$hotspots            = $attachmentmeta->get_hotspots( $attachment->ID );
+$image_src           = wp_get_attachment_image_src( $attachment->ID, 'full' )[0] ?? '';
+$attachment_metadata = wp_get_attachment_metadata( $attachment->ID ) ?: array();
 
 // If image is hosted on external url (like an image bucket), convert it to a data image.
 if ( strpos( $image_src, home_url() ) !== 0 ) {
@@ -33,7 +34,8 @@ if ( strpos( $image_src, home_url() ) !== 0 ) {
 $data_config = wp_json_encode(
 	array(
 		'attachment_id'       => $attachment->ID,
-		'attachment_metadata' => wp_get_attachment_metadata( $attachment->ID ) ?: array(),
+		'image_src'           => $image_src,
+		'attachment_metadata' => $attachment_metadata,
 		'faces'               => $faces,
 		'hotspots'            => $hotspots,
 		'js_faces_detection'  => array(
@@ -54,10 +56,14 @@ $data_config = wp_json_encode(
 	<!-- Spots preview -->
 	<p><strong><?php esc_html_e( 'The important spots on the image', 'image-crop-positioner' ); ?></strong></p>
 	<div class="image-spots-preview" >
+		<?php ( new Templates() )->echo_template( 'partials/spinner' ); ?>
 		<img
 			class="image-spots-preview__image"
 			id="image-crop-positioner-image-spots-preview-image"
-			src="<?php echo esc_attr( $image_src ); ?>"
+			src="data:"
+			loading="lazy"
+			width="<?php echo esc_attr( (string) ( $attachment_metadata['width'] ?? '' ) ); ?>"
+			height="<?php echo esc_attr( (string) ( $attachment_metadata['height'] ?? '' ) ); ?>"
 		>
 		<div class="image-spots-preview__spots"></div>
 	</div>
@@ -77,7 +83,7 @@ $data_config = wp_json_encode(
 			<?php if ( $js_faces_detection_enabled ) { ?>
 				<button type="button" class="button button__detect-faces-js" disabled="disabled" <?php ( new Templates() )->display_none( ! empty( $faces ) ); ?>>
 					<?php esc_html_e( 'Detect faces via JavaScript', 'image-crop-positioner' ); ?>
-					<div class="image-crop-positioner-spinner__wrapper"><div class="spinner image-crop-positioner-spinner is-active"></div></div>
+					<?php ( new Templates() )->echo_template( 'partials/spinner' ); ?>
 				</button>
 			<?php } ?>
 			<button type="button" class="button button__save-faces" <?php ( new Templates() )->display_none( true ); ?>><?php esc_html_e( 'Save faces', 'image-crop-positioner' ); ?></button>

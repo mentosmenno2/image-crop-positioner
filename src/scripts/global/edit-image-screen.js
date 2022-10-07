@@ -23,6 +23,14 @@ import SpinnerHelper from "../helpers/spinner";
 		 */
 
 		function initialize() {
+			const $rootElement = getRootElement();
+
+			// If element already exists, prepare directly
+			if ( $rootElement.length > 0 ) {
+				prepare();
+			}
+
+			// Prepare after element is ready
 			$( document ).on( 'imageCropPositionerEditFieldsReady', function() { prepare(); } );
 		}
 
@@ -31,6 +39,7 @@ import SpinnerHelper from "../helpers/spinner";
 			config = getRootElement().data( 'config' );
 			loadSpots();
 			addEventListeners();
+			loadPreviewImage();
 			reloadImagePreviews();
 		}
 
@@ -50,7 +59,12 @@ import SpinnerHelper from "../helpers/spinner";
 
 		function previewImageLoaded() {
 			getDetectFacesJsButton().attr( 'disabled', false );
+			spinnerHelper.removeFromElement( getChildElement( '.image-spots-preview' ) );
 			spinnerHelper.removeFromElement( getDetectFacesJsButton() );
+		}
+
+		function loadPreviewImage() {
+			getPreviewImage().attr( 'src', config.image_src );
 		}
 
 		/**
