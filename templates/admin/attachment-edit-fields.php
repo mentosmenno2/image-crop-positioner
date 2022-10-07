@@ -17,10 +17,11 @@ if ( ! wp_attachment_is_image( $attachment ) ) {
 	return;
 }
 
-$attachmentmeta = new AttachmentMeta();
-$faces          = $attachmentmeta->get_faces( $attachment->ID );
-$hotspots       = $attachmentmeta->get_hotspots( $attachment->ID );
-$image_src      = wp_get_attachment_image_src( $attachment->ID, 'full' )[0] ?? '';
+$attachmentmeta      = new AttachmentMeta();
+$faces               = $attachmentmeta->get_faces( $attachment->ID );
+$hotspots            = $attachmentmeta->get_hotspots( $attachment->ID );
+$image_src           = wp_get_attachment_image_src( $attachment->ID, 'full' )[0] ?? '';
+$attachment_metadata = wp_get_attachment_metadata( $attachment->ID ) ?: array();
 
 // If image is hosted on external url (like an image bucket), convert it to a data image.
 if ( strpos( $image_src, home_url() ) !== 0 ) {
@@ -34,7 +35,7 @@ $data_config = wp_json_encode(
 	array(
 		'attachment_id'       => $attachment->ID,
 		'image_src'           => $image_src,
-		'attachment_metadata' => wp_get_attachment_metadata( $attachment->ID ) ?: array(),
+		'attachment_metadata' => $attachment_metadata,
 		'faces'               => $faces,
 		'hotspots'            => $hotspots,
 		'js_faces_detection'  => array(
@@ -62,6 +63,8 @@ $data_config = wp_json_encode(
 			src=""
 			loading="lazy"
 			style="display: none;"
+			width="<?php echo esc_attr( (string) ( $attachment_metadata['width'] ?? '' ) ); ?>"
+			height="<?php echo esc_attr( (string) ( $attachment_metadata['height'] ?? '' ) ); ?>"
 		>
 		<div class="image-spots-preview__spots"></div>
 	</div>
