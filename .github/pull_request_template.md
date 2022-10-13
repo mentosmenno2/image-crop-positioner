@@ -1,7 +1,7 @@
 <!--- Provide a general summary of your changes in the Title above -->
 
 ## Issue link
-Fixes <!--- Number of the issue in GitHub. -->
+Fixes #<!--- Number of the issue in GitHub. -->
 
 ## Description
 <!--- Describe your changes in detail -->
