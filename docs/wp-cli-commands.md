@@ -27,6 +27,6 @@ wp image-crop-positioner face-detection save-image "\path\to\input_image.jpg" "\
 Run a migration for all attachments
 
 ```sh
-wp image-crop-positioner migrate attachments regenerate_images --per-page=100 --page=1
-wp image-crop-positioner migrate attachments my_eyes_are_up_here --per-page=100 --page=1
+wp image-crop-positioner migrate attachments regenerate_images --batch-size=100 --batch-number=1
+wp image-crop-positioner migrate attachments my_eyes_are_up_here --batch-size=100 --batch-number=1
 ```
