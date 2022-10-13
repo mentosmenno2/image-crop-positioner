@@ -32,7 +32,7 @@ class GetEncodedImage extends BaseAjaxCall {
 		$image_data = wp_remote_get( $image_src, array( 'timeout' => 5 ) ) ?: '';
 		if ( ! $image_data instanceof WP_Error && ! empty( $image_data['body'] ) && ! empty( $image_data['headers']['content-type'] ) && strpos( $image_data['headers']['content-type'], 'image/' ) === 0 ) {
 			$data = array(
-				'image' =>  base64_encode( $image_data['body'] ), //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+				'image' => base64_encode( $image_data['body'] ), //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			);
 			wp_send_json_success( $data, 200 );
 			exit;
