@@ -25,7 +25,7 @@ class Migrate {
 	 * ---
 	 *
 	 * [--page=<int>]
-	 * : The page you want to process
+	 * : The page you want to process first
 	 * ---
 	 * default: 1
 	 * ---
@@ -45,25 +45,39 @@ class Migrate {
 		$page     = (int) ( $assoc_args['page'] ?? 1 );
 
 		WP_CLI::log( "Retrieving attachments (page: $page, per page: $per_page)" );
+		$migrator = new MyEyesAreUpHere();
 
-		$migrator    = new MyEyesAreUpHere();
-		$wp_query    = $migrator->get_migratable_attachment_ids( $page, $per_page );
-		$posts_count = $wp_query->post_count;
+		$stop = false;
+		while ( $stop === false ) {
+			$wp_query = $migrator->get_migratable_attachment_ids( $page, $per_page );
+			$page++;
 
-		/** @var int[] */
-		$posts = $wp_query->posts;
-		foreach ( $posts as $index => $post_id ) {
-			WP_CLI::log( "Migrating attachment ID: $post_id" );
-			$status = $migrator->migrate_attachment( $post_id );
-			if ( $status === MyEyesAreUpHere::STATUS_DONE ) {
-				WP_CLI::log( "Migrated attachment ID: $post_id" );
-			} else {
-				WP_CLI::log( "Skipped attachment ID: $post_id" );
+			$posts_count = $wp_query->post_count;
+
+			/** @var int[] */
+			$posts = $wp_query->posts;
+			foreach ( $posts as $index => $post_id ) {
+				WP_CLI::log( "Migrating attachment ID: $post_id" );
+				$status = $migrator->migrate_attachment( $post_id );
+				if ( $status === MyEyesAreUpHere::STATUS_DONE ) {
+					WP_CLI::log( "Migrated attachment ID: $post_id" );
+				} else {
+					WP_CLI::log( "Skipped attachment ID: $post_id" );
+				}
+
+				$done = (int) $index + 1;
+				if ( $done % self::PROGRESS_DISPLAY_BATCH_SIZE === 0 ) {
+					WP_CLI::colorize( "%pMigrated $done of $posts_count attachments%n" );
+				}
 			}
 
-			$done = (int) $index + 1;
-			if ( $done % self::PROGRESS_DISPLAY_BATCH_SIZE === 0 ) {
-				WP_CLI::colorize( "%pMigrated $done of $posts_count attachments%n" );
+			if ( $per_page === -1 ) {
+				break;
+			}
+
+			if ( $posts_count < $per_page ) {
+				$stop = true;
+				continue;
 			}
 		}
 		WP_CLI::success( "All $posts_count attachments have been migrated" );
