@@ -1,17 +1,14 @@
 <!--- Provide a general summary of your changes in the Title above -->
 
 ## Issue link
-<!--- Link to the origin of the issue in Asana or HelpScout. -->
+Fixes <!--- Number of the issue in GitHub. -->
 
 ## Description
 <!--- Describe your changes in detail -->
 
 ## How Has This Been Tested?
 <!--- Please describe in detail how you tested your changes. -->
-<!--- Include details of your testing environment, tests ran to see how -->
-<!--- your change affects other areas of the code, etc. -->
-
-## Screenshots (if appropriate):
+<!--- If possible, include details of your testing environment, and/or tests you ran. -->
 
 ## Types of changes
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
@@ -25,3 +22,5 @@
 - [ ] My code follows the code style of this project.
 - [ ] My change requires a change to the documentation.
 - [ ] I have updated the documentation accordingly.
+
+## Screenshots (if appropriate):
