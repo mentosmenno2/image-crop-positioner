@@ -44,7 +44,7 @@ class Migrate {
 		$per_page = (int) ( $assoc_args['per-page'] ?? -1 );
 		$page     = (int) ( $assoc_args['page'] ?? 1 );
 
-		if ( $per_page == -1 && $page > 1 ) {
+		if ( $per_page === -1 && $page > 1 ) {
 			WP_CLI::error( sprintf( 'Pages are set, but no amount per page is set. Please use per-page to set this.' ) );
 		}
 
