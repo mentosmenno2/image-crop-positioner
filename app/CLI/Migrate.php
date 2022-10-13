@@ -24,7 +24,7 @@ class Migrate {
 	 * default: 100
 	 * ---
 	 *
-	 * [--batch-number=<int>]
+	 * [--start-batch-number=<int>]
 	 * : The batch number you want to start processing from
 	 * ---
 	 * default: 1
@@ -32,7 +32,7 @@ class Migrate {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp image-crop-positioner migrate attachments my_eyes_are_up_here --batch-size=100 --batch-number=1
+	 *     wp image-crop-positioner migrate attachments my_eyes_are_up_here --batch-size=100 --start-batch-number=1
 	 */
 	public function attachments( array $args, array $assoc_args ): void {
 		$migrator_slug = $args[0];
@@ -43,7 +43,7 @@ class Migrate {
 
 		$migrator     = $migrators[ $migrator_slug ];
 		$batch_size   = (int) ( $assoc_args['batch-size'] ?? 100 );
-		$batch_number = (int) ( $assoc_args['batch-number'] ?? 1 );
+		$batch_number = (int) ( $assoc_args['start-batch-number'] ?? 1 );
 		$posts_count  = 0;
 		$total_count  = 0;
 		$first_run    = true;
