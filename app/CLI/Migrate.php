@@ -58,7 +58,7 @@ class Migrate {
 				WP_CLI::log( 'No more items remaining' );
 				continue;
 			}
-			
+
 			$total_count += $posts_count;
 			WP_CLI::log( "Processing batch (batch number: $batch_number, batch size: $batch_size, items in batch: $posts_count)" );
 
