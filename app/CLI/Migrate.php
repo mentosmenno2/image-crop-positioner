@@ -54,6 +54,10 @@ class Migrate {
 			WP_CLI::log( "Getting new batch (batch number: $batch_number, batch size: $batch_size)" );
 			$wp_query     = $migrator->get_migratable_attachment_ids( $batch_number, $batch_size );
 			$posts_count  = $wp_query->post_count;
+			if ( $posts_count === 0 ) {
+				WP_CLI::log( 'No more items remaining' );
+				continue;
+			}
 			$total_count += $posts_count;
 			WP_CLI::log( "Processing batch (batch number: $batch_number, batch size: $batch_size, items in batch: $posts_count)" );
 
