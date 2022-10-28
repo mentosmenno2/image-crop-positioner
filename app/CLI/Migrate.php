@@ -18,21 +18,21 @@ class Migrate {
 	 * <migrator_slug>
 	 * : Slug of a migrator
 	 *
-	 * [--per-page=<int>]
-	 * : How many attachments are in a page. Use -1 for all attachments.
+	 * [--batch-size=<int>]
+	 * : How many attachments are processed in a batch. Use -1 for all attachments.
 	 * ---
-	 * default: -1
+	 * default: 100
 	 * ---
 	 *
-	 * [--page=<int>]
-	 * : The page you want to process
+	 * [--start-batch-number=<int>]
+	 * : The batch number you want to start processing from
 	 * ---
 	 * default: 1
 	 * ---
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp image-crop-positioner migrate attachments my_eyes_are_up_here --per-page=100 --page=1
+	 *     wp image-crop-positioner migrate attachments my_eyes_are_up_here --batch-size=100 --start-batch-number=1
 	 */
 	public function attachments( array $args, array $assoc_args ): void {
 		$migrator_slug = $args[0];
@@ -41,31 +41,44 @@ class Migrate {
 			WP_CLI::error( sprintf( 'Migrator does not exist. Please select one of: %s', implode( ', ', array_keys( $migrators ) ) ) );
 		}
 
-		$per_page = (int) ( $assoc_args['per-page'] ?? -1 );
-		$page     = (int) ( $assoc_args['page'] ?? 1 );
+		$migrator     = $migrators[ $migrator_slug ];
+		$batch_size   = (int) ( $assoc_args['batch-size'] ?? 100 );
+		$batch_number = (int) ( $assoc_args['start-batch-number'] ?? 1 );
+		$posts_count  = 0;
+		$total_count  = 0;
+		$first_run    = true;
 
-		WP_CLI::log( "Retrieving attachments (page: $page, per page: $per_page)" );
+		while ( $first_run || $posts_count ) {
+			$first_run = false;
 
-		$migrator    = new MyEyesAreUpHere();
-		$wp_query    = $migrator->get_migratable_attachment_ids( $page, $per_page );
-		$posts_count = $wp_query->post_count;
-
-		/** @var int[] */
-		$posts = $wp_query->posts;
-		foreach ( $posts as $index => $post_id ) {
-			WP_CLI::log( "Migrating attachment ID: $post_id" );
-			$status = $migrator->migrate_attachment( $post_id );
-			if ( $status === MyEyesAreUpHere::STATUS_DONE ) {
-				WP_CLI::log( "Migrated attachment ID: $post_id" );
-			} else {
-				WP_CLI::log( "Skipped attachment ID: $post_id" );
+			WP_CLI::log( "Getting new batch (batch number: $batch_number, batch size: $batch_size)" );
+			$wp_query    = $migrator->get_migratable_attachment_ids( $batch_number, $batch_size );
+			$posts_count = $wp_query->post_count;
+			if ( $posts_count === 0 ) {
+				WP_CLI::log( 'No more items remaining' );
+				continue;
 			}
 
-			$done = (int) $index + 1;
-			if ( $done % self::PROGRESS_DISPLAY_BATCH_SIZE === 0 ) {
-				WP_CLI::colorize( "%pMigrated $done of $posts_count attachments%n" );
+			$total_count += $posts_count;
+			WP_CLI::log( "Processing batch (batch number: $batch_number, batch size: $batch_size, items in batch: $posts_count)" );
+
+			/** @var int[] */
+			$posts = $wp_query->posts;
+			foreach ( $posts as $post_id ) {
+				WP_CLI::log( "Migrating attachment ID: $post_id" );
+				$status = $migrator->migrate_attachment( $post_id );
+				if ( $status === MyEyesAreUpHere::STATUS_DONE ) {
+					WP_CLI::log( "Migrated attachment ID: $post_id" );
+				} else {
+					WP_CLI::log( "Skipped attachment ID: $post_id" );
+				}
 			}
+
+			WP_CLI::log( "Processed batch (batch number: $batch_number, batch size: $batch_size, items in batch: $posts_count, total items processed: $total_count)" );
+
+			$batch_number++;
 		}
-		WP_CLI::success( "All $posts_count attachments have been migrated" );
+
+		WP_CLI::success( "All $total_count attachments have been migrated" );
 	}
 }
