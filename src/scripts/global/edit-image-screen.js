@@ -54,7 +54,10 @@ import SpinnerHelper from "../helpers/spinner";
 			getDiscardHotspotsButton().on( 'click', function() { discardHotspots(); } );
 			getSaveHotspotsButton().on( 'click', function() { saveHotspots(); } );
 
-			getPreviewImage().on( 'load', function() { previewImageLoaded(); } );
+			getPreviewImage().on( 'load', function() {
+				getPreviewImage().off( 'load' );
+				previewImageLoaded();
+			} );
 		}
 
 		function previewImageLoaded() {
@@ -214,17 +217,56 @@ import SpinnerHelper from "../helpers/spinner";
 
 		function detectFacesJs() {
 			if ( devTools.isOpen ) {
-				adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), 'Face detection via JavaScript does not work when devtools is open. Please close your devtools and try again.', 'error' );
-				return;
+
+				// eslint-disable-next-line no-console
+				console.warning( 'Image crop positioner: JavaScript face detection somehow might not work when devtools is open. If that is the case, please close devtools and try again.' );
 			}
 
 			disableAllDetections();
 			spinnerHelper.appendToElement( getDetectFacesJsButton() );
 
-			// Put it in a setTimeout so JavaScript will run it a little bit later, making sure the spinner works.
-			setTimeout( () => {
-				detectFacesJsBackgroundTask();
-			}, 0 );
+			// If hosted on same domain, detect faces after a small delay to allow for the spinner to be shown
+			if ( ! config.is_external ) {
+				setTimeout( () => {
+					detectFacesJsBackgroundTask();
+				}, 1 );
+				return;
+			}
+
+			// Download the base64 of the image and use it for faces detection
+			$.ajax( {
+				url : window.image_crop_positioner_options.ajax_url,
+				data : {
+					_ajax_nonce: window.image_crop_positioner_options.nonce,
+					action: 'image_crop_positioner_encode_image',
+					attachment_id: config.attachment_id
+				},
+				method : 'POST',
+				dataType: "json",
+				timeout: 30000,
+			} )
+				.done( function( data ) {
+					const $previewImageElement = getPreviewImage();
+					const currentSrc = $previewImageElement.attr( 'src' );
+					if ( currentSrc === data.data.src ) {
+						detectFacesJsBackgroundTask();
+						return;
+					}
+
+					$previewImageElement.on( 'load', function() {
+						$previewImageElement.off( 'load' );
+						detectFacesJsBackgroundTask();
+					} );
+					$previewImageElement.attr( 'src', data.data.src );
+				} )
+				.fail( function( jqXHR ) {
+					let errorMessage = 'Error';
+					if ( typeof jqXHR.responseJSON !== 'undefined' && typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
+						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
+					}
+					enableAllDetections();
+					adminNoticeHelper.setToElementHtml( getFaceDetectionMessage(), errorMessage, 'error' );
+				} );
 		}
 
 		function detectFacesJsBackgroundTask() {
