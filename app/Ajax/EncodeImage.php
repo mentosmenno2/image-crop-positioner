@@ -29,18 +29,17 @@ class EncodeImage extends BaseAjaxCall {
 	protected function get_base64_image( int $attachment_id ): void {
 
 		// Attempt with local file
-		// $file_path = get_attached_file( $attachment_id ) ?: '';
-		// $mime_type = mime_content_type( $file_path );
-		// $file_content = file_get_contents( $file_path ) ?: '';
-		// if ( $file_path && $mime_type && $file_content ) {
-		// 	$base64 = 'data:' . $mime_type . ';base64,' . base64_encode( $file_content ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-		// 	$this->return_success_response( $base64 );
-		// 	exit;
-		// }
+		$file_path = get_attached_file( $attachment_id ) ?: '';
+		$mime_type = mime_content_type( $file_path );
+		$file_content = file_get_contents( $file_path ) ?: '';
+		if ( $file_path && $mime_type && $file_content ) {
+			$base64 = 'data:' . $mime_type . ';base64,' . base64_encode( $file_content ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+			$this->return_success_response( $base64 );
+			exit;
+		}
 
 		// Attempt with remote get
 		$image_src = wp_get_attachment_image_src( $attachment_id, 'full' )[0] ?? '';
-		$image_src = 'https://i.postimg.cc/mgZLf18r/image.png';
 		$image_data = wp_remote_get(
 			$image_src,
 			array(
