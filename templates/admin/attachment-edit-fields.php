@@ -23,14 +23,6 @@ $hotspots            = $attachmentmeta->get_hotspots( $attachment->ID );
 $image_src           = wp_get_attachment_image_src( $attachment->ID, 'full' )[0] ?? '';
 $attachment_metadata = wp_get_attachment_metadata( $attachment->ID ) ?: array();
 
-// If image is hosted on external url (like an image bucket), convert it to a data image.
-if ( strpos( $image_src, home_url() ) !== 0 ) {
-	$image_data = wp_remote_get( $image_src, array( 'timeout' => 5 ) ) ?: '';
-	if ( ! $image_data instanceof WP_Error && ! empty( $image_data['body'] ) && ! empty( $image_data['headers']['content-type'] ) && strpos( $image_data['headers']['content-type'], 'image/' ) === 0 ) {
-		$image_src = 'data:' . $image_data['headers']['content-type'] . ';base64,' . base64_encode( $image_data['body'] ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-	}
-}
-
 $data_config = wp_json_encode(
 	array(
 		'attachment_id'       => $attachment->ID,
