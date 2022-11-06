@@ -31,7 +31,7 @@ class EncodeImage extends BaseAjaxCall {
 		// Attempt with local file
 		$file_path    = get_attached_file( $attachment_id ) ?: '';
 		$mime_type    = mime_content_type( $file_path );
-		$file_content = file_get_contents( $file_path ) ?: '';
+		$file_content = file_get_contents( $file_path ) ?: ''; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		if ( $file_path && $mime_type && $file_content ) {
 			$base64 = 'data:' . $mime_type . ';base64,' . base64_encode( $file_content ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			$this->return_success_response( $base64 );
