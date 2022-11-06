@@ -67,7 +67,7 @@ class Migrate {
 			foreach ( $posts as $post_id ) {
 				WP_CLI::log( "Migrating attachment ID: $post_id" );
 				$status = $migrator->migrate_attachment( $post_id );
-				if ( $status === MyEyesAreUpHere::STATUS_DONE ) {
+				if ( $status === $migrator::STATUS_DONE ) {
 					WP_CLI::log( "Migrated attachment ID: $post_id" );
 				} else {
 					WP_CLI::log( "Skipped attachment ID: $post_id" );
