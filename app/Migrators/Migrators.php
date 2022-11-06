@@ -12,7 +12,8 @@ class Migrators {
 	public function get_migrators(): array {
 		$classnames = array(
 			RegenerateImages::class,
-			MyEyesAreUpHere::class,
+			FromMyEyesAreUpHere::class,
+			ToMyEyesAreUpHere::class,
 		);
 
 		$classes = array_map(

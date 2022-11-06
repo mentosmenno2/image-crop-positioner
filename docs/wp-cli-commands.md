@@ -28,5 +28,6 @@ Run a migration for all attachments
 
 ```sh
 wp image-crop-positioner migrate attachments regenerate_images --batch-size=100 --start-batch-number=1
-wp image-crop-positioner migrate attachments my_eyes_are_up_here --batch-size=100 --start-batch-number=1
+wp image-crop-positioner migrate attachments from_my_eyes_are_up_here --batch-size=100 --start-batch-number=1
+wp image-crop-positioner migrate attachments to_my_eyes_are_up_here --batch-size=100 --start-batch-number=1
 ```

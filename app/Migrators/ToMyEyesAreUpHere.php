@@ -5,20 +5,21 @@ namespace Mentosmenno2\ImageCropPositioner\Migrators;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Objects\Face;
 use Mentosmenno2\ImageCropPositioner\Objects\Hotspot;
+use Mentosmenno2\ImageCropPositioner\Objects\Spot;
 
-class MyEyesAreUpHere extends BaseMigrator {
+class ToMyEyesAreUpHere extends BaseMigrator {
 
 	public function get_slug(): string {
-		return 'my_eyes_are_up_here';
+		return 'to_my_eyes_are_up_here';
 	}
 
 	public function get_title(): string {
-		return __( 'My Eyes Are Up Here', 'image-crop-positioner' );
+		return __( 'To My Eyes Are Up Here', 'image-crop-positioner' );
 	}
 
 	public function get_description(): string {
 		$url = 'https://wordpress.org/plugins/my-eyes-are-up-here/';
-		return sprintf( __( 'Migrate faces and hotspots from the <a href="%s" target="_blank">My Eyes Are Up Here</a> plugin.', 'image-crop-positioner' ), $url );
+		return sprintf( __( 'Migrate faces and hotspots from Image Crop Positioner to the <a href="%s" target="_blank">My Eyes Are Up Here</a> plugin. We\'re sorry to see you go, but we also know we can\'t stop you from doing so. But at least, we can make the process easier.', 'image-crop-positioner' ), $url );
 	}
 
 	public function get_default_batch_size(): int {
@@ -45,15 +46,15 @@ class MyEyesAreUpHere extends BaseMigrator {
 	}
 
 	protected function has_faces( int $attachment_id ): bool {
-		return metadata_exists( 'post', $attachment_id, AttachmentMeta::META_KEY_FACES );
+		return metadata_exists( 'post', $attachment_id, 'faces' );
 	}
 
 	/**
-	 * Migrate faces from My Eyes Are Up Here to Image Crop Positioner
+	 * Migrate faces from Image Crop Positioner to My Eyes Are Up Here
 	 */
 	protected function migrate_faces( int $attachment_id ): int {
-		$old_faces = get_post_meta( $attachment_id, 'faces', true );
-		if ( empty( $old_faces ) || ! is_array( $old_faces ) ) {
+		$old_faces = ( new AttachmentMeta() )->get_faces( $attachment_id );
+		if ( empty( $old_faces ) ) {
 			return self::STATUS_SKIPPED;
 		}
 
@@ -63,30 +64,23 @@ class MyEyesAreUpHere extends BaseMigrator {
 
 		$new_faces = array();
 		foreach ( $old_faces as $old_face ) {
-			$new_faces[] = new Face(
-				array(
-					'x'      => $old_face['x'],
-					'y'      => $old_face['y'],
-					'width'  => $old_face['width'],
-					'height' => $old_face['height'] ?? $old_face['width'],
-				)
-			);
+			$new_faces[] = $this->convert_face( $old_face );
 		}
 
-		( new AttachmentMeta() )->set_faces( $attachment_id, $new_faces );
+		update_post_meta( $attachment_id, 'faces', $new_faces );
 		return self::STATUS_DONE;
 	}
 
 	protected function has_hotspots( int $attachment_id ): bool {
-		return metadata_exists( 'post', $attachment_id, AttachmentMeta::META_KEY_HOTSPOTS );
+		return metadata_exists( 'post', $attachment_id, 'hotspots' );
 	}
 
 	/**
-	 * Migrate hotspots from My Eyes Are Up Here to Image Crop Positioner
+	 * Migrate hotspots from Image Crop Positioner to My Eyes Are Up Here
 	 */
 	protected function migrate_hotspots( int $attachment_id ): int {
-		$old_hotspots = get_post_meta( $attachment_id, 'hotspots', true );
-		if ( empty( $old_hotspots ) || ! is_array( $old_hotspots ) ) {
+		$old_hotspots = ( new AttachmentMeta() )->get_hotspots( $attachment_id );
+		if ( empty( $old_hotspots ) ) {
 			return self::STATUS_SKIPPED;
 		}
 
@@ -96,17 +90,27 @@ class MyEyesAreUpHere extends BaseMigrator {
 
 		$new_hotspots = array();
 		foreach ( $old_hotspots as $old_hotspot ) {
-			$new_hotspots[] = new Hotspot(
-				array(
-					'x'      => $old_hotspot['x'],
-					'y'      => $old_hotspot['y'],
-					'width'  => $old_hotspot['width'],
-					'height' => $old_hotspot['height'] ?? $old_hotspot['width'],
-				)
-			);
+			$new_hotspots[] = $this->convert_hotspot( $old_hotspot );
 		}
 
-		( new AttachmentMeta() )->set_hotspots( $attachment_id, $new_hotspots );
+		update_post_meta( $attachment_id, 'hotspots', $new_hotspots );
 		return self::STATUS_DONE;
+	}
+
+	protected function convert_face( Face $face ): array {
+		return array(
+			'x'      => (string) $face->get_x(),
+			'y'      => (string) $face->get_y(),
+			'width'  => (string) $face->get_width(),
+			'height' => (string) $face->get_height(),
+		);
+	}
+
+	protected function convert_hotspot( Hotspot $hotspot ):array {
+		return array(
+			'x'     => (string) $hotspot->get_x(),
+			'y'     => (string) $hotspot->get_y(),
+			'width' => (string) $hotspot->get_width(),
+		);
 	}
 }
