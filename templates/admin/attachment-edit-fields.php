@@ -22,6 +22,7 @@ $faces               = $attachmentmeta->get_faces( $attachment->ID );
 $hotspots            = $attachmentmeta->get_hotspots( $attachment->ID );
 $image_src           = wp_get_attachment_image_src( $attachment->ID, 'full' )[0] ?? '';
 $attachment_metadata = wp_get_attachment_metadata( $attachment->ID ) ?: array();
+$is_external  = strpos( $image_src, home_url() ) !== 0;
 
 $data_config = wp_json_encode(
 	array(
@@ -30,6 +31,7 @@ $data_config = wp_json_encode(
 		'attachment_metadata' => $attachment_metadata,
 		'faces'               => $faces,
 		'hotspots'            => $hotspots,
+		'is_external'         => $is_external,
 		'js_faces_detection'  => array(
 			'min_accuracy' => ( new JSFacesDetectionMinAccuracy() )->get_value(),
 		),

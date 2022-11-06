@@ -225,6 +225,12 @@ import SpinnerHelper from "../helpers/spinner";
 			disableAllDetections();
 			spinnerHelper.appendToElement( getDetectFacesJsButton() );
 
+			// If hosted on same domain, detect faces after a small delay
+			if ( ! config.is_external ) {
+				detectFacesJsBackgroundTask();
+			}
+
+			// Download the base64 of the image and use it for faces detection
 			$.ajax( {
 				url : window.image_crop_positioner_options.ajax_url,
 				data : {
