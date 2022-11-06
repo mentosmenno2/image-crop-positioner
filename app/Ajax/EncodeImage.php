@@ -29,8 +29,8 @@ class EncodeImage extends BaseAjaxCall {
 	protected function get_base64_image( int $attachment_id ): void {
 
 		// Attempt with local file
-		$file_path = get_attached_file( $attachment_id ) ?: '';
-		$mime_type = mime_content_type( $file_path );
+		$file_path    = get_attached_file( $attachment_id ) ?: '';
+		$mime_type    = mime_content_type( $file_path );
 		$file_content = file_get_contents( $file_path ) ?: '';
 		if ( $file_path && $mime_type && $file_content ) {
 			$base64 = 'data:' . $mime_type . ';base64,' . base64_encode( $file_content ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
@@ -39,11 +39,11 @@ class EncodeImage extends BaseAjaxCall {
 		}
 
 		// Attempt with remote get
-		$image_src = wp_get_attachment_image_src( $attachment_id, 'full' )[0] ?? '';
+		$image_src  = wp_get_attachment_image_src( $attachment_id, 'full' )[0] ?? '';
 		$image_data = wp_remote_get(
 			$image_src,
 			array(
-				'timeout' => 10
+				'timeout' => 10,
 			)
 		);
 		if ( ! $image_data instanceof WP_Error && ! empty( $image_data['body'] ) && ! empty( $image_data['headers']['content-type'] ) && strpos( $image_data['headers']['content-type'], 'image/' ) === 0 ) {
@@ -65,10 +65,12 @@ class EncodeImage extends BaseAjaxCall {
 	}
 
 	protected function return_success_response( string $src, ?WP_Error $download_debug_data = null ): void {
-		wp_send_json_success( array(
-			'src' => $src,
-			'download_debug_data' => $download_debug_data,
-		), 200 );
+		wp_send_json_success(
+			array(
+				'src'                 => $src,
+				'download_debug_data' => $download_debug_data,
+			), 200
+		);
 		exit;
 	}
 }

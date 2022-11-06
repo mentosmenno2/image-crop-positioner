@@ -22,7 +22,7 @@ $faces               = $attachmentmeta->get_faces( $attachment->ID );
 $hotspots            = $attachmentmeta->get_hotspots( $attachment->ID );
 $image_src           = wp_get_attachment_image_src( $attachment->ID, 'full' )[0] ?? '';
 $attachment_metadata = wp_get_attachment_metadata( $attachment->ID ) ?: array();
-$is_external  = strpos( $image_src, home_url() ) !== 0;
+$is_external         = strpos( $image_src, home_url() ) !== 0;
 
 $data_config = wp_json_encode(
 	array(
