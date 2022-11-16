@@ -18,6 +18,7 @@ This plugin allows you to better crop your images, based on face detection or ho
 - [WP-CLI Commands](./docs/wp-cli-commands.md)
 - [Developing](./docs/developing.md)
 - [Automated testing](./docs/automated-testing.md)
+- [Known issues](./docs/known-issues.md)
 
 ## Do you like this plugin?
 That's amazing to hear 😄! I attempt to keep it up to date as best as I can. However, it's a spare-time project that I mostly work on in the evening hours.
