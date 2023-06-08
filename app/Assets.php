@@ -11,7 +11,7 @@ class Assets {
 	}
 
 	public function is_development_mode(): bool {
-		return ! file_exists( constant('IMAGE_CROP_POSITIONER_PLUGIN_PATH') . 'dist/main.js' );
+		return ! file_exists( constant( 'IMAGE_CROP_POSITIONER_PLUGIN_PATH' ) . 'dist/main.js' );
 	}
 
 	public function enqueue_admin(): void {
@@ -26,12 +26,12 @@ class Assets {
 
 	public function enqueue_development( string $handle, array $deps, string $path, bool $in_footer ): void {
 		$src = $this->get_development_src( $path );
-		wp_enqueue_script( $handle, $src, $deps, constant('IMAGE_CROP_POSITIONER_PLUGIN_VERSION'), $in_footer );
+		wp_enqueue_script( $handle, $src, $deps, constant( 'IMAGE_CROP_POSITIONER_PLUGIN_VERSION' ), $in_footer );
 	}
 
 	public function enqueue_production(): void {
-		wp_enqueue_script( 'image_crop_positioner_main', constant('IMAGE_CROP_POSITIONER_PLUGIN_URL') . 'dist/main.js', array( 'jquery' ), constant( 'IMAGE_CROP_POSITIONER_PLUGIN_VERSION' ), true );
-		wp_enqueue_style( 'image_crop_positioner_main', constant('IMAGE_CROP_POSITIONER_PLUGIN_URL') . 'dist/main.css', array(), constant( 'IMAGE_CROP_POSITIONER_PLUGIN_VERSION' ), 'all' );
+		wp_enqueue_script( 'image_crop_positioner_main', constant( 'IMAGE_CROP_POSITIONER_PLUGIN_URL' ) . 'dist/main.js', array( 'jquery' ), constant( 'IMAGE_CROP_POSITIONER_PLUGIN_VERSION' ), true );
+		wp_enqueue_style( 'image_crop_positioner_main', constant( 'IMAGE_CROP_POSITIONER_PLUGIN_URL' ) . 'dist/main.css', array(), constant( 'IMAGE_CROP_POSITIONER_PLUGIN_VERSION' ), 'all' );
 	}
 
 	public function localize(): void {
