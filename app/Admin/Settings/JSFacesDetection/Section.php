@@ -22,6 +22,7 @@ class Section {
 
 	/**
 	 * Render a settings section description based on the section ID
+	 * @param array<string,mixed> $args
 	 */
 	public function render_description( array $args ): void {
 		$text = esc_html__( 'Here you can change the JS faces detection settings.', 'image-crop-positioner' );

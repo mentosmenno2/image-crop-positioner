@@ -45,7 +45,7 @@ abstract class BaseSelectField extends BaseField {
 		</select>
 
 		<?php if ( $description ) { ?>
-			<p><?php echo esc_html( $description ); ?></p>
+			<p><?php echo wp_kses_post( $description ); ?></p>
 		<?php } ?>
 
 		<?php

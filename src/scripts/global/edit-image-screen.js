@@ -40,7 +40,7 @@ import SpinnerHelper from "../helpers/spinner";
 			loadSpots();
 			addEventListeners();
 			loadPreviewImage();
-			reloadImagePreviews();
+			reloadImagePreviews( false );
 		}
 
 		function addEventListeners() {
@@ -76,7 +76,16 @@ import SpinnerHelper from "../helpers/spinner";
 		 * ##########
 		 */
 
-		function reloadImagePreviews() {
+		function reloadImagePreviews( usingCron ) {
+			if ( usingCron ) {
+				adminNoticeHelper.setToElementHtml(
+					getChildElement( '.image-previews__message' ),
+					'Image sizes will be regenerated in the background. This might take some time.',
+					'info'
+				);
+				return;
+			}
+
 			spinnerHelper.setToElementHtml( getChildElement( '.image-previews__images' ) );
 
 			$.ajax( {
@@ -101,7 +110,7 @@ import SpinnerHelper from "../helpers/spinner";
 					if ( typeof jqXHR.responseJSON !== 'undefined' && typeof jqXHR.responseJSON.data[ 0 ].message !== 'undefined' ) {
 						errorMessage = jqXHR.responseJSON.data[ 0 ].message;
 					}
-					adminNoticeHelper.setToElementHtml( getChildElement( '.image-previews__images' ), errorMessage, 'error' );
+					adminNoticeHelper.setToElementHtml( getChildElement( '.image-previews__message' ), errorMessage, 'error' );
 				} );
 		}
 
@@ -355,7 +364,7 @@ import SpinnerHelper from "../helpers/spinner";
 				.done( function( data ) {
 					config.faces = data.data.faces;
 					loadSpots();
-					reloadImagePreviews();
+					reloadImagePreviews( data.data.regenerate_using_cron );
 					getSaveFacesButton().hide();
 					getDiscardFacesButton().hide();
 					getRemoveFacesButton().show();
@@ -394,7 +403,7 @@ import SpinnerHelper from "../helpers/spinner";
 				.done( function( data ) {
 					config.faces = data.data.faces;
 					loadSpots();
-					reloadImagePreviews();
+					reloadImagePreviews( data.data.regenerate_using_cron );
 					getRemoveFacesButton().hide();
 					getDetectFacesPhpButton().show();
 					getDetectFacesJsButton().show();
@@ -474,7 +483,7 @@ import SpinnerHelper from "../helpers/spinner";
 				.done( function( data ) {
 					config.hotspots = data.data.hotspots;
 					loadSpots();
-					reloadImagePreviews();
+					reloadImagePreviews( data.data.regenerate_using_cron );
 					getSaveHotspotsButton().hide();
 					getDiscardHotspotsButton().hide();
 					getEditHotspotsButton().show();

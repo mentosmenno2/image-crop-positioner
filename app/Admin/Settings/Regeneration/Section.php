@@ -1,12 +1,12 @@
 <?php
 
-namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\PHPFaceDetection;
+namespace Mentosmenno2\ImageCropPositioner\Admin\Settings\Regeneration;
 
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu;
 
 class Section {
 
-	public const NAME = 'image_crop_positioner_options_php_face_detection';
+	public const NAME = 'image_regeneration_positioner_options_image_sizes_regeneration';
 
 	public function register_hooks(): void {
 		add_action( 'admin_init', array( $this, 'register_section' ) );
@@ -17,7 +17,7 @@ class Section {
 	}
 
 	public function get_label(): string {
-		return __( 'PHP face detection', 'image-crop-positioner' );
+		return __( 'Image sizes regeneration', 'image-regeneration-positioner' );
 	}
 
 	/**
@@ -25,7 +25,7 @@ class Section {
 	 * @param array<string,mixed> $args
 	 */
 	public function render_description( array $args ): void {
-		$text = esc_html__( 'Here you can change the PHP face detection settings.', 'image-crop-positioner' );
+		$text = esc_html__( 'Here you can set the settings for regenerating image sizes.', 'image-regeneration-positioner' );
 		if ( empty( $text ) ) {
 			return;
 		}
