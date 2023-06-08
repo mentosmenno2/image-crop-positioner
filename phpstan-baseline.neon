@@ -1,0 +1,316 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Admin\\:\\:edit_fields\\(\\) has parameter \\$form_fields with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Admin.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Admin\\:\\:edit_fields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Admin.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Admin\\\\Settings\\\\Cache\\\\Section\\:\\:render_description\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Admin/Settings/Cache/Section.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Admin\\\\Settings\\\\Crop\\\\Section\\:\\:render_description\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Admin/Settings/Crop/Section.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Admin\\\\Settings\\\\HotspotsSelection\\\\Section\\:\\:render_description\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Admin/Settings/HotspotsSelection/Section.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Admin\\\\Settings\\\\JSFacesDetection\\\\Section\\:\\:render_description\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Admin/Settings/JSFacesDetection/Section.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Admin\\\\Settings\\\\Menu\\:\\:get_current_settings_menu_page\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Admin/Settings/Menu.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Admin\\\\Settings\\\\Menu\\:\\:get_settings_menu\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Admin/Settings/Menu.php
+
+		-
+			message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, string\\|false\\|null given\\.$#"
+			count: 1
+			path: app/Admin/Settings/Menu.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Admin\\\\Settings\\\\PHPFaceDetection\\\\Section\\:\\:render_description\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Admin/Settings/PHPFaceDetection/Section.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Ajax\\\\SaveFaces\\:\\:save_faces\\(\\) has parameter \\$faces_data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Ajax/SaveFaces.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Ajax\\\\SaveHotspots\\:\\:save_hotspots\\(\\) has parameter \\$hotspots_data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Ajax/SaveHotspots.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: app/Ajax/SaveHotspots.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Assets\\:\\:enqueue_development\\(\\) has parameter \\$deps with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Assets.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Assets\\:\\:get_localize_data\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Assets.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Assets\\:\\:get_src_config\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Assets.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
+			count: 2
+			path: app/Assets.php
+
+		-
+			message: "#^Cannot call method get_accuracy\\(\\) on Mentosmenno2\\\\ImageCropPositioner\\\\Objects\\\\Face\\|null\\.$#"
+			count: 1
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Cannot call method get_height\\(\\) on Mentosmenno2\\\\ImageCropPositioner\\\\Objects\\\\Face\\|null\\.$#"
+			count: 1
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Cannot call method get_width\\(\\) on Mentosmenno2\\\\ImageCropPositioner\\\\Objects\\\\Face\\|null\\.$#"
+			count: 1
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Cannot call method get_x\\(\\) on Mentosmenno2\\\\ImageCropPositioner\\\\Objects\\\\Face\\|null\\.$#"
+			count: 1
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Cannot call method get_y\\(\\) on Mentosmenno2\\\\ImageCropPositioner\\\\Objects\\\\Face\\|null\\.$#"
+			count: 1
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\CLI\\\\FaceDetection\\:\\:get_face\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\CLI\\\\FaceDetection\\:\\:get_face\\(\\) has parameter \\$assoc_args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\CLI\\\\FaceDetection\\:\\:save_image\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\CLI\\\\FaceDetection\\:\\:save_image\\(\\) has parameter \\$assoc_args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 2
+			path: app/CLI/FaceDetection.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\CLI\\\\Migrate\\:\\:attachments\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/CLI/Migrate.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\CLI\\\\Migrate\\:\\:attachments\\(\\) has parameter \\$assoc_args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/CLI/Migrate.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Cache\\:\\:change_attachment_image_src\\(\\) has parameter \\$image with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Cache.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Cache\\:\\:change_attachment_image_src\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Cache.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Cache\\:\\:change_attachment_image_srcset\\(\\) has parameter \\$image_meta with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Cache.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Cache\\:\\:change_attachment_image_srcset\\(\\) has parameter \\$size_array with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Cache.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Cache\\:\\:change_attachment_image_srcset\\(\\) has parameter \\$sources with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Cache.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Cache\\:\\:change_attachment_image_srcset\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Cache.php
+
+		-
+			message: "#^Offset 'Name' on array\\{Name\\: string, PluginURI\\: string, Version\\: string, Description\\: string, Author\\: string, AuthorURI\\: string, TextDomain\\: string, DomainPath\\: string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: app/Conflicts.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Crop\\:\\:crop\\(\\) has parameter \\$crop with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Crop.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Crop\\:\\:get_spots_average\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Crop.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Crop\\:\\:get_spots_center\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Crop.php
+
+		-
+			message: "#^If condition is always false\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\FaceDetection\\\\FaceDetector\\:\\:compute_ii\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\FaceDetection\\\\FaceDetector\\:\\:detect_on_sub_image\\(\\) has parameter \\$ii with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\FaceDetection\\\\FaceDetector\\:\\:detect_on_sub_image\\(\\) has parameter \\$ii2 with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\FaceDetection\\\\FaceDetector\\:\\:do_detect_greedy_big_to_small\\(\\) has parameter \\$ii with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\FaceDetection\\\\FaceDetector\\:\\:do_detect_greedy_big_to_small\\(\\) has parameter \\$ii2 with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\FaceDetection\\\\FaceDetector\\:\\:get_img_stats\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Parameter \\#1 \\$im of function imagecolorat expects resource, GdImage\\|resource given\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Parameter \\#1 \\$im of function imagecrop expects resource, GdImage\\|resource given\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Parameter \\#1 \\$im of function imagesx expects resource, GdImage\\|resource given\\.$#"
+			count: 2
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Parameter \\#1 \\$im of function imagesy expects resource, GdImage\\|resource given\\.$#"
+			count: 2
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Parameter \\#2 \\$src_im of function imagecopyresampled expects resource, GdImage\\|resource given\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Property Mentosmenno2\\\\ImageCropPositioner\\\\FaceDetection\\\\FaceDetector\\:\\:\\$detection_data type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/FaceDetection/FaceDetector.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Migrators\\\\FromMyEyesAreUpHere\\:\\:get_migrations\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Migrators/FromMyEyesAreUpHere.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Migrators\\\\Migrators\\:\\:get_migrators\\(\\) should return array\\<Mentosmenno2\\\\ImageCropPositioner\\\\Migrators\\\\BaseMigrator\\> but returns array\\<string, Mentosmenno2\\\\ImageCropPositioner\\\\Migrators\\\\FromMyEyesAreUpHere\\|Mentosmenno2\\\\ImageCropPositioner\\\\Migrators\\\\RegenerateImages\\|Mentosmenno2\\\\ImageCropPositioner\\\\Migrators\\\\ToMyEyesAreUpHere\\>\\|false\\.$#"
+			count: 1
+			path: app/Migrators/Migrators.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Migrators\\\\ToMyEyesAreUpHere\\:\\:convert_face\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Migrators/ToMyEyesAreUpHere.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Migrators\\\\ToMyEyesAreUpHere\\:\\:convert_hotspot\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Migrators/ToMyEyesAreUpHere.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Migrators\\\\ToMyEyesAreUpHere\\:\\:get_migrations\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Migrators/ToMyEyesAreUpHere.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Objects\\\\Face\\:\\:get_data_array\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Objects/Face.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Objects\\\\Spot\\:\\:get_data_array\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Objects/Spot.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Objects\\\\Spot\\:\\:jsonSerialize\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Objects/Spot.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Templates\\:\\:echo_template\\(\\) has parameter \\$template_args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Templates.php
+
+		-
+			message: "#^Method Mentosmenno2\\\\ImageCropPositioner\\\\Templates\\:\\:get_template\\(\\) has parameter \\$_template_args with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Templates.php
+
+		-
+			message: "#^Property Mentosmenno2\\\\ImageCropPositioner\\\\Templates\\:\\:\\$args type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Templates.php

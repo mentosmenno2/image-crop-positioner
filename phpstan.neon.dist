@@ -2,7 +2,7 @@ includes:
   - phpstan-baseline.neon
 
 parameters:
-    level: 2
+    level: 8
     reportUnmatchedIgnoredErrors: false
     editorUrl: 'vscode://file/%%file%%:%%line%%'
     paths:
