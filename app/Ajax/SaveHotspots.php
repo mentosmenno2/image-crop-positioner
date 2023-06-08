@@ -2,6 +2,7 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\Regeneration\Fields\UseCron;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Objects\Hotspot;
 use Mentosmenno2\ImageCropPositioner\Regenerate;
@@ -47,7 +48,8 @@ class SaveHotspots extends BaseAjaxCall {
 		);
 		( new AttachmentMeta() )->set_hotspots( $attachment_id, $hotspots );
 
-		$regenerated = ( new Regenerate() )->run( $attachment_id );
+		$regenerate_use_cron = ( new UseCron() )->get_value();
+		$regenerated         = ( new Regenerate() )->execute( $attachment_id, $regenerate_use_cron );
 		if ( ! $regenerated ) {
 			$error = new WP_Error(
 				500, __( 'Could not regenerate images.', 'image-crop-positioner' ), array(
@@ -64,7 +66,8 @@ class SaveHotspots extends BaseAjaxCall {
 		);
 
 		$data = array(
-			'hotspots' => $return_hotspots_data,
+			'hotspots'              => $return_hotspots_data,
+			'regenerate_using_cron' => $regenerate_use_cron,
 		);
 		wp_send_json_success( $data, 200 );
 	}

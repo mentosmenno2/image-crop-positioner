@@ -2,6 +2,7 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
+use Mentosmenno2\ImageCropPositioner\Admin\Settings\Regeneration\Fields\UseCron;
 use Mentosmenno2\ImageCropPositioner\Helpers\AttachmentMeta;
 use Mentosmenno2\ImageCropPositioner\Regenerate;
 use WP_Error;
@@ -31,7 +32,8 @@ class RemoveFaces extends BaseAjaxCall {
 		$faces = array();
 		( new AttachmentMeta() )->set_faces( $attachment_id, $faces );
 
-		$regenerated = ( new Regenerate() )->run( $attachment_id );
+		$regenerate_use_cron = ( new UseCron() )->get_value();
+		$regenerated         = ( new Regenerate() )->execute( $attachment_id, $regenerate_use_cron );
 		if ( ! $regenerated ) {
 			$error = new WP_Error(
 				500, __( 'Could not regenerate images.', 'image-crop-positioner' ), array(
@@ -42,7 +44,8 @@ class RemoveFaces extends BaseAjaxCall {
 		}
 
 		$data = array(
-			'faces' => $faces,
+			'faces'                 => $faces,
+			'regenerate_using_cron' => $regenerate_use_cron,
 		);
 		wp_send_json_success( $data, 200 );
 	}

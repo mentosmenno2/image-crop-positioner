@@ -24,7 +24,7 @@ abstract class BaseToggleField extends BaseField {
 		<label for="<?php echo esc_attr( $this->get_name() ); ?>"><?php echo esc_html( $this->get_checkbox_label() ); ?></label>
 
 		<?php if ( $description ) { ?>
-			<p><?php echo esc_html( $description ); ?></p>
+			<p><?php echo wp_kses_post( $description ); ?></p>
 		<?php } ?>
 
 		<?php

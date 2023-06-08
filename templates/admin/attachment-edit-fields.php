@@ -45,6 +45,7 @@ $data_config = wp_json_encode(
 	<div class="image-previews" >
 		<p class="image-previews__text"><strong><?php esc_html_e( 'Image size previews', 'image-crop-positioner' ); ?></strong></p>
 		<div class="image-previews__images"></div>
+		<div class="image-previews__message"></div>
 	</div>
 
 	<!-- Spots preview -->

@@ -4,6 +4,29 @@ namespace Mentosmenno2\ImageCropPositioner;
 
 class Regenerate {
 
+	public const ACTION = 'image_crop_positioner_regenerate_image';
+
+	public function register_hooks(): void {
+		add_action( self::ACTION, array( $this, 'cron_run' ), 10, 1 );
+	}
+
+	public function execute( int $attachment_id, bool $schedule ): bool {
+		if ( $schedule ) {
+			if ( wp_next_scheduled( self::ACTION, array( $attachment_id ) ) ) {
+				return true;
+			}
+
+			wp_schedule_single_event( time(), self::ACTION, array( $attachment_id ) );
+			return true;
+		}
+
+		return $this->run( $attachment_id );
+	}
+
+	public function cron_run( int $attachment_id ): void {
+		$this->run( $attachment_id );
+	}
+
 	/**
 	 * Regenerate attachment image sizes
 	 */
