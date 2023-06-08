@@ -30,7 +30,6 @@ class SaveFaces extends BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 400 );
-			exit;
 		}
 
 		$this->save_faces( $attachment_id, $faces );
@@ -55,7 +54,6 @@ class SaveFaces extends BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 500 );
-			exit;
 		}
 
 		$return_faces_data = array_map(
@@ -68,6 +66,5 @@ class SaveFaces extends BaseAjaxCall {
 			'faces' => $return_faces_data,
 		);
 		wp_send_json_success( $data, 200 );
-		exit;
 	}
 }

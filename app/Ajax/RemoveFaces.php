@@ -39,13 +39,11 @@ class RemoveFaces extends BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 500 );
-			exit;
 		}
 
 		$data = array(
 			'faces' => $faces,
 		);
 		wp_send_json_success( $data, 200 );
-		exit;
 	}
 }

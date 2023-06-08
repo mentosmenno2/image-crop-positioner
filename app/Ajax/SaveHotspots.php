@@ -55,7 +55,6 @@ class SaveHotspots extends BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 500 );
-			exit;
 		}
 
 		$return_hotspots_data = array_map(
@@ -68,6 +67,5 @@ class SaveHotspots extends BaseAjaxCall {
 			'hotspots' => $return_hotspots_data,
 		);
 		wp_send_json_success( $data, 200 );
-		exit;
 	}
 }

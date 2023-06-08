@@ -34,7 +34,6 @@ class Migrate extends BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 403 );
-			exit;
 		}
 
 		return $migrators[ $migrator_slug ];
@@ -66,6 +65,5 @@ class Migrate extends BaseAjaxCall {
 			),
 		);
 		wp_send_json_success( $data, 200 );
-		exit;
 	}
 }

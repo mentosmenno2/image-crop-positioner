@@ -36,7 +36,6 @@ class FaceDetection extends BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 400 );
-			exit;
 		}
 
 		try {
@@ -48,7 +47,6 @@ class FaceDetection extends BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 400 );
-			exit;
 		}
 
 		$data = array(
@@ -58,6 +56,5 @@ class FaceDetection extends BaseAjaxCall {
 			$data['faces'][] = $extraction->face->get_data_array();
 		}
 		wp_send_json_success( $data, 200 );
-		exit;
 	}
 }

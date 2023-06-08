@@ -39,6 +39,5 @@ class ImagePreviews extends BaseAjaxCall {
 		}
 
 		wp_send_json_success( $data, 200 );
-		exit;
 	}
 }
