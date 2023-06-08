@@ -17,7 +17,6 @@ abstract class BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 403 );
-			exit;
 		}
 	}
 
@@ -30,7 +29,6 @@ abstract class BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 400 );
-			exit;
 		}
 	}
 
@@ -42,7 +40,6 @@ abstract class BaseAjaxCall {
 				)
 			);
 			wp_send_json_error( $error, 400 );
-			exit;
 		}
 	}
 }

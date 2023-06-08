@@ -35,7 +35,6 @@ class EncodeImage extends BaseAjaxCall {
 		if ( $file_path && $mime_type && $file_content ) {
 			$base64 = 'data:' . $mime_type . ';base64,' . base64_encode( $file_content ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			$this->return_success_response( $base64 );
-			exit;
 		}
 
 		// Attempt with remote get
@@ -49,7 +48,6 @@ class EncodeImage extends BaseAjaxCall {
 		if ( ! $image_data instanceof WP_Error && ! empty( $image_data['body'] ) && ! empty( $image_data['headers']['content-type'] ) && strpos( $image_data['headers']['content-type'], 'image/' ) === 0 ) {
 			$image_src = 'data:' . $image_data['headers']['content-type'] . ';base64,' . base64_encode( $image_data['body'] ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			$this->return_success_response( $image_src );
-			exit;
 		}
 
 		// If both fail, return the original source
@@ -61,7 +59,6 @@ class EncodeImage extends BaseAjaxCall {
 				)
 			)
 		);
-		exit;
 	}
 
 	protected function return_success_response( string $src, ?WP_Error $download_debug_data = null ): void {
@@ -71,6 +68,5 @@ class EncodeImage extends BaseAjaxCall {
 				'download_debug_data' => $download_debug_data,
 			), 200
 		);
-		exit;
 	}
 }

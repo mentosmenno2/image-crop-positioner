@@ -63,10 +63,10 @@ jobs:
           wp config set WP_DEBUG true --allow-root
           wp core install --allow-root  --url=localhost --title=Test --admin_user=admin --admin_password=password --admin_email=admin@test.test
           wp plugin activate image-crop-positioner --allow-root
-      - name: test:psalm
+      - name: test:phpstan
         run: |
           cd wp-content/plugins/image-crop-positioner/
-          composer run test:psalm
+          composer run test:phpstan
       - name: test:docs
         run: |
           cd wp-content/plugins/image-crop-positioner/

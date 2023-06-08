@@ -47,7 +47,7 @@ class Menu {
 				return $menu_item['slug'];
 			}, $menu
 		);
-		return array_combine( $keys, $menu );
+		return array_combine( $keys, $menu ) ?: array();
 	}
 
 	public function get_current_settings_menu_page(): array {

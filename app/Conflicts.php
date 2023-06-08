@@ -59,7 +59,7 @@ class Conflicts {
 				<?php
 
 				foreach ( $active_conflicting_plugins as $plugin ) {
-					$name = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $plugin, false )['Name'];
+					$name = get_plugin_data( trailingslashit( constant( 'WP_PLUGIN_DIR' ) ) . $plugin, false )['Name'];
 					if ( empty( $name ) ) {
 						$name = get_plugin_data( trailingslashit( WPMU_PLUGIN_DIR ) . $plugin, false )['Name'] ?? $plugin;
 					}

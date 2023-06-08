@@ -1,0 +1,18 @@
+includes:
+  - phpstan-baseline.neon
+
+parameters:
+    level: 8
+    reportUnmatchedIgnoredErrors: false
+    editorUrl: 'vscode://file/%%file%%:%%line%%'
+    paths:
+        - app
+    ignoreErrors:
+        - '#Class GdImage not found\.#'
+        - '#Property (.+) has unknown class GdImage as its type\.#'
+        - '#Parameter (.+) of method (.+) has invalid type GdImage\.#'
+        - '#PHPDoc tag (.+) contains unknown class GdImage\.#'
+        - '#Function WP_CLI\\Utils\\(.+) not found\.#'
+        # Uses func_get_args()
+        - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
+        - '#^Function remove_filter invoked with [34567] parameters, 2-3 required\.$#'

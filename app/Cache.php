@@ -30,7 +30,6 @@ class Cache {
 	 *
 	 * @param array|false $image
 	 * @param int|string $attachment_id
-	 * @param string $size
 	 * @return array|false
 	 */
 	public function change_attachment_image_src( $image, $attachment_id ) {
