@@ -17,7 +17,7 @@ class Enabled extends BaseToggleField {
 	}
 
 	public function get_checkbox_label(): string {
-		return __( 'Enable JS faces detection.', 'image-crop-positioner' );
+		return __( 'Enable browser faces detection.', 'image-crop-positioner' );
 	}
 
 	public function get_default_value(): bool {

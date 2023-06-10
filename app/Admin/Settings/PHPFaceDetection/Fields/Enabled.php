@@ -18,7 +18,7 @@ class Enabled extends BaseToggleField {
 	}
 
 	public function get_checkbox_label(): string {
-		return __( 'Enable PHP face detection.', 'image-crop-positioner' );
+		return __( 'Enable server face detection.', 'image-crop-positioner' );
 	}
 
 	public function is_disabled(): bool {
@@ -27,7 +27,7 @@ class Enabled extends BaseToggleField {
 
 	public function get_description(): string {
 		if ( $this->is_disabled() ) {
-			return __( 'Cannot enable PHP face detection because your system does not need the requirements.', 'image-crop-positioner' );
+			return __( 'Cannot enable server face detection because your system does not need the requirements.', 'image-crop-positioner' );
 		}
 		return '';
 	}

@@ -17,16 +17,16 @@ To make sure everything works as expected, follow these steps when activating Im
 
 ## Uploading new images to the media library fails
 
-This is probably caused by PHP face detection. This process can be quite heavy for small webservers.
-To fix this issue, go to the plugin settings, and disable the "PHP face detection - Auto detect and crop" setting.
+This is probably caused by server face detection (with PHP). This process can be quite heavy for small webservers.
+To fix this issue, go to the plugin settings, and disable the "Server face detection - Auto detect and crop" setting.
 This will prevent automatically attempting to detect faces and crop the image after uploading.
 
-## PHP face detection takes a long time and eventually crashes
+## Server face detection (with PHP) takes a long time and eventually crashes
 
-The process of PHP face detection can be quite a heavy process.
+The process of server face detection can be quite a heavy process.
 Small webservers may not be able to handle such load, and take too long.
 You have a few things you can do:
 
-1. Disable PHP face detection.
+1. Disable server face detection.
 2. Upgrade your webserver with more RAM and/or a better processor.
 3. Fiddle around with your PHP settings, for example the max_execution_time.

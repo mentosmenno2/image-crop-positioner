@@ -17,7 +17,7 @@ class Section {
 	}
 
 	public function get_label(): string {
-		return __( 'JavaScript faces detection', 'image-crop-positioner' );
+		return __( 'Browser faces detection (with JavaScript)', 'image-crop-positioner' );
 	}
 
 	/**
@@ -25,7 +25,7 @@ class Section {
 	 * @param array<string,mixed> $args
 	 */
 	public function render_description( array $args ): void {
-		$text = esc_html__( 'Here you can change the JS faces detection settings.', 'image-crop-positioner' );
+		$text = esc_html__( 'Here you can change the browser faces detection settings. Browser faces detection uses JavaScript to detect faces.', 'image-crop-positioner' );
 		if ( empty( $text ) ) {
 			return;
 		}
