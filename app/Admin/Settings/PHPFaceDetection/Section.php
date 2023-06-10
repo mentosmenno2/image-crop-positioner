@@ -17,7 +17,7 @@ class Section {
 	}
 
 	public function get_label(): string {
-		return __( 'PHP face detection', 'image-crop-positioner' );
+		return __( 'Server face detection (with PHP)', 'image-crop-positioner' );
 	}
 
 	/**
@@ -25,7 +25,7 @@ class Section {
 	 * @param array<string,mixed> $args
 	 */
 	public function render_description( array $args ): void {
-		$text = esc_html__( 'Here you can change the PHP face detection settings.', 'image-crop-positioner' );
+		$text = esc_html__( 'Here you can change the server face detection settings. Server face detection uses PHP to detect a face.', 'image-crop-positioner' );
 		if ( empty( $text ) ) {
 			return;
 		}
