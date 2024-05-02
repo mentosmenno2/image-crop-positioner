@@ -27,6 +27,7 @@ The process of server face detection can be quite a heavy process.
 Small webservers may not be able to handle such load, and take too long.
 You have a few things you can do:
 
-1. Disable server face detection.
-2. Upgrade your webserver with more RAM and/or a better processor.
-3. Fiddle around with your PHP settings, for example the max_execution_time.
+1. Disable server face detection - auto detect and crop
+2. Disable server face detection.
+3. Upgrade your webserver with more RAM and/or a better processor.
+4. Fiddle around with your PHP settings, for example the max_execution_time.
