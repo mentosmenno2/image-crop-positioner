@@ -284,7 +284,7 @@ class FaceDetector {
 				$red      = ( $rgb >> 16 ) & 0xFF;
 				$green    = ( $rgb >> 8 ) & 0xFF;
 				$blue     = $rgb & 0xFF;
-				$grey     = ( 0.2989 * $red + 0.587 * $green + 0.114 * $blue ) >> 0;  // this is what matlab uses
+				$grey     = ( (int) ( 0.2989 * $red + 0.587 * $green + 0.114 * $blue ) ) >> 0;  // this is what matlab uses
 				$rowsum  += $grey;
 				$rowsum2 += $grey * $grey;
 
