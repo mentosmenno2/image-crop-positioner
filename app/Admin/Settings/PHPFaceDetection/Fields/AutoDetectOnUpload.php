@@ -30,6 +30,6 @@ class AutoDetectOnUpload extends BaseToggleField {
 	}
 
 	public function get_default_value(): bool {
-		return true;
+		return false;
 	}
 }
