@@ -1,0 +1,333 @@
+# Copyright (C) 2024 mentosmenno2
+# This file is distributed under the same license as the Image Crop Positioner plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Image Crop Positioner 0.6.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/image-crop-positioner\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-06-07T11:23:37+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: image-crop-positioner\n"
+
+#. Plugin Name of the plugin
+#: image-crop-positioner.php
+#: app/Admin/Settings/Menu.php:17
+#: app/Admin/Settings/Menu.php:18
+#: app/Conflicts.php:56
+msgid "Image Crop Positioner"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: image-crop-positioner.php
+msgid "https://github.com/mentosmenno2/image-crop-positioner"
+msgstr ""
+
+#. Description of the plugin
+#: image-crop-positioner.php
+msgid "Face recognition and hotspot selection for cropping images in WordPress."
+msgstr ""
+
+#. Author of the plugin
+#: image-crop-positioner.php
+msgid "mentosmenno2"
+msgstr ""
+
+#. Author URI of the plugin
+#: image-crop-positioner.php
+msgid "https://github.com/mentosmenno2"
+msgstr ""
+
+#: app/Admin.php:28
+msgid "Image crop position"
+msgstr ""
+
+#: app/Admin/Settings/Cache/Fields/BreakEnabled.php:16
+msgid "Break cache"
+msgstr ""
+
+#: app/Admin/Settings/Cache/Fields/BreakEnabled.php:20
+msgid "Enable cache breaking."
+msgstr ""
+
+#: app/Admin/Settings/Cache/Fields/BreakEnabled.php:24
+msgid "By enabling this option, an url parameter will be added to the image source to break cache after an image is cropped. Disabling this option might result in your changes to an image not beeing visible on your website, because they are cached by your web server or a plugin."
+msgstr ""
+
+#: app/Admin/Settings/Cache/Section.php:20
+msgid "Cache"
+msgstr ""
+
+#: app/Admin/Settings/Cache/Section.php:28
+msgid "Here you can change the cache settings."
+msgstr ""
+
+#: app/Admin/Settings/Crop/Fields/PositioningMethod.php:16
+msgid "Positioning method"
+msgstr ""
+
+#: app/Admin/Settings/Crop/Fields/PositioningMethod.php:20
+msgid "The method used to determine the correct crop position."
+msgstr ""
+
+#: app/Admin/Settings/Crop/Fields/PositioningMethod.php:25
+msgid "Center of all spots"
+msgstr ""
+
+#: app/Admin/Settings/Crop/Fields/PositioningMethod.php:26
+msgid "Average of all spots"
+msgstr ""
+
+#: app/Admin/Settings/Crop/Section.php:20
+msgid "Crop"
+msgstr ""
+
+#: app/Admin/Settings/Crop/Section.php:28
+msgid "Here you can set the crop settings."
+msgstr ""
+
+#: app/Admin/Settings/HotspotsSelection/Fields/Enabled.php:16
+#: app/Admin/Settings/JSFacesDetection/Fields/Enabled.php:16
+#: app/Admin/Settings/PHPFaceDetection/Fields/Enabled.php:17
+msgid "Enabled"
+msgstr ""
+
+#: app/Admin/Settings/HotspotsSelection/Fields/Enabled.php:20
+msgid "Enable hotspots selection."
+msgstr ""
+
+#: app/Admin/Settings/HotspotsSelection/Section.php:20
+msgid "Hotspots selection"
+msgstr ""
+
+#: app/Admin/Settings/HotspotsSelection/Section.php:28
+msgid "Here you can change the hotspots selection settings."
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Fields/Enabled.php:20
+msgid "Enable browser faces detection."
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Fields/MinAccuracy.php:17
+#: app/Admin/Settings/PHPFaceDetection/Fields/MinAccuracy.php:17
+msgid "Minimum accuracy"
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Fields/MinAccuracy.php:25
+#: app/Admin/Settings/PHPFaceDetection/Fields/MinAccuracy.php:25
+msgid "Determines how accurate face detections must be to be used."
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Section.php:20
+msgid "Browser faces detection (with JavaScript)"
+msgstr ""
+
+#: app/Admin/Settings/JSFacesDetection/Section.php:28
+msgid "Here you can change the browser faces detection settings. Browser faces detection uses JavaScript to detect faces."
+msgstr ""
+
+#: app/Admin/Settings/Menu.php:37
+msgid "Settings"
+msgstr ""
+
+#: app/Admin/Settings/Menu.php:41
+msgid "Migrate"
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/AutoDetectOnUpload.php:17
+msgid "Auto detect and crop"
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/AutoDetectOnUpload.php:21
+msgid "Automatically detect faces and crop the image."
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/AutoDetectOnUpload.php:29
+msgid "After uploading an image, automatically attempt to detect a face and crop the image."
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/Enabled.php:21
+msgid "Enable server face detection."
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Fields/Enabled.php:30
+msgid "Cannot enable server face detection because your system does not need the requirements."
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Section.php:20
+msgid "Server face detection (with PHP)"
+msgstr ""
+
+#: app/Admin/Settings/PHPFaceDetection/Section.php:28
+msgid "Here you can change the server face detection settings. Server face detection uses PHP to detect a face."
+msgstr ""
+
+#: app/Admin/Settings/Regeneration/Fields/UseCron.php:16
+msgid "Use background process"
+msgstr ""
+
+#: app/Admin/Settings/Regeneration/Fields/UseCron.php:20
+msgid "Use background process (cron) for regenerating image sizes."
+msgstr ""
+
+#: app/Admin/Settings/Regeneration/Fields/UseCron.php:24
+msgid "By enabling this option, image sizes will be regenerated in the background with cronjobs. Enabling this will improve performance, however image sizes are not displayed directly. It might take some time before the new sizes are generated and shown on your website."
+msgstr ""
+
+#: app/Admin/Settings/Regeneration/Fields/UseCron.php:28
+msgid "The default WP cron is disabled via the DISABLE_WP_CRON constant. Make sure the cron is working correctly before enabling this option."
+msgstr ""
+
+#: app/Ajax/BaseAjaxCall.php:15
+msgid "Invalid nonce."
+msgstr ""
+
+#: app/Ajax/BaseAjaxCall.php:27
+msgid "Invalid attachment ID."
+msgstr ""
+
+#: app/Ajax/BaseAjaxCall.php:38
+msgid "Attachment is not an image."
+msgstr ""
+
+#: app/Ajax/EncodeImage.php:57
+msgid "Could not get base64 data for image."
+msgstr ""
+
+#: app/Ajax/FaceDetection.php:34
+msgid "Attachment has no file path."
+msgstr ""
+
+#: app/Ajax/Migrate.php:32
+msgid "Invalid validator slug"
+msgstr ""
+
+#: app/Ajax/Migrate.php:50
+msgid "Migrated"
+msgstr ""
+
+#: app/Ajax/Migrate.php:50
+msgid "Skipped"
+msgstr ""
+
+#: app/Ajax/RemoveFaces.php:39
+#: app/Ajax/SaveFaces.php:54
+#: app/Ajax/SaveHotspots.php:55
+msgid "Could not regenerate images."
+msgstr ""
+
+#: app/Ajax/SaveFaces.php:29
+msgid "Invalid faces."
+msgstr ""
+
+#: app/Ajax/SaveHotspots.php:29
+msgid "Invalid hotspots."
+msgstr ""
+
+#: app/Conflicts.php:57
+msgid "The plugin has been automatically disabled because the following conflicting plugins are active:"
+msgstr ""
+
+#: app/Migrators/FromMyEyesAreUpHere.php:16
+msgid "From My Eyes Are Up Here"
+msgstr ""
+
+#: app/Migrators/FromMyEyesAreUpHere.php:21
+msgid "Migrate faces and hotspots from the <a href=\"%s\" target=\"_blank\">My Eyes Are Up Here</a> plugin to Image Crop Positioner."
+msgstr ""
+
+#: app/Migrators/RegenerateImages.php:14
+msgid "Regenerate all images"
+msgstr ""
+
+#: app/Migrators/RegenerateImages.php:18
+msgid "Regenerate all image sizes for all images in the WordPress media library."
+msgstr ""
+
+#: app/Migrators/ToMyEyesAreUpHere.php:17
+msgid "To My Eyes Are Up Here"
+msgstr ""
+
+#: app/Migrators/ToMyEyesAreUpHere.php:22
+msgid "Migrate faces and hotspots from Image Crop Positioner to the <a href=\"%s\" target=\"_blank\">My Eyes Are Up Here</a> plugin. We're sorry to see you go, but we also know we can't stop you from doing so. But at least, we can make the process easier."
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:46
+msgid "Image size previews"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:52
+msgid "The important spots on the image"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:73
+msgid "Face detection"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:74
+msgid "Please note this is very basic face detection and won't find everything. Use hotspots to highlight any that were missed."
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:77
+msgid "Detect face via server"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:82
+msgid "Detect faces via browser"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:86
+msgid "Save faces"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:87
+msgid "Discard faces"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:88
+msgid "Remove faces"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:96
+msgid "Hotspot selection"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:97
+msgid "Edit hotspots"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:98
+msgid "Save hotspots"
+msgstr ""
+
+#: templates/admin/attachment-edit-fields.php:99
+msgid "Discard changes"
+msgstr ""
+
+#: templates/admin/settings/pages/migrate.php:28
+msgid "Batch size: "
+msgstr ""
+
+#: templates/admin/settings/pages/migrate.php:41
+msgid "Images per batch"
+msgstr ""
+
+#: templates/admin/settings/pages/migrate.php:43
+msgid "Higher batch sizes speed up the migration, but increase the chance of server timeouts. If you experience server timeouts, please lower the batch size or use WP-CLI."
+msgstr ""
+
+#: templates/admin/settings/pages/migrate.php:50
+msgid "Start migration"
+msgstr ""
+
+#: templates/admin/settings/pages/migrate.php:51
+msgid "Stop migration"
+msgstr ""
+
+#: templates/admin/settings/pages/migrate.php:71
+msgid "Show/hide log"
+msgstr ""
