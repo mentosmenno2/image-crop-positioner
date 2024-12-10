@@ -20,9 +20,7 @@ add_action(
 		// Set plugin variables
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		$plugin_path = plugin_dir_path( __FILE__ );
-		$plugin_data = get_plugin_data( __FILE__ );
 		$plugin_url  = plugin_dir_url( __FILE__ );
-		define( 'IMAGE_CROP_POSITIONER_PLUGIN_VERSION', isset( $plugin_data['Version'] ) ? $plugin_data['Version'] : '' );
 		define( 'IMAGE_CROP_POSITIONER_PLUGIN_FILE', __FILE__ );
 		define( 'IMAGE_CROP_POSITIONER_PLUGIN_PATH', $plugin_path );
 		define( 'IMAGE_CROP_POSITIONER_PLUGIN_URL', $plugin_url );
