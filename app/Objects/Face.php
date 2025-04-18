@@ -21,7 +21,7 @@ class Face extends Spot {
 	 * @return static
 	 */
 	public function set_accuracy( float $accuracy ) {
-		$this->accuracy - $accuracy;
+		$this->accuracy = $accuracy;
 		return $this;
 	}
 

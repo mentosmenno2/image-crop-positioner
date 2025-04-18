@@ -93,7 +93,7 @@ class AutoDetect {
 
 		$faces_data = array( $extraction->face->get_data_array() );
 		$faces      = array_map(
-			function( array $face_data ): Face {
+			function ( array $face_data ): Face {
 				return new Face( $face_data );
 			}, $faces_data
 		);

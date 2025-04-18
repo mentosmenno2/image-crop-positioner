@@ -76,7 +76,7 @@ class Migrate {
 
 			WP_CLI::log( "Processed batch (batch number: $batch_number, batch size: $batch_size, items in batch: $posts_count, total items processed: $total_count)" );
 
-			$batch_number++;
+			++$batch_number;
 		}
 
 		WP_CLI::success( "All $total_count attachments have been migrated" );

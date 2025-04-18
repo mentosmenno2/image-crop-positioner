@@ -19,8 +19,8 @@ class Migrate extends BaseAjaxCall {
 		$this->validate_nonce();
 
 		$migrator = $this->get_and_validate_migrator();
-		$page     = (int) filter_input( INPUT_POST, 'page', FILTER_VALIDATE_INT ) ?: 1;
-		$per_page = (int) filter_input( INPUT_POST, 'per_page', FILTER_VALIDATE_INT ) ?: 10;
+		$page     = (int) ( filter_input( INPUT_POST, 'page', FILTER_VALIDATE_INT ) ?: 1 );
+		$per_page = (int) ( filter_input( INPUT_POST, 'per_page', FILTER_VALIDATE_INT ) ?: 10 );
 		$this->migrate( $migrator, $page, $per_page );
 	}
 
