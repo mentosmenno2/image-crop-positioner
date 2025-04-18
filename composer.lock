@@ -4567,16 +4567,16 @@
         },
         {
             "name": "wp-cli/server-command",
-            "version": "v2.0.12",
+            "version": "v2.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/server-command.git",
-                "reference": "8081e417bb8f5d48dd814b0b9f2402a41af105ea"
+                "reference": "012e10d3281866235cbf626f38a27169d6c6e13b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/server-command/zipball/8081e417bb8f5d48dd814b0b9f2402a41af105ea",
-                "reference": "8081e417bb8f5d48dd814b0b9f2402a41af105ea",
+                "url": "https://api.github.com/repos/wp-cli/server-command/zipball/012e10d3281866235cbf626f38a27169d6c6e13b",
+                "reference": "012e10d3281866235cbf626f38a27169d6c6e13b",
                 "shasum": ""
             },
             "require": {
@@ -4584,17 +4584,17 @@
             },
             "require-dev": {
                 "wp-cli/entity-command": "^2",
-                "wp-cli/wp-cli-tests": "^3.1"
+                "wp-cli/wp-cli-tests": "^4"
             },
             "type": "wp-cli-package",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "2.x-dev"
-                },
                 "bundled": true,
                 "commands": [
                     "server"
-                ]
+                ],
+                "branch-alias": {
+                    "dev-main": "2.x-dev"
+                }
             },
             "autoload": {
                 "files": [
@@ -4619,9 +4619,9 @@
             "homepage": "https://github.com/wp-cli/server-command",
             "support": {
                 "issues": "https://github.com/wp-cli/server-command/issues",
-                "source": "https://github.com/wp-cli/server-command/tree/v2.0.12"
+                "source": "https://github.com/wp-cli/server-command/tree/v2.0.14"
             },
-            "time": "2023-02-17T16:16:13+00:00"
+            "time": "2024-10-01T10:46:38+00:00"
         },
         {
             "name": "wp-cli/shell-command",
