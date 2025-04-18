@@ -52,11 +52,10 @@ class Templates {
 	 *
 	 * @param mixed $display_none
 	 * @param boolean $compare
-	 * @param boolean $echo
+	 * @param boolean $output
 	 * @return string
 	 */
-	public function display_none( $display_none, bool $compare = true, bool $echo = true ) {
-		return __checked_selected_helper( $display_none, $compare, $echo, 'style="display: none;"' );
+	public function display_none( $display_none, bool $compare = true, bool $output = true ) {
+		return __checked_selected_helper( $display_none, $compare, $output, 'style="display: none;"' );
 	}
-
 }

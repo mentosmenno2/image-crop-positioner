@@ -24,7 +24,7 @@ abstract class BaseMigrator {
 	 */
 	abstract public function get_description(): string;
 
-	abstract public function get_default_batch_size() : int;
+	abstract public function get_default_batch_size(): int;
 
 	/**
 	 * Migrate an attachment
@@ -36,7 +36,7 @@ abstract class BaseMigrator {
 
 	public function get_migratable_attachment_ids( int $page = 1, int $per_page = -1 ): WP_Query {
 		$image_mimes = array_filter(
-			get_allowed_mime_types(), function( string $mime ): bool {
+			get_allowed_mime_types(), function ( string $mime ): bool {
 				return strpos( $mime, 'image/' ) === 0;
 			}
 		);

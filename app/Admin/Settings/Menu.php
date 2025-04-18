@@ -43,11 +43,11 @@ class Menu {
 		);
 
 		$keys = array_map(
-			function( array $menu_item ): string {
+			function ( array $menu_item ): string {
 				return $menu_item['slug'];
 			}, $menu
 		);
-		return array_combine( $keys, $menu ) ?: array();
+		return array_combine( $keys, $menu );
 	}
 
 	public function get_current_settings_menu_page(): array {

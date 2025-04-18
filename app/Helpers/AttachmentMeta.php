@@ -45,7 +45,7 @@ class AttachmentMeta {
 		}
 
 		return array_map(
-			function( array $face_data ): Face {
+			function ( array $face_data ): Face {
 				return new Face( $face_data );
 			}, $faces_data
 		);
@@ -57,7 +57,7 @@ class AttachmentMeta {
 	 */
 	public function set_faces( int $attachment_id, array $faces ): void {
 		$faces_data = array_map(
-			function( Face $face ): array {
+			function ( Face $face ): array {
 				return $face->get_data_array();
 			}, $faces
 		);
@@ -88,7 +88,7 @@ class AttachmentMeta {
 		}
 
 		return array_map(
-			function( array $hotspot_data ): Hotspot {
+			function ( array $hotspot_data ): Hotspot {
 				return new Hotspot( $hotspot_data );
 			}, $hotspots_data
 		);
@@ -100,7 +100,7 @@ class AttachmentMeta {
 	 */
 	public function set_hotspots( int $attachment_id, array $hotspots ): void {
 		$hotspots_data = array_map(
-			function( Hotspot $hotspot ): array {
+			function ( Hotspot $hotspot ): array {
 				return $hotspot->get_data_array();
 			}, $hotspots
 		);

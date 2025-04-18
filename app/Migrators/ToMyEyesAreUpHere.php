@@ -106,7 +106,7 @@ class ToMyEyesAreUpHere extends BaseMigrator {
 		);
 	}
 
-	protected function convert_hotspot( Hotspot $hotspot ):array {
+	protected function convert_hotspot( Hotspot $hotspot ): array {
 		return array(
 			'x'     => (string) $hotspot->get_x(),
 			'y'     => (string) $hotspot->get_y(),

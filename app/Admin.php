@@ -32,5 +32,4 @@ class Admin {
 
 		return $form_fields;
 	}
-
 }

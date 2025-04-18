@@ -39,15 +39,16 @@ class Regenerate {
 		}
 
 		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/image.php';
+			$requirement = ABSPATH . 'wp-admin/includes/image.php';
+			if ( ! file_exists( $requirement ) ) {
+				return false;
+			}
+
+			require_once $requirement; // @phpstan-ignore-line requireOnce.fileNotFound
 		}
 
 		$metadata = wp_generate_attachment_metadata( $attachment_id, $file );
-		/**
-		 * @psalm-suppress DocblockTypeContradiction
-		 * The docblock states $metadata can only be an array, but it can also be a WP_Error
-		 */
-		if ( ! is_array( $metadata ) || empty( $metadata ) ) {
+		if ( ! is_array( $metadata ) || empty( $metadata ) ) { // @phpstan-ignore-line function.alreadyNarrowedType
 			return false;
 		}
 
@@ -61,7 +62,7 @@ class Regenerate {
 	protected function set_execution_time_limit(): void {
 		$minimal_time_limit = 5 * MINUTE_IN_SECONDS;
 		$current_time_limit = ini_get( 'max_execution_time' );
-		if ( false !== $current_time_limit && ( (int) $current_time_limit === 0 || (int) $current_time_limit > $minimal_time_limit ) ) {
+		if ( false !== $current_time_limit && ( (int) $current_time_limit === 0 || (int) $current_time_limit > $minimal_time_limit ) ) { // @phpstan-ignore-line notIdentical.alwaysTrue
 			return;
 		}
 		@set_time_limit( $minimal_time_limit ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged

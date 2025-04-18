@@ -1,4 +1,7 @@
 <?php
+/**
+ * Menu page for the settings
+ */
 
 use Mentosmenno2\ImageCropPositioner\Admin\Settings\Menu;
 use Mentosmenno2\ImageCropPositioner\Templates;

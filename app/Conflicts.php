@@ -42,12 +42,17 @@ class Conflicts {
 		delete_option( 'image_crop_positioner_conflict' );
 
 		$active_conflicting_plugins = array_filter(
-			self::CONFLICTING_PLUGINS, function( string $plugin ): bool {
+			self::CONFLICTING_PLUGINS, function ( string $plugin ): bool {
 				return is_plugin_active( $plugin );
 			}
 		);
 
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		$requirement = ABSPATH . 'wp-admin/includes/plugin.php';
+		if ( ! file_exists( $requirement ) ) {
+			return;
+		}
+
+		require_once $requirement; // @phpstan-ignore-line requireOnce.fileNotFound
 
 		?>
 

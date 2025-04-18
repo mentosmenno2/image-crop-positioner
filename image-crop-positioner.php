@@ -9,14 +9,14 @@
  * Text Domain:       image-crop-positioner
  * Domain Path:       /languages
  * Requires at least: 5.3
- * Requires PHP:      7.3
+ * Requires PHP:      8.0
  * Update URI:        https://github.com/mentosmenno2/image-crop-positioner
  */
 
 // Initialize the plugin
 add_action(
 	'plugins_loaded',
-	function() {
+	function () {
 		// Set plugin variables
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		$plugin_path = plugin_dir_path( __FILE__ );
@@ -37,16 +37,16 @@ add_action(
 			 */
 			$autoload_dir = IMAGE_CROP_POSITIONER_PLUGIN_PATH . 'app' . DIRECTORY_SEPARATOR;
 			spl_autoload_register(
-				function ( string $class ) use ( $autoload_dir ) {
-					$no_plugin_ns_class = str_replace( IMAGE_CROP_POSITIONER_PLUGIN_NAMESPACE, '', $class );
-					if ( $no_plugin_ns_class === $class ) {
+				function ( string $classname ) use ( $autoload_dir ) {
+					$no_plugin_ns_class = str_replace( IMAGE_CROP_POSITIONER_PLUGIN_NAMESPACE, '', $classname );
+					if ( $no_plugin_ns_class === $classname ) {
 						return false; // Class not in plugin namespace, skip autoloading
 					}
 
 					$file = str_replace( '\\', DIRECTORY_SEPARATOR, $no_plugin_ns_class ) . '.php';
 					$file = $autoload_dir . $file;
 					if ( ! file_exists( $file ) ) {
-						throw new Exception( 'Class ' . $class . 'not found' );
+						throw new Exception( 'Class ' . $classname . 'not found' ); //phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 					}
 
 					// Require the file
@@ -92,6 +92,6 @@ add_action(
 		}
 
 		// Load textdomain
-		load_plugin_textdomain( 'image-crop-positioner', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'image-crop-positioner', false, basename( __DIR__ ) . '/languages/' );
 	}
 );

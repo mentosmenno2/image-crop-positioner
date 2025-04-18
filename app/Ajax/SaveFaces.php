@@ -41,7 +41,7 @@ class SaveFaces extends BaseAjaxCall {
 	 */
 	protected function save_faces( int $attachment_id, array $faces_data ): void {
 		$faces = array_map(
-			function( array $face_data ): Face {
+			function ( array $face_data ): Face {
 				return new Face( $face_data );
 			}, $faces_data
 		);
@@ -59,7 +59,7 @@ class SaveFaces extends BaseAjaxCall {
 		}
 
 		$return_faces_data = array_map(
-			function( Face $face ): array {
+			function ( Face $face ): array {
 				return $face->get_data_array();
 			}, $faces
 		);

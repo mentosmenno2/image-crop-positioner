@@ -37,7 +37,7 @@ class FaceDetector {
 	protected static $instance = null;
 
 	/**
-	 * @var null|resource|GdImage
+	 * @var null|GdImage
 	 *
 	 * @psalm-suppress UndefinedDocblockClass
 	 */
@@ -57,7 +57,7 @@ class FaceDetector {
 			throw new Exception( 'PHP GD extension is not loaded' );
 		}
 
-		$detection_file = dirname( __FILE__ ) . '/detection.dat';
+		$detection_file = __DIR__ . '/detection.dat';
 		if ( ! is_file( $detection_file ) ) {
 			throw new Exception( 'Detection data file does not exist' );
 		}
@@ -92,7 +92,7 @@ class FaceDetector {
 	}
 
 	/**
-	 * @param resource|GdImage|string $file
+	 * @param GdImage|string $file
 	 *
 	 * @return $this
 	 *
@@ -101,7 +101,7 @@ class FaceDetector {
 	public function extract( $file ) {
 
 		/** @psalm-suppress UndefinedClass */
-		if ( is_resource( $file ) || $file instanceof GdImage ) {
+		if ( $file instanceof GdImage ) {
 			$this->canvas = $file;
 		} elseif ( is_file( $file ) ) {
 			/** @var string */
@@ -112,7 +112,7 @@ class FaceDetector {
 				throw new Exception( "File extension of $file is not supported for reading data" );
 			}
 
-			/** @var resource|GdImage|false */
+			/** @var GdImage|false */
 			$result = $function_name( $file );
 			if ( $result === false ) {
 				throw new Exception( "Cannot load $file" );
@@ -128,13 +128,8 @@ class FaceDetector {
 			throw new Exception( 'Could not create canvas' );
 		}
 
-		/** @psalm-suppress PossiblyInvalidArgument */
-		$im_width = imagesx( $this->canvas );
-		/** @psalm-suppress PossiblyInvalidArgument */
+		$im_width  = imagesx( $this->canvas );
 		$im_height = imagesy( $this->canvas );
-		if ( ! is_int( $im_width ) || ! is_int( $im_height ) ) {
-			throw new Exception( 'Cannot determine dimensions' );
-		}
 
 		//Resample before detection?
 		$ratio       = 0;
@@ -147,8 +142,8 @@ class FaceDetector {
 		}
 
 		if ( $ratio !== (float) 0 ) {
-			$new_img_width  = (int) ( $im_width / $ratio );
-			$new_img_height = (int) ( $im_height / $ratio );
+			$new_img_width  = max( (int) ( $im_width / $ratio ), 1 );
+			$new_img_height = max( (int) ( $im_height / $ratio ), 1 );
 			$reduced_canvas = imagecreatetruecolor( $new_img_width, $new_img_height );
 			if ( ! $reduced_canvas ) {
 				throw new Exception( 'Could not create new truecolor image' );
@@ -201,7 +196,7 @@ class FaceDetector {
 		}
 
 		/** @psalm-suppress UndefinedClass */
-		if ( ! is_resource( $this->canvas ) && ! $this->canvas instanceof GdImage ) {
+		if ( ! $this->canvas instanceof GdImage ) {
 			throw new Exception( 'Cannot save file because no canvas' );
 		}
 
@@ -229,20 +224,15 @@ class FaceDetector {
 	}
 
 	/**
-	 * @param resource|GdImage $canvas
+	 * @param GdImage $canvas
 	 *
 	 * @return array
 	 *
 	 * @psalm-suppress UndefinedDocblockClass
 	 */
 	protected function get_img_stats( $canvas ) {
-		/** @psalm-suppress PossiblyInvalidArgument */
-		$image_width = imagesx( $canvas );
-		/** @psalm-suppress PossiblyInvalidArgument */
+		$image_width  = imagesx( $canvas );
 		$image_height = imagesy( $canvas );
-		if ( ! is_int( $image_width ) || ! is_int( $image_height ) ) {
-			throw new Exception( 'Cannot determine dimensions of canvas' );
-		}
 
 		$iis = $this->compute_ii( $canvas, $image_width, $image_height );
 		return array(
@@ -254,7 +244,7 @@ class FaceDetector {
 	}
 
 	/**
-	 * @param resource|GdImage $canvas
+	 * @param GdImage $canvas
 	 * @param int $image_width
 	 * @param int $image_height
 	 *
@@ -318,7 +308,7 @@ class FaceDetector {
 		$face_data          = null;
 		$detection_accuracy = null;
 		for ( $scale = $start_scale; $scale > 1; $scale *= $scale_update ) {
-			$max_loops++;
+			++$max_loops;
 			if ( is_array( $face_data ) ) {
 				continue;
 			}
@@ -344,7 +334,7 @@ class FaceDetector {
 					}
 				} // end x
 			} // end y
-			$loops++;
+			++$loops;
 		}  // end scale
 
 		if ( ! is_array( $face_data ) ) {
@@ -424,12 +414,10 @@ class FaceDetector {
 						} else {
 							$current_node = $tree[ $rightidx ];
 						}
-					} else {
-						if ( $leftidx === -1 ) {
+					} elseif ( $leftidx === -1 ) {
 							$tree_sum = $leftval;
-						} else {
-							$current_node = $tree[ $leftidx ];
-						}
+					} else {
+						$current_node = $tree[ $leftidx ];
 					}
 				}
 				$stage_sum += $tree_sum;

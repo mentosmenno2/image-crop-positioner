@@ -42,7 +42,7 @@ class SaveHotspots extends BaseAjaxCall {
 	 */
 	protected function save_hotspots( int $attachment_id, array $hotspots_data ): void {
 		$hotspots = array_map(
-			function( array $hotspot_data ): Hotspot {
+			function ( array $hotspot_data ): Hotspot {
 				return new Hotspot( $hotspot_data );
 			}, $hotspots_data
 		);
@@ -60,7 +60,7 @@ class SaveHotspots extends BaseAjaxCall {
 		}
 
 		$return_hotspots_data = array_map(
-			function( Hotspot $hotspot ): array {
+			function ( Hotspot $hotspot ): array {
 				return $hotspot->get_data_array();
 			}, $hotspots
 		);
