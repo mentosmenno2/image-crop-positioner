@@ -3373,16 +3373,16 @@
         },
         {
             "name": "wp-cli/entity-command",
-            "version": "v2.5.1",
+            "version": "v2.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/entity-command.git",
-                "reference": "4c0b4846baf193d9a3992386b89a381496983eb1"
+                "reference": "45d4f3a77b7977fee4b4f7e183e692ab84bf7dd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/entity-command/zipball/4c0b4846baf193d9a3992386b89a381496983eb1",
-                "reference": "4c0b4846baf193d9a3992386b89a381496983eb1",
+                "url": "https://api.github.com/repos/wp-cli/entity-command/zipball/45d4f3a77b7977fee4b4f7e183e692ab84bf7dd8",
+                "reference": "45d4f3a77b7977fee4b4f7e183e692ab84bf7dd8",
                 "shasum": ""
             },
             "require": {
@@ -3394,13 +3394,10 @@
                 "wp-cli/extension-command": "^1.2 || ^2",
                 "wp-cli/media-command": "^1.1 || ^2",
                 "wp-cli/super-admin-command": "^1 || ^2",
-                "wp-cli/wp-cli-tests": "^3.1"
+                "wp-cli/wp-cli-tests": "^4"
             },
             "type": "wp-cli-package",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "2.x-dev"
-                },
                 "bundled": true,
                 "commands": [
                     "comment",
@@ -3553,7 +3550,10 @@
                     "user term set",
                     "user unspam",
                     "user update"
-                ]
+                ],
+                "branch-alias": {
+                    "dev-main": "2.x-dev"
+                }
             },
             "autoload": {
                 "files": [
@@ -3578,9 +3578,9 @@
             "homepage": "https://github.com/wp-cli/entity-command",
             "support": {
                 "issues": "https://github.com/wp-cli/entity-command/issues",
-                "source": "https://github.com/wp-cli/entity-command/tree/v2.5.1"
+                "source": "https://github.com/wp-cli/entity-command/tree/v2.5.6"
             },
-            "time": "2023-05-30T13:42:30+00:00"
+            "time": "2023-10-13T13:38:49+00:00"
         },
         {
             "name": "wp-cli/eval-command",
