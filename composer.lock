@@ -3642,16 +3642,16 @@
         },
         {
             "name": "wp-cli/export-command",
-            "version": "v2.1.1",
+            "version": "v2.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/export-command.git",
-                "reference": "1731f1c869382dfc2cf2630c3139e1f97522db40"
+                "reference": "eeafa03095b80d2648d1a67b00c688be9d418aff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/export-command/zipball/1731f1c869382dfc2cf2630c3139e1f97522db40",
-                "reference": "1731f1c869382dfc2cf2630c3139e1f97522db40",
+                "url": "https://api.github.com/repos/wp-cli/export-command/zipball/eeafa03095b80d2648d1a67b00c688be9d418aff",
+                "reference": "eeafa03095b80d2648d1a67b00c688be9d418aff",
                 "shasum": ""
             },
             "require": {
@@ -3664,17 +3664,17 @@
                 "wp-cli/extension-command": "^1.2 || ^2",
                 "wp-cli/import-command": "^1 || ^2",
                 "wp-cli/media-command": "^1 || ^2",
-                "wp-cli/wp-cli-tests": "^3.1"
+                "wp-cli/wp-cli-tests": "^4"
             },
             "type": "wp-cli-package",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "2.x-dev"
-                },
                 "bundled": true,
                 "commands": [
                     "export"
-                ]
+                ],
+                "branch-alias": {
+                    "dev-main": "2.x-dev"
+                }
             },
             "autoload": {
                 "files": [
@@ -3699,9 +3699,9 @@
             "homepage": "https://github.com/wp-cli/export-command",
             "support": {
                 "issues": "https://github.com/wp-cli/export-command/issues",
-                "source": "https://github.com/wp-cli/export-command/tree/v2.1.1"
+                "source": "https://github.com/wp-cli/export-command/tree/v2.1.13"
             },
-            "time": "2023-02-17T16:41:22+00:00"
+            "time": "2024-10-01T10:31:03+00:00"
         },
         {
             "name": "wp-cli/extension-command",
