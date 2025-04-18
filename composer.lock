@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e8b7cebf52d0550db8dfbea61f3f55b",
+    "content-hash": "b3cc3de799ca1bb2d066d6cac03c7116",
     "packages": [],
     "packages-dev": [
         {
@@ -959,16 +959,16 @@
         },
         {
             "name": "mentosmenno2/coding-standards",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mentosmenno2/coding-standards.git",
-                "reference": "2e236c0fe14a36217959b19cc790a1efb5324624"
+                "reference": "9b21bcd94bf6d0fd411b54b9e3afcf2092f142b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mentosmenno2/coding-standards/zipball/2e236c0fe14a36217959b19cc790a1efb5324624",
-                "reference": "2e236c0fe14a36217959b19cc790a1efb5324624",
+                "url": "https://api.github.com/repos/mentosmenno2/coding-standards/zipball/9b21bcd94bf6d0fd411b54b9e3afcf2092f142b8",
+                "reference": "9b21bcd94bf6d0fd411b54b9e3afcf2092f142b8",
                 "shasum": ""
             },
             "require": {
@@ -990,9 +990,9 @@
             "description": "Menno van den Ende Coding Standards",
             "support": {
                 "issues": "https://github.com/mentosmenno2/coding-standards/issues",
-                "source": "https://github.com/mentosmenno2/coding-standards/tree/v1.0.5"
+                "source": "https://github.com/mentosmenno2/coding-standards/tree/v1.0.6"
             },
-            "time": "2021-02-27T21:47:27+00:00"
+            "time": "2024-09-17T20:08:39+00:00"
         },
         {
             "name": "mustache/mustache",
@@ -1980,22 +1980,20 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v5.4.21",
+            "version": "v6.0.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "078e9a5e1871fcfe6a5ce421b539344c21afef19"
+                "reference": "5cc9cac6586fc0c28cd173780ca696e419fefa11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/078e9a5e1871fcfe6a5ce421b539344c21afef19",
-                "reference": "078e9a5e1871fcfe6a5ce421b539344c21afef19",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/5cc9cac6586fc0c28cd173780ca696e419fefa11",
+                "reference": "5cc9cac6586fc0c28cd173780ca696e419fefa11",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
-                "symfony/polyfill-php80": "^1.16"
+                "php": ">=8.0.2"
             },
             "type": "library",
             "autoload": {
@@ -2023,7 +2021,7 @@
             "description": "Finds files and directories via an intuitive fluent interface",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/finder/tree/v5.4.21"
+                "source": "https://github.com/symfony/finder/tree/v6.0.19"
             },
             "funding": [
                 {
@@ -2039,7 +2037,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-16T09:33:00+00:00"
+            "time": "2023-01-20T17:44:14+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -5029,12 +5027,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3"
+        "php": ">=8.0"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
