@@ -2,6 +2,8 @@
 
 namespace Mentosmenno2\ImageCropPositioner\Ajax;
 
+use WP_Error;
+
 class ImagePreviews extends BaseAjaxCall {
 
 	public function register_hooks(): void {
@@ -24,14 +26,28 @@ class ImagePreviews extends BaseAjaxCall {
 	 * Get the image previews and send them to the json response
 	 */
 	protected function get_image_previews( int $attachment_id ): void {
-		$data  = array();
-		$sizes = get_intermediate_image_sizes();
-		foreach ( $sizes as $size ) {
-			$image  = wp_get_attachment_image(
+		$image_meta = wp_get_attachment_metadata( $attachment_id );
+		if ( ! $image_meta ) {
+			$error = new WP_Error(
+				400, __( 'No image meta found.', 'image-crop-positioner' ), array(
+					'status' => 400,
+				)
+			);
+			wp_send_json_error( $error, 400 );
+		}
+
+		$data = array();
+		foreach ( array_keys( $image_meta['sizes'] ) as $size ) {
+			$image = wp_get_attachment_image(
 				$attachment_id, $size, false, array(
 					'class' => 'image-previews__image',
 				)
 			);
+
+			if ( empty( $image ) ) {
+				continue;
+			}
+
 			$data[] = array(
 				'size' => $size,
 				'html' => $image,
