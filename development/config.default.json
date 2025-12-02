@@ -1,7 +1,0 @@
-{
-    "config": {
-        "url": "http://local.wordpress.test",
-		"secure": false,
-		"port": 8080
-    }
-}
