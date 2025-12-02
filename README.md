@@ -4,10 +4,6 @@
 
 This plugin allows you to better crop your images, based on face detection or hotspot selection.
 
-## In Development
-
-> :warning: **This plugin is still in development.** Some functionality may be missing or not working as intended.
-
 ## Menu
 
 - [Requirements](./docs/requirements.md)
