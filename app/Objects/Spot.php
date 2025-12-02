@@ -9,17 +9,13 @@ use JsonSerializable;
  */
 class Spot implements JsonSerializable {
 
-	/** @var float */
-	protected $x = 0;
+	protected float $x = 0;
 
-	/** @var float */
-	protected $y = 0;
+	protected float $y = 0;
 
-	/** @var float */
-	protected $width = 0;
+	protected float $width = 0;
 
-	/** @var float */
-	protected $height = 0;
+	protected float $height = 0;
 
 	/**
 	 * @param array<string, float> $data

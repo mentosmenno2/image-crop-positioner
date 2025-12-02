@@ -13,11 +13,20 @@ class Cache {
 		add_filter( 'wp_calculate_image_srcset', array( $this, 'change_attachment_image_srcset' ), 11, 5 );
 	}
 
-	public function store_updated_date( int $meta_id, int $attachment_id, string $meta_key ): void {
+	/**
+	 * When attachment metadata is generated for an image, set the updated date.
+	 *
+	 * @param integer $meta_id
+	 * @param integer $attachment_id
+	 * @param string $meta_key
+	 * @return void
+	 */
+	public function store_updated_date( $meta_id, $attachment_id, $meta_key ) {
 		if ( $meta_key !== '_wp_attachment_metadata' ) {
 			return;
 		}
 
+		$attachment_id = (int) $attachment_id;
 		if ( ! wp_attachment_is_image( $attachment_id ) ) {
 			return;
 		}
@@ -48,14 +57,21 @@ class Cache {
 
 	/**
 	 * Change the sourceset of the attachment
+	 *
+	 * @param array<mixed> $sources
+	 * @param array<int,int> $size_array
+	 * @param string $image_src
+	 * @param array<string,mixed> $image_meta
+	 * @param int $attachment_id
+	 * @return array<mixed>
 	 */
-	public function change_attachment_image_srcset( array $sources, array $size_array, string $image_src, array $image_meta, int $attachment_id ): array {
+	public function change_attachment_image_srcset( $sources, $size_array, $image_src, $image_meta, $attachment_id ) {
 		if ( ! ( new BreakEnabled() )->get_value() ) {
 			return $sources;
 		}
 
 		foreach ( $sources as &$source ) {
-			$source['url'] = $this->change_attachment_image_url( $source['url'], $attachment_id );
+			$source['url'] = $this->change_attachment_image_url( $source['url'], (int) $attachment_id );
 		}
 
 		return $sources;

@@ -18,24 +18,39 @@ class AutoDetect {
 
 	/**
 	 * Hijack the updated_postmeta filter to detect faces directly after generating attachment metadata
+	 *
+	 * @param int $meta_id
+	 * @param int $attachment_id
+	 * @param string $meta_key
+	 * @return int
 	 */
-	public function auto_detect_faces_after_saving_imagemeta( int $meta_id, int $attachment_id, string $meta_key ): int {
+	public function auto_detect_faces_after_saving_imagemeta( $meta_id, $attachment_id, $meta_key ) {
 		if ( $meta_key !== '_wp_attachment_metadata' ) {
 			return $meta_id;
 		}
 
-		$this->auto_detect_faces( $attachment_id );
+		$this->auto_detect_faces( (int) $attachment_id );
 		return $meta_id;
 	}
 
-	public function set_added_with_plugin_enabled( int $attachment_id ): void {
-		( new AttachmentMeta() )->set_plugin_enabled_on_upload( $attachment_id, true );
+	/**
+	 * After an attachment is added, mark if this plugin was enabled on upload
+	 *
+	 * @param int $attachment_id
+	 * @return void
+	 */
+	public function set_added_with_plugin_enabled( $attachment_id ) {
+		( new AttachmentMeta() )->set_plugin_enabled_on_upload( (int) $attachment_id, true );
 	}
 
 	/**
-	 * Auto detect faces in an image
+	 * After an attachment is added, auto detect faces in an image
+	 *
+	 * @param int $attachment_id
+	 * @return void
 	 */
-	public function auto_detect_faces( int $attachment_id ): void {
+	public function auto_detect_faces( $attachment_id ) {
+		$attachment_id   = (int) $attachment_id;
 		$attachment_meta = new AttachmentMeta();
 
 		// If already autodetected, skip.

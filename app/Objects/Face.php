@@ -8,10 +8,9 @@ namespace Mentosmenno2\ImageCropPositioner\Objects;
 class Face extends Spot {
 
 	/**
-	 * @var float
 	 * Accuracy of detection from 0 - 100 (where 0 is worst and 100 is best)
 	 */
-	protected $accuracy = 0;
+	protected float $accuracy = 0;
 
 	public function get_accuracy(): float {
 		return $this->accuracy;
