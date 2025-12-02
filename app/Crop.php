@@ -8,8 +8,7 @@ use Mentosmenno2\ImageCropPositioner\Objects\Spot;
 
 class Crop {
 
-	/** @var int */
-	protected $attachment_id = 0;
+	protected int $attachment_id = 0;
 
 	public function register_hooks(): void {
 		add_filter( 'get_attached_file', array( $this, 'set_attachment_id' ), 10, 2 );
@@ -19,10 +18,14 @@ class Crop {
 	}
 
 	/**
-	 * Hacky use of attached_file filters to get current attachment ID being resized
+	 * Hacky use of attached_file filters to get current attachment ID being resized.
+	 *
+	 * @param string $file
+	 * @param int $attachment_id
+	 * @return string
 	 */
-	public function set_attachment_id( string $file, int $attachment_id ): string {
-		$this->attachment_id = $attachment_id;
+	public function set_attachment_id( $file, $attachment_id ) {
+		$this->attachment_id = (int) $attachment_id;
 		return $file;
 	}
 
@@ -39,7 +42,7 @@ class Crop {
 	 *
 	 * @return mixed
 	 */
-	public function crop( $payload, int $orig_w, int $orig_h, $dest_w, $dest_h, $crop ) {
+	public function crop( $payload, $orig_w, $orig_h, $dest_w, $dest_h, $crop ) {
 		if ( ! $crop ) {
 			return $payload;
 		}
