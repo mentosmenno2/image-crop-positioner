@@ -29,7 +29,8 @@ class Enabled extends BaseToggleField {
 		if ( $this->is_disabled() ) {
 			return __( 'Cannot enable server face detection because your system does not need the requirements.', 'image-crop-positioner' );
 		}
-		return '';
+
+		return __( 'Server face detection is a heavy task for the webserver, which it might not be able to handle.', 'image-crop-positioner' );
 	}
 
 	public function get_value(): bool {
