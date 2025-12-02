@@ -30,24 +30,15 @@ class FaceDetector {
 	/** @var int */
 	protected const PADDING_HEIGHT = 20;
 
-	/** @var array */
-	protected $detection_data = array();
+	protected array $detection_data = array();
 
-	/** @var self|null*/
-	protected static $instance = null;
+	protected static ?self $instance = null;
 
-	/**
-	 * @var null|GdImage
-	 *
-	 * @psalm-suppress UndefinedDocblockClass
-	 */
-	public $canvas;
+	public ?GdImage $canvas;
 
-	/** @var Face|null */
-	public $face;
+	public ?Face $face = null;
 
-	/** @var bool */
-	public $face_found = false;
+	public bool $face_found = false;
 
 	/**
 	 * Create a new face detector class
@@ -95,12 +86,8 @@ class FaceDetector {
 	 * @param GdImage|string $file
 	 *
 	 * @return $this
-	 *
-	 * @psalm-suppress UndefinedDocblockClass
 	 */
 	public function extract( $file ) {
-
-		/** @psalm-suppress UndefinedClass */
 		if ( $file instanceof GdImage ) {
 			$this->canvas = $file;
 		} elseif ( is_file( $file ) ) {
@@ -123,7 +110,6 @@ class FaceDetector {
 			throw new Exception( 'Provided file is not a file' );
 		}
 
-		/** @psalm-suppress all */
 		if ( is_null( $this->canvas ) ) {
 			throw new Exception( 'Could not create canvas' );
 		}
@@ -148,7 +134,7 @@ class FaceDetector {
 			if ( ! $reduced_canvas ) {
 				throw new Exception( 'Could not create new truecolor image' );
 			}
-			/** @psalm-suppress all */
+
 			imagecopyresampled( $reduced_canvas, $this->canvas, 0, 0, 0, 0, $new_img_width, $new_img_height, $im_width, $im_height );
 
 			$stats      = $this->get_img_stats( $reduced_canvas );
@@ -161,7 +147,6 @@ class FaceDetector {
 					->set_height( $this->face->get_height() * $ratio );
 			}
 		} else {
-			/** @psalm-suppress all */
 			$stats      = $this->get_img_stats( $this->canvas );
 			$this->face = $this->do_detect_greedy_big_to_small( $stats['ii'], $stats['ii2'], $stats['width'], $stats['height'] );
 		}
@@ -195,7 +180,6 @@ class FaceDetector {
 			throw new Exception( 'Cannot save file because no faces are detected' );
 		}
 
-		/** @psalm-suppress UndefinedClass */
 		if ( ! $this->canvas instanceof GdImage ) {
 			throw new Exception( 'Cannot save file because no canvas' );
 		}
@@ -207,7 +191,6 @@ class FaceDetector {
 			'height' => $this->face->get_height() + self::PADDING_HEIGHT,
 		);
 
-		/** @psalm-suppress PossiblyInvalidArgument */
 		$cropped_canvas = imagecrop( $this->canvas, $to_crop );
 
 		/** @var string */
@@ -227,8 +210,6 @@ class FaceDetector {
 	 * @param GdImage $canvas
 	 *
 	 * @return array
-	 *
-	 * @psalm-suppress UndefinedDocblockClass
 	 */
 	protected function get_img_stats( $canvas ) {
 		$image_width  = imagesx( $canvas );
@@ -249,8 +230,6 @@ class FaceDetector {
 	 * @param int $image_height
 	 *
 	 * @return array
-	 *
-	 * @psalm-suppress UndefinedDocblockClass
 	 */
 	protected function compute_ii( $canvas, $image_width, $image_height ) {
 		$ii_w = $image_width + 1;
@@ -269,7 +248,6 @@ class FaceDetector {
 			$rowsum            = 0;
 			$rowsum2           = 0;
 			for ( $j = 1; $j < $ii_w - 1; $j++ ) {
-				/** @psalm-suppress PossiblyInvalidArgument */
 				$rgb      = ImageColorAt( $canvas, $j, $i ) ?: 0;
 				$red      = ( $rgb >> 16 ) & 0xFF;
 				$green    = ( $rgb >> 8 ) & 0xFF;
